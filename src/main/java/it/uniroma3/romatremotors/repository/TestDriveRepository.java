@@ -21,4 +21,14 @@ public interface TestDriveRepository extends CrudRepository<TestDrive, Long> {
 
     // Ricerca per data (esempio per test drive in un range di date)
     List<TestDrive> findByDataOraBetween(LocalDateTime startDate, LocalDateTime endDate); // Trova test drive in un intervallo di date
+    
+    //Ricerca per una data e ora
+    List<TestDrive> findByDataOra(LocalDateTime date);
+    
+    //Ricerca per data e cliente
+    List<TestDrive> findByDataOraAndCliente(LocalDateTime date, Cliente cliente);
+    
+    //Ricerca per auto e cliente
+    List<TestDrive> findByClienteAndAuto(Cliente cliente, Auto auto);
+    
 }
