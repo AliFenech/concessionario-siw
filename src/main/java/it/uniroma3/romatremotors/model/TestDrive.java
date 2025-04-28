@@ -18,11 +18,10 @@ public class TestDrive {
 	@Column(nullable = false)
 	private LocalDateTime dataEOra;
 	
-	/*
-	 * Ricordati di aggiornare i getter e i setter
+	
 	 @ManyToOne
 	 private Dipendente dipendente;
-	 */
+	 
 	
 	@ManyToOne
 	private Cliente cliente;
@@ -84,6 +83,16 @@ public class TestDrive {
 	 */
 	public void setAuto(Auto auto) {
 		this.auto = auto;
+	}
+	
+	
+
+	public Dipendente getDipendente() {
+		return dipendente;
+	}
+
+	public void setDipendente(Dipendente dipendente) {
+		this.dipendente = dipendente;
 	}
 
 	@Override

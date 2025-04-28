@@ -1,10 +1,12 @@
 package it.uniroma3.romatremotors.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -32,6 +34,10 @@ public class Auto {
 	@OneToMany(mappedBy= "auto")
 	private TestDrive testDrive;
 
+	@ManyToMany(mappedBy="auto")
+	private List<AutoOptional> autoOptional;
+	
+	
 	/**
 	 * @return the telaio
 	 */
