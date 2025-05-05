@@ -32,12 +32,46 @@ public class Auto {
 	private Cliente proprietario;
 	
 	@OneToMany(mappedBy= "auto")
-	private TestDrive testDrive;
+	private List<TestDrive> testDrive;
 
-	@ManyToMany(mappedBy="auto")
-	private List<AutoOptional> autoOptional;
+	@ManyToMany
+	private List<AutoOptional> optional;
+	
+	@ManyToOne
+	private Dipendente dipendente;
+	
+	@ManyToOne
+	private PuntoVendita puntoVendita;
 	
 	
+	/**
+	 * @return the dipendente
+	 */
+	public Dipendente getDipendente() {
+		return dipendente;
+	}
+
+	/**
+	 * @param dipendente the dipendente to set
+	 */
+	public void setDipendente(Dipendente dipendente) {
+		this.dipendente = dipendente;
+	}
+
+	/**
+	 * @return the puntoVendita
+	 */
+	public PuntoVendita getPuntoVendita() {
+		return puntoVendita;
+	}
+
+	/**
+	 * @param puntoVendita the puntoVendita to set
+	 */
+	public void setPuntoVendita(PuntoVendita puntoVendita) {
+		this.puntoVendita = puntoVendita;
+	}
+
 	/**
 	 * @return the telaio
 	 */
@@ -122,18 +156,36 @@ public class Auto {
 		this.proprietario = proprietario;
 	}
 
+	
+
 	/**
 	 * @return the testDrive
 	 */
-	public TestDrive getTestDrive() {
+	public List<TestDrive> getTestDrive() {
 		return testDrive;
 	}
 
 	/**
 	 * @param testDrive the testDrive to set
 	 */
-	public void setTestDrive(TestDrive testDrive) {
+	public void setTestDrive(List<TestDrive> testDrive) {
 		this.testDrive = testDrive;
+	}
+
+
+
+	/**
+	 * @return the optional
+	 */
+	public List<AutoOptional> getOptional() {
+		return optional;
+	}
+
+	/**
+	 * @param optional the optional to set
+	 */
+	public void setOptional(List<AutoOptional> optional) {
+		this.optional = optional;
 	}
 
 	@Override

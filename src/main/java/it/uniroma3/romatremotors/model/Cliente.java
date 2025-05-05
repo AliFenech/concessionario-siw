@@ -1,6 +1,7 @@
 package it.uniroma3.romatremotors.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -26,10 +27,17 @@ public class Cliente {
 	private LocalDate dataNascita;
 	
 	@OneToMany(mappedBy= "proprietario")
-	private Auto auto;
+	private List<Auto> auto;
 	
 	@OneToMany(mappedBy= "cliente")
-	private TestDrive testdrive;
+	private List<TestDrive> testdrive;
+
+	/**
+	 * @param auto the auto to set
+	 */
+	public void setAuto(List<Auto> auto) {
+		this.auto = auto;
+	}
 
 	/**
 	 * @return the codiceFiscale
@@ -87,32 +95,27 @@ public class Cliente {
 		this.dataNascita = dataNascita;
 	}
 
-	/**
-	 * @return the auto
-	 */
-	public Auto getAuto() {
-		return auto;
-	}
 
-	/**
-	 * @param auto the auto to set
-	 */
-	public void setAuto(Auto auto) {
-		this.auto = auto;
-	}
 
 	/**
 	 * @return the testdrive
 	 */
-	public TestDrive getTestdrive() {
+	public List<TestDrive> getTestdrive() {
 		return testdrive;
 	}
 
 	/**
 	 * @param testdrive the testdrive to set
 	 */
-	public void setTestdrive(TestDrive testdrive) {
+	public void setTestdrive(List<TestDrive> testdrive) {
 		this.testdrive = testdrive;
+	}
+
+	/**
+	 * @return the auto
+	 */
+	public List<Auto> getAuto() {
+		return auto;
 	}
 
 	@Override
