@@ -36,5 +36,5 @@ public interface AutoRepository extends CrudRepository<Auto, String> {  // 'Stri
     List<Auto> findByKmLessThanAndPrezzoGreaterThan(int km, double prezzo);  
     
     //Ricerca per proprietario
-    List<Auto> findByCliente(Cliente proprietario);
+    List<Auto> findByProprietario(Cliente proprietario);
 }

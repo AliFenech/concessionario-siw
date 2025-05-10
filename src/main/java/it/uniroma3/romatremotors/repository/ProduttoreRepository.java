@@ -31,5 +31,5 @@ public interface ProduttoreRepository extends CrudRepository<Produttore, Long> {
     Optional<Produttore> findByModello(Modello modello);
 
     // Cerca produttori che hanno un modello con un nome specifico
-    List<Produttore> findByModelloNomeModello(String nomeModello);
+    List<Produttore> findByModelloNome(String nomeModello);
 }
