@@ -15,7 +15,8 @@ import jakarta.persistence.OneToMany;
 public class Cliente {
 
 	@Id
-	private String codiceFiscale;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long codiceFiscale;
 	
 	@Column(nullable = false)
 	private String nome;
@@ -39,19 +40,25 @@ public class Cliente {
 		this.auto = auto;
 	}
 
+	
+
 	/**
 	 * @return the codiceFiscale
 	 */
-	public String getCodiceFiscale() {
+	public Long getCodiceFiscale() {
 		return codiceFiscale;
 	}
+
+
 
 	/**
 	 * @param codiceFiscale the codiceFiscale to set
 	 */
-	public void setCodiceFiscale(String codiceFiscale) {
+	public void setCodiceFiscale(Long codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
+
+
 
 	/**
 	 * @return the nome
