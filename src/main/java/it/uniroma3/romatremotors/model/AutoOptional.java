@@ -21,7 +21,7 @@ public class AutoOptional {
 	@Column(nullable=false)
 	private String nome;
 	
-	@ManyToMany(mappedBy="optional",fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy="optionalAuto",fetch = FetchType.EAGER)
 	private List<Auto> auto;
 
 	public Long getId() {

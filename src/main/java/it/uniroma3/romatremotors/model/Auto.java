@@ -35,7 +35,7 @@ public class Auto {
 	private List<TestDrive> testDrive;
 
 	@ManyToMany
-	private List<AutoOptional> optional;
+	private List<AutoOptional> optionalAuto;
 	
 	@ManyToOne
 	private Dipendente dipendente;
@@ -173,19 +173,20 @@ public class Auto {
 	}
 
 
+	
 
 	/**
-	 * @return the optional
+	 * @return the optionalAuto
 	 */
-	public List<AutoOptional> getOptional() {
-		return optional;
+	public List<AutoOptional> getOptionalAuto() {
+		return optionalAuto;
 	}
 
 	/**
-	 * @param optional the optional to set
+	 * @param optionalAuto the optionalAuto to set
 	 */
-	public void setOptional(List<AutoOptional> optional) {
-		this.optional = optional;
+	public void setOptionalAuto(List<AutoOptional> optionalAuto) {
+		this.optionalAuto = optionalAuto;
 	}
 
 	@Override
