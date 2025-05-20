@@ -24,8 +24,27 @@ public class Cliente {
 	@Column(nullable = false)
 	private String cognome;
 	
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Column(nullable = false)
 	private LocalDate dataNascita;
+	
+	@Column(nullable = false)
+	private String email;
 	
 	@OneToMany(mappedBy= "proprietario")
 	private List<Auto> auto;

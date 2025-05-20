@@ -2,6 +2,7 @@ package it.uniroma3.romatremotors.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,6 +17,8 @@ public class Credentials {
 	public static final String ADMIN_ROLE = "ADMIN";
 	public static final String CLIENT_ROLE = "CLIENT";
 	
+	
+	
 	@Id
 	private String username;
 	
@@ -23,10 +26,16 @@ public class Credentials {
 	private String password;
 	
 	@Column(nullable = false)
+	private String passwordConfirm;
+	
+	@Column(nullable = false)
 	private String ruolo;
 	
-	@OneToOne
-	private User utente;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Cliente cliente;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Dipendente dipendente;
 
 	/**
 	 * @return the username
@@ -71,22 +80,73 @@ public class Credentials {
 	}
 
 	/**
-	 * @return the utente
+	 * @return the cliente
 	 */
-	public User getUtente() {
-		return utente;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
 	/**
-	 * @param utente the utente to set
+	 * @param cliente the cliente to set
 	 */
-	public void setUtente(User utente) {
-		this.utente = utente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	/**
+	 * @return the dipendente
+	 */
+	public Dipendente getDipendente() {
+		return dipendente;
+	}
+
+	/**
+	 * @param dipendente the dipendente to set
+	 */
+	public void setDipendente(Dipendente dipendente) {
+		this.dipendente = dipendente;
+	}
+
+	/**
+	 * @return the defaultRole
+	 */
+	public static String getDefaultRole() {
+		return DEFAULT_ROLE;
+	}
+
+	/**
+	 * @return the adminRole
+	 */
+	public static String getAdminRole() {
+		return ADMIN_ROLE;
+	}
+
+	/**
+	 * @return the clientRole
+	 */
+	public static String getClientRole() {
+		return CLIENT_ROLE;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ruolo, username, utente);
+		return Objects.hash(ruolo, username);
+	}
+	
+	
+
+	/**
+	 * @return the passwordConfirm
+	 */
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	/**
+	 * @param passwordConfirm the passwordConfirm to set
+	 */
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 
 	@Override
@@ -98,13 +158,9 @@ public class Credentials {
 		if (getClass() != obj.getClass())
 			return false;
 		Credentials other = (Credentials) obj;
-		return Objects.equals(ruolo, other.ruolo) && Objects.equals(username, other.username)
-				&& Objects.equals(utente, other.utente);
+		return Objects.equals(ruolo, other.ruolo) && Objects.equals(username, other.username);
 	}
 
-
-
-	
 	
 	
 }
