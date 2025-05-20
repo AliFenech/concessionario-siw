@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import it.uniroma3.romatremotors.model.Credentials;
 
 @Controller
-public interface CredentialsRepository extends CrudRepository<Credentials, String>{
+public interface CredentialsRepository extends CrudRepository<Credentials, Long>{
 
 	public Optional<Credentials> findByUsername(String username);
 }

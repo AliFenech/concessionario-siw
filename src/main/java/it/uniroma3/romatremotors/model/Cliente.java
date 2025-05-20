@@ -16,7 +16,7 @@ public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long codiceFiscale;
+	private Long id;
 	
 	@Column(nullable = false)
 	private String nome;
@@ -61,20 +61,23 @@ public class Cliente {
 
 	
 
+
+
+
 	/**
-	 * @return the codiceFiscale
+	 * @return the id
 	 */
-	public Long getCodiceFiscale() {
-		return codiceFiscale;
+	public Long getId() {
+		return id;
 	}
 
 
 
 	/**
-	 * @param codiceFiscale the codiceFiscale to set
+	 * @param id the id to set
 	 */
-	public void setCodiceFiscale(Long codiceFiscale) {
-		this.codiceFiscale = codiceFiscale;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 
@@ -144,10 +147,14 @@ public class Cliente {
 		return auto;
 	}
 
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(codiceFiscale, cognome, dataNascita, nome);
+		return Objects.hash(cognome, dataNascita, email, nome);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -158,9 +165,11 @@ public class Cliente {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		return Objects.equals(codiceFiscale, other.codiceFiscale) && Objects.equals(cognome, other.cognome)
-				&& Objects.equals(dataNascita, other.dataNascita) && Objects.equals(nome, other.nome);
+		return Objects.equals(cognome, other.cognome) && Objects.equals(dataNascita, other.dataNascita)
+				&& Objects.equals(email, other.email) && Objects.equals(nome, other.nome);
 	}
+
+	
 	
 	
 	

@@ -12,6 +12,10 @@
                 <!--Inizio registrazione-->
                 <h1>Registrazione</h1>
                 <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Username</span>
+                    <input type="text" class="form-control" required th:field="${credentials.username}" placeholder="Inserisci qui il tuo username">
+                </div>
+                <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Nome</span>
                     <input type="text" class="form-control" required th:field="${cliente.nome}" placeholder="Inserisci qui il tuo nome">
                 </div>
