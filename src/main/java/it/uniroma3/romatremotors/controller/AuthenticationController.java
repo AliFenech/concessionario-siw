@@ -25,7 +25,7 @@ public class AuthenticationController {
 	@Autowired CredentialsValidation credentialsValidation;
 	
 	
-	@GetMapping("/registrazione")
+	@GetMapping("/registrazione")	
 	public String showRegisterForm(Model model) {
 		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("credentials", new Credentials());
@@ -33,18 +33,36 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/registrazione")
-	public String registerClient(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult clienteBindingResult,@Valid  @ModelAttribute("credentials") Credentials credentials, BindingResult credentialsBindingResult, Model model) {
-		
-		this.credentialsValidation.validate(credentials, credentialsBindingResult);
-		//se il cliente e le credenziali hanno contenuti che rispettano i valid allora completo la registrazione del cliente
-		if(!clienteBindingResult.hasErrors() && ! credentialsBindingResult.hasErrors()) {
-			credentials.setCliente(cliente);
-			credentialsService.saveCredentials(credentials);
-			model.addAttribute("cliente", cliente);
-			return "cliente/index";
-		}
-		return "registrazione";
+	public String registerClient(@Valid @ModelAttribute("cliente") Cliente cliente,
+	                             BindingResult clienteBindingResult,
+	                             @Valid @ModelAttribute("credentials") Credentials credentials,
+	                             BindingResult credentialsBindingResult,
+	                             Model model) {
+
+	    this.credentialsValidation.validate(credentials, credentialsBindingResult);
+
+	    if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
+	        credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
+	    }
+
+	    if (!clienteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+	        credentials.setCliente(cliente);
+	        credentialsService.saveCredentials(credentials);
+	        model.addAttribute("cliente", cliente);
+	        return "cliente/index";
+	    }
+
+	    
+	    if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {
+	        model.addAttribute("errorsPasswordConfirm", credentialsBindingResult.getFieldErrors("passwordConfirm")
+	            .stream()
+	            .map(err -> err.getDefaultMessage())
+	            .toList());
+	    }
+
+	    return "formRegistrazione";
 	}
+
 	
 	@GetMapping(value = "/") 
 	public String index(Model model) {

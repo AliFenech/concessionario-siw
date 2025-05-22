@@ -8,9 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Credentials {
@@ -31,6 +33,7 @@ public class Credentials {
 	@Column(nullable = false)
 	private String password;
 	
+	@Transient
 	@Column(nullable = false)
 	private String passwordConfirm;
 	
@@ -38,6 +41,7 @@ public class Credentials {
 	private String ruolo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -154,6 +158,10 @@ public class Credentials {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
+	 // Validazione password
+    public boolean isPasswordConfirmed() {
+        return this.password != null && this.password.equals(this.passwordConfirm);
+    }
 
 	@Override
 	public boolean equals(Object obj) {

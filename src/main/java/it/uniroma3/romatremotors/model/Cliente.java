@@ -32,7 +32,6 @@ public class Cliente {
 	private String cognome;
 	
 	@Column(nullable = false)
-	@Min(1900)
 	@Past
 	private LocalDate dataNascita;
 	
