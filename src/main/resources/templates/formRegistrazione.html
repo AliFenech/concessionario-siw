@@ -11,33 +11,43 @@
             <form th:action="@{/registrazione}" method="POST">
                 <!--Inizio registrazione-->
                 <h1>Registrazione</h1>
+                <div class="input-group input-group-sm mb-3" th:if="${#fields.hasGlobalErrors()}">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" th:style="'color:red'"></p>
+                </div>
+
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Username</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" th:if="${fields.hasErrors('credentials.username')}" th:errors="${credentials.username}" th:style="'color:red'"></span>
                     <input type="text" class="form-control" required th:field="${credentials.username}" placeholder="Inserisci qui il tuo username">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Nome</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" th:if="${fields.hasErrors('cliente.nome')}" th:errors="${cliente.nome}" th:style="'color:red'"></span>
                     <input type="text" class="form-control" required th:field="${cliente.nome}" placeholder="Inserisci qui il tuo nome">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Cognome</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" th:if="${fields.hasErrors('credentials.cognome')}" th:errors="${credentials.cognome}" th:style="'color:red'"></span>
                     <input type="text" class="form-control" required th:field="${cliente.cognome}" placeholder="Inserisci qui il tuo cognome">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" th:if="${fields.hasErrors('credentials.email')}" th:errors="${credentials.email}" th:style="'color:red'"></span>
                     <input type="text" class="form-control" required th:field="${cliente.email}" placeholder="Inserisci qui la tua email">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Data di nascita</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" th:if="${fields.hasErrors('cliente.dataNascita')}" th:errors="${cliente.dataNascita}" th:style="'color:red'"></span>
                     <input type="date" class="form-control" required th:field="${cliente.dataNascita}" >
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm" th:if="${fields.hasErrors('credentials.password')}" th:errors="${credentials.password}" th:style="'color:red'"></span>
                     <input type="password" class="form-control" required th:field="${credentials.password}" placeholder="Inserisci qui la tua password">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Conferma Password</span>
-                    <input type="text" class="form-control" required th:field="${credentials.passwordConfirm}" placeholder="Conferma qui la tua password">
+                    <input type="password" class="form-control" required th:field="${credentials.passwordConfirm}" placeholder="Conferma qui la tua password">
                 </div>
                 <div class="input-group input-group-sm mb-3">
                     <input type="submit" value="Registrati" class="btn btn-primary">

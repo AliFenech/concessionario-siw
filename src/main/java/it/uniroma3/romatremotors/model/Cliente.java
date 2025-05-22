@@ -10,6 +10,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+
 
 @Entity
 public class Cliente {
@@ -19,10 +24,28 @@ public class Cliente {
 	private Long id;
 	
 	@Column(nullable = false)
+	@NotBlank
 	private String nome;
 	
 	@Column(nullable = false)
+	@NotBlank
 	private String cognome;
+	
+	@Column(nullable = false)
+	@Min(1900)
+	@Past
+	private LocalDate dataNascita;
+	
+	@Column(nullable = false)
+	@Email
+	private String email;
+	
+	@OneToMany(mappedBy= "proprietario")
+	private List<Auto> auto;
+	
+	@OneToMany(mappedBy= "cliente")
+	private List<TestDrive> testdrive;
+	
 	
 	/**
 	 * @return the email
@@ -40,17 +63,7 @@ public class Cliente {
 		this.email = email;
 	}
 
-	@Column(nullable = false)
-	private LocalDate dataNascita;
-	
-	@Column(nullable = false)
-	private String email;
-	
-	@OneToMany(mappedBy= "proprietario")
-	private List<Auto> auto;
-	
-	@OneToMany(mappedBy= "cliente")
-	private List<TestDrive> testdrive;
+
 
 	/**
 	 * @param auto the auto to set
@@ -58,11 +71,6 @@ public class Cliente {
 	public void setAuto(List<Auto> auto) {
 		this.auto = auto;
 	}
-
-	
-
-
-
 
 	/**
 	 * @return the id
@@ -168,10 +176,5 @@ public class Cliente {
 		return Objects.equals(cognome, other.cognome) && Objects.equals(dataNascita, other.dataNascita)
 				&& Objects.equals(email, other.email) && Objects.equals(nome, other.nome);
 	}
-
-	
-	
-	
-	
 	
 }
