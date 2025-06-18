@@ -80,6 +80,13 @@ public class AuthenticationController {
         return "index.html";
 	}
 	
+	@GetMapping(value= "/login")
+	public String login(Model model) {
+		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("credentials", new Credentials());
+		return "login";
+
+	}
 	
 	
 }
