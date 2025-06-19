@@ -40,8 +40,9 @@ public class AuthenticationController {
 	                             Model model) {
 
 	    this.credentialsValidation.validate(credentials, credentialsBindingResult);
-
+	    
 	    if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
+	    	System.out.println("Password non corrette");
 	        credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
 	    }
 
@@ -87,6 +88,8 @@ public class AuthenticationController {
 		return "login";
 
 	}
+	
+
 	
 	
 }
