@@ -16,6 +16,10 @@ public class CredentialsService {
 	private CredentialsRepository credentialsRepository;
 
 	
+	public Credentials getCredentials(Long id) {
+		return credentialsRepository.findById(id).get();
+	}
+	
 	public Credentials getCredentials(String username) {
 		return credentialsRepository.findByUsername(username).get();
 	}

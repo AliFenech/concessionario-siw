@@ -29,7 +29,7 @@ public class Auto {
 	private Float prezzo;
 	
 	@ManyToOne(optional = true)
-	private Cliente proprietario;
+	private Utente proprietario;
 	
 	@OneToMany(mappedBy= "auto")
 	private List<TestDrive> testDrive;
@@ -38,7 +38,7 @@ public class Auto {
 	private List<AutoOptional> optionalAuto;
 	
 	@ManyToOne
-	private Dipendente dipendente;
+	private Utente dipendente;
 	
 	@ManyToOne
 	private PuntoVendita puntoVendita;
@@ -47,14 +47,14 @@ public class Auto {
 	/**
 	 * @return the dipendente
 	 */
-	public Dipendente getDipendente() {
+	public Utente getDipendente() {
 		return dipendente;
 	}
 
 	/**
 	 * @param dipendente the dipendente to set
 	 */
-	public void setDipendente(Dipendente dipendente) {
+	public void setDipendente(Utente dipendente) {
 		this.dipendente = dipendente;
 	}
 
@@ -145,14 +145,14 @@ public class Auto {
 	/**
 	 * @return the proprietario
 	 */
-	public Cliente getProprietario() {
+	public Utente getProprietario() {
 		return proprietario;
 	}
 
 	/**
 	 * @param proprietario the proprietario to set
 	 */
-	public void setProprietario(Cliente proprietario) {
+	public void setProprietario(Utente proprietario) {
 		this.proprietario = proprietario;
 	}
 

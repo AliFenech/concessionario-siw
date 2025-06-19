@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Min;
 
 
 @Entity
-public class Cliente {
+public class Utente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,36 +40,16 @@ public class Cliente {
 	private String email;
 	
 	@OneToMany(mappedBy= "proprietario")
-	private List<Auto> auto;
+	private List<Auto> autoAcquistate;
+	
+	@OneToMany(mappedBy= "dipendente")
+	private List<Auto> autoInserite;
 	
 	@OneToMany(mappedBy= "cliente")
-	private List<TestDrive> testdrive;
+	private List<TestDrive> testdriveCliente;
 	
-	
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-
-
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
-	/**
-	 * @param auto the auto to set
-	 */
-	public void setAuto(List<Auto> auto) {
-		this.auto = auto;
-	}
+	@OneToMany(mappedBy= "dipendente")
+	private List<TestDrive> testdriveDipendente;
 
 	/**
 	 * @return the id
@@ -78,16 +58,12 @@ public class Cliente {
 		return id;
 	}
 
-
-
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	/**
 	 * @return the nome
@@ -131,37 +107,80 @@ public class Cliente {
 		this.dataNascita = dataNascita;
 	}
 
-
-
 	/**
-	 * @return the testdrive
+	 * @return the email
 	 */
-	public List<TestDrive> getTestdrive() {
-		return testdrive;
+	public String getEmail() {
+		return email;
 	}
 
 	/**
-	 * @param testdrive the testdrive to set
+	 * @param email the email to set
 	 */
-	public void setTestdrive(List<TestDrive> testdrive) {
-		this.testdrive = testdrive;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**
-	 * @return the auto
+	 * @return the autoAcquistate
 	 */
-	public List<Auto> getAuto() {
-		return auto;
+	public List<Auto> getAutoAcquistate() {
+		return autoAcquistate;
 	}
 
+	/**
+	 * @param autoAcquistate the autoAcquistate to set
+	 */
+	public void setAutoAcquistate(List<Auto> autoAcquistate) {
+		this.autoAcquistate = autoAcquistate;
+	}
 
+	/**
+	 * @return the autoInserite
+	 */
+	public List<Auto> getAutoInserite() {
+		return autoInserite;
+	}
+
+	/**
+	 * @param autoInserite the autoInserite to set
+	 */
+	public void setAutoInserite(List<Auto> autoInserite) {
+		this.autoInserite = autoInserite;
+	}
+
+	/**
+	 * @return the testdriveCliente
+	 */
+	public List<TestDrive> getTestdriveCliente() {
+		return testdriveCliente;
+	}
+
+	/**
+	 * @param testdriveCliente the testdriveCliente to set
+	 */
+	public void setTestdriveCliente(List<TestDrive> testdriveCliente) {
+		this.testdriveCliente = testdriveCliente;
+	}
+
+	/**
+	 * @return the testdriveDipendente
+	 */
+	public List<TestDrive> getTestdriveDipendente() {
+		return testdriveDipendente;
+	}
+
+	/**
+	 * @param testdriveDipendente the testdriveDipendente to set
+	 */
+	public void setTestdriveDipendente(List<TestDrive> testdriveDipendente) {
+		this.testdriveDipendente = testdriveDipendente;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(cognome, dataNascita, email, nome);
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -171,9 +190,10 @@ public class Cliente {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Utente other = (Utente) obj;
 		return Objects.equals(cognome, other.cognome) && Objects.equals(dataNascita, other.dataNascita)
 				&& Objects.equals(email, other.email) && Objects.equals(nome, other.nome);
 	}
+	
 	
 }

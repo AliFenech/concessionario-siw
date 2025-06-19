@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.romatremotors.controller.validator.CredentialsValidation;
-import it.uniroma3.romatremotors.model.Cliente;
+import it.uniroma3.romatremotors.model.Utente;
 import it.uniroma3.romatremotors.model.Credentials;
 import it.uniroma3.romatremotors.service.CredentialsService;
 import jakarta.validation.Valid;
@@ -27,13 +27,13 @@ public class AuthenticationController {
 	
 	@GetMapping("/registrazione")	
 	public String showRegisterForm(Model model) {
-		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("cliente", new Utente());
 		model.addAttribute("credentials", new Credentials());
 		return "formRegistrazione";
 	}
 	
 	@PostMapping("/registrazione")
-	public String registerClient(@Valid @ModelAttribute("cliente") Cliente cliente,
+	public String registerClient(@Valid @ModelAttribute("utente") Utente utente,
 	                             BindingResult clienteBindingResult,
 	                             @Valid @ModelAttribute("credentials") Credentials credentials,
 	                             BindingResult credentialsBindingResult,
@@ -47,9 +47,9 @@ public class AuthenticationController {
 	    }
 
 	    if (!clienteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-	        credentials.setCliente(cliente);
+	        credentials.setCliente(utente);
 	        credentialsService.saveCredentials(credentials);
-	        model.addAttribute("cliente", cliente);
+	        model.addAttribute("cliente", utente);
 	        return "cliente/index";
 	    }
 
@@ -83,7 +83,7 @@ public class AuthenticationController {
 	
 	@GetMapping(value= "/login")
 	public String login(Model model) {
-		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("cliente", new Utente());
 		model.addAttribute("credentials", new Credentials());
 		return "login";
 
