@@ -27,14 +27,14 @@ public class AuthenticationController {
 	
 	@GetMapping("/registrazione")	
 	public String showRegisterForm(Model model) {
-		model.addAttribute("cliente", new Utente());
+		model.addAttribute("utente", new Utente());
 		model.addAttribute("credentials", new Credentials());
 		return "formRegistrazione";
 	}
 	
 	@PostMapping("/registrazione")
 	public String registerClient(@Valid @ModelAttribute("utente") Utente utente,
-	                             BindingResult clienteBindingResult,
+	                             BindingResult utenteBindingResult,
 	                             @Valid @ModelAttribute("credentials") Credentials credentials,
 	                             BindingResult credentialsBindingResult,
 	                             Model model) {
@@ -46,10 +46,10 @@ public class AuthenticationController {
 	        credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
 	    }
 
-	    if (!clienteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+	    if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
 	        credentials.setCliente(utente);
 	        credentialsService.saveCredentials(credentials);
-	        model.addAttribute("cliente", utente);
+	        model.addAttribute("utente", utente);
 	        return "cliente/index";
 	    }
 
@@ -83,7 +83,7 @@ public class AuthenticationController {
 	
 	@GetMapping(value= "/login")
 	public String login(Model model) {
-		model.addAttribute("cliente", new Utente());
+		model.addAttribute("utente", new Utente());
 		model.addAttribute("credentials", new Credentials());
 		return "login";
 
