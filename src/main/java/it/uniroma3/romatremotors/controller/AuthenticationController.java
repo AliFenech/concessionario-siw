@@ -41,6 +41,8 @@ public class AuthenticationController {
 
 	    this.credentialsValidation.validate(credentials, credentialsBindingResult);
 	    
+	    
+	    
 	    if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
 	    	System.out.println("Password non corrette");
 	        credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
@@ -49,7 +51,7 @@ public class AuthenticationController {
 	    if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
 	        credentials.setCliente(utente);
 	        credentialsService.saveCredentials(credentials);
-	        model.addAttribute("utente", utente);
+	        model.addAttribute("cliente", utente);
 	        return "cliente/index";
 	    }
 

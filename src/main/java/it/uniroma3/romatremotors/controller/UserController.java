@@ -19,7 +19,7 @@ public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private CredentialsService credentialsService;
 
-	@GetMapping("/cliente/")
+	@GetMapping("/cliente/index")
 	public String getHome(@PathVariable("id") Long id,  Model model, Principal principal) {
 		if(principal == null) {
 			return "redirect:/login";
@@ -29,8 +29,9 @@ public class UserController {
 		
 		Credentials credentials = credentialsService.getCredentials(utente.getId());
 		
+		System.out.println("Il ruolo è:" + credentials.getRuolo());
 		if (credentials.getRuolo() == "ADMIN") {	
-		
+			
 			model.addAttribute("cliente", utente);
 			return "cliente/index";
 		}else {

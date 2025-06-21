@@ -25,9 +25,8 @@ public class CredentialsService {
 	}
 	
 	public Credentials saveCredentials(Credentials credentials) {
-		credentials.setRuolo(Credentials.CLIENT_ROLE);
+		credentials.setRuolo(Credentials.CLIENT_ROLE);		
 		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
-		System.out.println("PASSWORD Criptata:" + credentials.getPassword().toString());
 		return this.credentialsRepository.save(credentials);
 	}
 }
