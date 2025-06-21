@@ -1,0 +1,7 @@
+Per chiudere il processo attivo (apri il terminale come amministratore):
+
+netstat -ano | findstr :8080
+
+taskkill /PID 1234 /F
+
+dove 1234 è il numero del PID

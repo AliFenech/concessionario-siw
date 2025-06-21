@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista Punti Vendita</title>
+</head>
+<body>
+    <h1>Lista Punti Vendita</h1>
+    <a href="/puntiVendita/aggiungi">Aggiungi Punto Vendita</a>
+    <ul>
+        <li th:each="pv : ${puntiVendita}">
+            <a th:href="@{/puntiVendita/{id}(id=${pv.id})}" th:text="${pv.citta} + ' - ' + ${pv.indirizzo}"></a>
+        </li>
+    </ul>
+</body>
+</html>
