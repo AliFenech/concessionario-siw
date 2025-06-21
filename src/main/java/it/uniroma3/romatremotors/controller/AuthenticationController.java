@@ -91,6 +91,20 @@ public class AuthenticationController {
 
 	}
 	
+	@GetMapping(value= "/success")
+	public String nextLogin(Model model) {
+		
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+    	
+    	if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
+            return "admin/index.html";
+        }else if(credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
+        	return "cliente/index.html";
+        }else {
+        	return "/";
+        }
+	}
 
 	
 	

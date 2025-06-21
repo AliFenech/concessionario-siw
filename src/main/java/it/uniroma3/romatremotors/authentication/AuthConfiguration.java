@@ -28,8 +28,9 @@ public class AuthConfiguration{
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+		System.out.println("Provo l'autenticazione");
 		auth.jdbcAuthentication().dataSource(dataSource).authoritiesByUsernameQuery("SELECT username, ruolo from credentials WHERE username = ?")
-		.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username = ?");
+		.usersByUsernameQuery("SELECT username, password_encode, 1 as enabled FROM credentials WHERE username = ?");
 	}
 	
 	@Bean
@@ -55,7 +56,7 @@ public class AuthConfiguration{
 		.loginPage("/login")
 		.permitAll()
 		.defaultSuccessUrl("/success", true)
-		.failureUrl("/login?error=true")
+		
 		// LOGOUT: qui definiamo il logout
 		.and()
 		.logout()
