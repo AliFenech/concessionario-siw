@@ -22,11 +22,11 @@ public class TestDrive {
 	
 	
 	 @ManyToOne
-	 private Dipendente dipendente;
+	 private Utente dipendente;
 	 
 	
 	@ManyToOne
-	private Cliente cliente;
+	private Utente cliente;
 	
 	@ManyToOne
 	private Auto auto;
@@ -62,14 +62,14 @@ public class TestDrive {
 	/**
 	 * @return the cliente
 	 */
-	public Cliente getCliente() {
+	public Utente getCliente() {
 		return cliente;
 	}
 
 	/**
 	 * @param cliente the cliente to set
 	 */
-	public void setCliente(Cliente cliente) {
+	public void setCliente(Utente cliente) {
 		this.cliente = cliente;
 	}
 
@@ -89,11 +89,11 @@ public class TestDrive {
 	
 	
 
-	public Dipendente getDipendente() {
+	public Utente getDipendente() {
 		return dipendente;
 	}
 
-	public void setDipendente(Dipendente dipendente) {
+	public void setDipendente(Utente dipendente) {
 		this.dipendente = dipendente;
 	}
 

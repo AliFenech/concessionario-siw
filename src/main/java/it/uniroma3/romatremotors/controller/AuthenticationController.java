@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.romatremotors.controller.validator.CredentialsValidation;
-import it.uniroma3.romatremotors.model.Cliente;
+import it.uniroma3.romatremotors.model.Utente;
 import it.uniroma3.romatremotors.model.Credentials;
 import it.uniroma3.romatremotors.service.CredentialsService;
 import jakarta.validation.Valid;
@@ -27,28 +27,29 @@ public class AuthenticationController {
 	
 	@GetMapping("/registrazione")	
 	public String showRegisterForm(Model model) {
-		model.addAttribute("cliente", new Cliente());
+		model.addAttribute("utente", new Utente());
 		model.addAttribute("credentials", new Credentials());
 		return "formRegistrazione";
 	}
 	
 	@PostMapping("/registrazione")
-	public String registerClient(@Valid @ModelAttribute("cliente") Cliente cliente,
-	                             BindingResult clienteBindingResult,
+	public String registerClient(@Valid @ModelAttribute("utente") Utente utente,
+	                             BindingResult utenteBindingResult,
 	                             @Valid @ModelAttribute("credentials") Credentials credentials,
 	                             BindingResult credentialsBindingResult,
 	                             Model model) {
 
 	    this.credentialsValidation.validate(credentials, credentialsBindingResult);
-
+	    
 	    if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
+	    	System.out.println("Password non corrette");
 	        credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
 	    }
 
-	    if (!clienteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-	        credentials.setCliente(cliente);
+	    if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+	        credentials.setCliente(utente);
 	        credentialsService.saveCredentials(credentials);
-	        model.addAttribute("cliente", cliente);
+	        model.addAttribute("utente", utente);
 	        return "cliente/index";
 	    }
 
@@ -80,6 +81,15 @@ public class AuthenticationController {
         return "index.html";
 	}
 	
+	@GetMapping(value= "/login")
+	public String login(Model model) {
+		model.addAttribute("utente", new Utente());
+		model.addAttribute("credentials", new Credentials());
+		return "login";
+
+	}
+	
+
 	
 	
 }

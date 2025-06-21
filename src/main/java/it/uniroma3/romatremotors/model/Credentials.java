@@ -41,11 +41,10 @@ public class Credentials {
 	private String ruolo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="cliente_id")
-	private Cliente cliente;
+	private Utente cliente;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private Dipendente dipendente;
+	private Utente dipendente;
 
 	/**
 	 * @return the username
@@ -92,28 +91,28 @@ public class Credentials {
 	/**
 	 * @return the cliente
 	 */
-	public Cliente getCliente() {
+	public Utente getCliente() {
 		return cliente;
 	}
 
 	/**
 	 * @param cliente the cliente to set
 	 */
-	public void setCliente(Cliente cliente) {
+	public void setCliente(Utente cliente) {
 		this.cliente = cliente;
 	}
 
 	/**
 	 * @return the dipendente
 	 */
-	public Dipendente getDipendente() {
+	public Utente getDipendente() {
 		return dipendente;
 	}
 
 	/**
 	 * @param dipendente the dipendente to set
 	 */
-	public void setDipendente(Dipendente dipendente) {
+	public void setDipendente(Utente dipendente) {
 		this.dipendente = dipendente;
 	}
 

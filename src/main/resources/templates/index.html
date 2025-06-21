@@ -1,224 +1,158 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>RomaTreMotors - Homepage</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" 
-          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-    
-    <!-- Il tuo CSS personalizzato -->
-    <link rel="stylesheet" href="/css/main.css">
-    
-    <style>
-      .carousel-item img {
-        height: 450px;
-        object-fit: cover;
-        width: 100%;
-      }
-      .service-icon {
-        font-size: 3rem;
-        color: #0d6efd;
-      }
-      .dealer-info {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 6px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-      }
-    </style>
+  <meta charset="UTF-8">
+  <title>RomaTreMotors - Homepage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- CSS personalizzato -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="#">RomaTreMotors</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <!-- Login dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Login
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
-                <li><a class="dropdown-item" href="/loginUtente.html">Utente</a></li>
-                <li><a class="dropdown-item" href="/loginDipendente.html">Dipendente</a></li>
-              </ul>
-            </li>
-            <!-- Registrazione dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="registerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Registrati
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="registerDropdown">
-                <li><a class="dropdown-item" href="/formRegistrazione.html">Utente</a></li>
-                <li><a class="dropdown-item" href="/formRegistrazione.html">Dipendente</a></li>
-              </ul>
-            </li>
-          </ul>
+<body class="index-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- <img src="assets/img/logo.png" alt="Logo RomaTreMotors"> -->
+        <h1 class="sitename">RomaTre<span>Motors</span></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/" class="active">Home</a></li>
+          <li><a href="/catalogo">Catalogo Auto</a></li>
+          <li><a href="/login">Accedi</a></li>
+          <li><a href="/registrazione">Registrati</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="title">
+      <div class="container">
+        <div class="row align-items-start">
+
+          <div class="col-lg-6 mb-4">
+            <h2><span>Benvenuto</span> da<br> Roma Tre Motors</h2>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row gy-4">
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <a href="#">
+                  <div class="service-item d-flex align-items-center gap-3">
+                    <div class="icon"><i class="bi bi-car-front-fill"></i></div>
+                    <div><h3 class="mb-2">Utilitarie</h3></div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <a href="#">
+                  <div class="service-item d-flex align-items-center gap-3">
+                    <div class="icon"><i class="bi bi-speedometer"></i></div>
+                    <div><h3 class="mb-2">Sportive</h3></div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <a href="#">
+                  <div class="service-item d-flex align-items-center gap-3">
+                    <div class="icon"><i class="bi bi-ev-front"></i></div>
+                    <div><h3 class="mb-2">Elettriche</h3></div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <a href="#">
+                  <div class="service-item d-flex align-items-center gap-3">
+                    <div class="icon"><i class="bi bi-grid-1x2-fill"></i></div>
+                    <div><h3 class="mb-2">Altre</h3></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
+      </div>
     </div>
-</nav>
 
-<!-- Primo Carousel Auto -->
-<div id="autoCarousel1" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="4000">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#autoCarousel1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#autoCarousel1" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#autoCarousel1" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1350&q=80" alt="Auto Sportiva">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Auto Sportiva</h5>
-        <p>Prestazioni e stile per ogni strada.</p>
+    <!-- Services Section -->
+    <section id="services" class="services section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>I nostri servizi</h2>
+        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1350&q=80" alt="Auto Elegante">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Auto Elegante</h5>
-        <p>Comfort e lusso in ogni dettaglio.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1350&q=80" alt="Auto Familiare">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Auto Familiare</h5>
-        <p>Spazio e sicurezza per tutta la famiglia.</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#autoCarousel1" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-    <span class="visually-hidden">Precedente</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#autoCarousel1" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-    <span class="visually-hidden">Successivo</span>
-  </button>
-</div>
 
-<!-- Secondo Carousel Auto -->
-<div id="autoCarousel2" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="4000">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#autoCarousel2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#autoCarousel2" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#autoCarousel2" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1350&q=80" alt="Auto Classica" style="width: 100%; height: 450px; object-fit: cover;">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Auto Classica</h5>
-        <p>Eleganza senza tempo su quattro ruote.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1350&q=80" alt="Auto SUV" style="width: 100%; height: 450px; object-fit: cover;">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Auto SUV</h5>
-        <p>Spazio e potenza per ogni avventura.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1350&q=80" alt="Auto Crossover" style="width: 100%; height: 450px; object-fit: cover;">
-      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-        <h5>Auto Crossover</h5>
-        <p>Versatilità e design moderno.</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#autoCarousel2" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-    <span class="visually-hidden">Precedente</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#autoCarousel2" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-    <span class="visually-hidden">Successivo</span>
-  </button>
-</div>
+      <div class="container">
+        <div class="row gy-4">
 
-<!-- Servizi -->
-<section class="container py-5">
-  <h2 class="text-center mb-5">I Nostri Servizi</h2>
-  <div class="row text-center g-4">
-    <div class="col-md-3">
-      <div class="p-4 border rounded shadow-sm h-100">
-        <i class="bi bi-car-front service-icon mb-3"></i>
-        <h4>Noleggio</h4>
-        <p>Noleggia la tua auto preferita per brevi o lunghi periodi.</p>
+          <!-- Inizio singolo servizio -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-activity"></i></div>
+              <a href="service-details.html" class="stretched-link"><h3>Nesciunt Mete</h3></a>
+              <p>Provident nihil minus qui consequatur non omnis maiores...</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-broadcast"></i></div>
+              <a href="service-details.html" class="stretched-link"><h3>Eosle Commodi</h3></a>
+              <p>Ut autem aut autem non a. Sint sint sit facilis...</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-easel"></i></div>
+              <a href="service-details.html" class="stretched-link"><h3>Ledo Markt</h3></a>
+              <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur...</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-bounding-box-circles"></i></div>
+              <a href="service-details.html" class="stretched-link"><h3>Asperiores Commodit</h3></a>
+              <p>Non et temporibus minus omnis sed dolor esse consequatur...</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-calendar4-week"></i></div>
+              <a href="service-details.html" class="stretched-link"><h3>Velit Doloremque</h3></a>
+              <p>Est maiores autem enim facilis ut aut ipsam corporis aut...</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-chat-square-text"></i></div>
+              <a href="service-details.html" class="stretched-link"><h3>Dolori Architecto</h3></a>
+              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut...</p>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="p-4 border rounded shadow-sm h-100">
-        <i class="bi bi-currency-dollar service-icon mb-3"></i>
-        <h4>Acquisto</h4>
-        <p>Acquista la tua prossima auto con le migliori offerte.</p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="p-4 border rounded shadow-sm h-100">
-        <i class="bi bi-speedometer2 service-icon mb-3"></i>
-        <h4>Test Drive</h4>
-        <p>Prova l'auto che ti interessa prima di decidere.</p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="p-4 border rounded shadow-sm h-100">
-        <i class="bi bi-people service-icon mb-3"></i>
-        <h4>Assistenza</h4>
-        <p>Servizio di assistenza e manutenzione per ogni esigenza.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Sezione Concessionari -->
-<section class="container py-5">
-  <h2 class="text-center mb-4">I Nostri Concessionari</h2>
-  <div class="row">
-    <div class="col-md-4 dealer-info">
-      <h5>Concessionario Centro</h5>
-      <p>Via Roma 123, Roma</p>
-      <p>Telefono: <a href="tel:+390612345678">+39 06 12345678</a></p>
-    </div>
-    <div class="col-md-4 dealer-info">
-      <h5>Concessionario Nord</h5>
-      <p>Via Milano 45, Milano</p>
-      <p>Telefono: <a href="tel:+390212345678">+39 02 12345678</a></p>
-    </div>
-    <div class="col-md-4 dealer-info">
-      <h5>Concessionario Sud</h5>
-      <p>Via Napoli 78, Napoli</p>
-      <p>Telefono: <a href="tel:+390812345678">+39 081 12345678</a></p>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 RomaTreMotors. Tutti i diritti riservati.</p>
-</footer>
-
-<!-- JS Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-
-<!-- Il tuo JS personalizzato -->
-<script src="/js/main.js"></script>
-
+    </section>
+  </main>
 </body>
 </html>

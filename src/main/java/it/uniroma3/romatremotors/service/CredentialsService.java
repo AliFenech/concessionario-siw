@@ -16,6 +16,10 @@ public class CredentialsService {
 	private CredentialsRepository credentialsRepository;
 
 	
+	public Credentials getCredentials(Long id) {
+		return credentialsRepository.findById(id).get();
+	}
+	
 	public Credentials getCredentials(String username) {
 		return credentialsRepository.findByUsername(username).get();
 	}
@@ -23,6 +27,7 @@ public class CredentialsService {
 	public Credentials saveCredentials(Credentials credentials) {
 		credentials.setRuolo(Credentials.CLIENT_ROLE);
 		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+		System.out.println("PASSWORD Criptata:" + credentials.getPassword().toString());
 		return this.credentialsRepository.save(credentials);
 	}
 }
