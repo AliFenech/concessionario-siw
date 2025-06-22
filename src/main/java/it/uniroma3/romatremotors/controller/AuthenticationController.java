@@ -26,6 +26,29 @@ public class AuthenticationController {
 
     @Autowired 
     private CredentialsValidation credentialsValidation;
+    
+    
+    @GetMapping(value = "/") 
+	public String index(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken) {
+	        return "index";
+		}
+		else {		
+			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+			  model.addAttribute("username", userDetails.getUsername());
+			  System.out.println("Username in controller: " + userDetails.getUsername());
+
+			if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
+				return "admin/indexAdmin";
+			}
+		}
+        return "index"; 
+        }
+    
+    
+    
 
     @GetMapping("/registrazione")    
     public String showRegisterForm(Model model) {
@@ -73,7 +96,7 @@ public class AuthenticationController {
         if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
             return "admin/index.html";
         } else if (credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
-            return "cliente/index.html";
+            return "index.html";
         } else {
             return "/";
         }
@@ -81,8 +104,7 @@ public class AuthenticationController {
 
     @GetMapping(value= "/login")
     public String login(Model model) {
-        model.addAttribute("utente", new Utente());
-        model.addAttribute("credentials", new Credentials());
+      
         return "login";
     }
 }
