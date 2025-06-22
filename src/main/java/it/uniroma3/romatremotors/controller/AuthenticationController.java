@@ -21,91 +21,68 @@ import jakarta.validation.Valid;
 @Controller
 public class AuthenticationController {
 
-	@Autowired CredentialsService credentialsService;
-	@Autowired CredentialsValidation credentialsValidation;
-	
-	
-	@GetMapping("/registrazione")	
-	public String showRegisterForm(Model model) {
-		model.addAttribute("utente", new Utente());
-		model.addAttribute("credentials", new Credentials());
-		return "formRegistrazione";
-	}
-	
-	@PostMapping("/registrazione")
-	public String registerClient(@Valid @ModelAttribute("utente") Utente utente,
-	                             BindingResult utenteBindingResult,
-	                             @Valid @ModelAttribute("credentials") Credentials credentials,
-	                             BindingResult credentialsBindingResult,
-	                             Model model) {
+    @Autowired 
+    private CredentialsService credentialsService;
 
-	    this.credentialsValidation.validate(credentials, credentialsBindingResult);
-	    
-	    
-	    
-	    if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
-	    	System.out.println("Password non corrette");
-	        credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
-	    }
+    @Autowired 
+    private CredentialsValidation credentialsValidation;
 
-	    if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-	        credentials.setCliente(utente);
-	        credentialsService.saveCredentials(credentials);
-	        model.addAttribute("cliente", utente);
-	        return "cliente/index";
-	    }
+    @GetMapping("/registrazione")    
+    public String showRegisterForm(Model model) {
+        model.addAttribute("utente", new Utente());
+        model.addAttribute("credentials", new Credentials());
+        return "formRegistrazione";
+    }
+    
+    @PostMapping("/registrazione")
+    public String registerClient(@Valid @ModelAttribute("utente") Utente utente,
+                                 BindingResult utenteBindingResult,
+                                 @Valid @ModelAttribute("credentials") Credentials credentials,
+                                 BindingResult credentialsBindingResult,
+                                 Model model) {
 
-	    
-	    if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {
-	        model.addAttribute("errorsPasswordConfirm", credentialsBindingResult.getFieldErrors("passwordConfirm")
-	            .stream()
-	            .map(err -> err.getDefaultMessage())
-	            .toList());
-	    }
+        this.credentialsValidation.validate(credentials, credentialsBindingResult);
 
-	    return "formRegistrazione";
-	}
-
-	
-	@GetMapping(value = "/") 
-	public String index(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication instanceof AnonymousAuthenticationToken) {
-	        return "index.html";
-		}
-		else {		
-			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
-				return "admin/indexAdmin.html";
-			}
-		}
-        return "index.html";
-	}
-	
-	@GetMapping(value= "/login")
-	public String login(Model model) {
-		model.addAttribute("utente", new Utente());
-		model.addAttribute("credentials", new Credentials());
-		return "login";
-
-	}
-	
-	@GetMapping(value= "/success")
-	public String nextLogin(Model model) {
-		
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-    	
-    	if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
-            return "admin/index.html";
-        }else if(credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
-        	return "cliente/index.html";
-        }else {
-        	return "/";
+        if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
+            System.out.println("Password non corrette");
+            credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
         }
-	}
 
-	
-	
+        if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+            credentials.setCliente(utente);
+            credentialsService.saveCredentials(credentials);
+            model.addAttribute("cliente", utente); // Come nel branch `edit`
+            return "cliente/index";
+        }
+
+        if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {
+            model.addAttribute("errorsPasswordConfirm", credentialsBindingResult.getFieldErrors("passwordConfirm")
+                .stream()
+                .map(err -> err.getDefaultMessage())
+                .toList());
+        }
+
+        return "formRegistrazione";
+    }
+
+    @GetMapping(value= "/success")
+    public String nextLogin(Model model) {
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+
+        if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
+            return "admin/index.html";
+        } else if (credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
+            return "cliente/index.html";
+        } else {
+            return "/";
+        }
+    }
+
+    @GetMapping(value= "/login")
+    public String login(Model model) {
+        model.addAttribute("utente", new Utente());
+        model.addAttribute("credentials", new Credentials());
+        return "login";
+    }
 }
