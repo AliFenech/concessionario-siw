@@ -26,7 +26,7 @@ public class AuthenticationController {
 
     @Autowired 
     private CredentialsValidation credentialsValidation;
-    
+
     @GetMapping("/registrazione")    
     public String showRegisterForm(Model model) {
         model.addAttribute("utente", new Utente());
@@ -42,7 +42,7 @@ public class AuthenticationController {
                                  Model model) {
 
         this.credentialsValidation.validate(credentials, credentialsBindingResult);
-        
+
         if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
             System.out.println("Password non corrette");
             credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
@@ -51,7 +51,7 @@ public class AuthenticationController {
         if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             credentials.setCliente(utente);
             credentialsService.saveCredentials(credentials);
-            model.addAttribute("utente", utente);
+            model.addAttribute("cliente", utente); // Come nel branch `edit`
             return "cliente/index";
         }
 
@@ -65,26 +65,20 @@ public class AuthenticationController {
         return "formRegistrazione";
     }
 
-    @GetMapping(value = "/") 
-    public String index(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken) {
-            model.addAttribute("isDipendente", false);
-            return "index";
-        } else {        
-            UserDetails userDetails = (UserDetails)authentication.getPrincipal();
-            Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-            
-            boolean isDipendente = "DIPENDENTE".equals(credentials.getRuolo());
-            model.addAttribute("isDipendente", isDipendente);
+    @GetMapping(value= "/success")
+    public String nextLogin(Model model) {
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
-            if (Credentials.ADMIN_ROLE.equals(credentials.getRuolo())) {
-                return "admin/indexAdmin";
-            }
+        if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
+            return "admin/index.html";
+        } else if (credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
+            return "cliente/index.html";
+        } else {
+            return "/";
         }
-        return "index";
     }
-    
+
     @GetMapping(value= "/login")
     public String login(Model model) {
         model.addAttribute("utente", new Utente());

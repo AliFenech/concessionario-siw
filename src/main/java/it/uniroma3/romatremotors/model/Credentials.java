@@ -31,7 +31,7 @@ public class Credentials {
 	private String username;
 	
 	@Column(nullable = false)
-	private String password;
+	private String passwordEncode;
 	
 	@Transient
 	@Column(nullable = false)
@@ -64,14 +64,14 @@ public class Credentials {
 	 * @return the password
 	 */
 	public String getPassword() {
-		return password;
+		return passwordEncode;
 	}
 
 	/**
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
-		this.password = password;
+		this.passwordEncode = password;
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Credentials {
 	}
 	 // Validazione password
     public boolean isPasswordConfirmed() {
-        return this.password != null && this.password.equals(this.passwordConfirm);
+        return this.passwordEncode != null && this.passwordEncode.equals(this.passwordConfirm);
     }
 
 	@Override
