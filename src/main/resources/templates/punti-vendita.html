@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista Punti Vendita</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <h1>Lista Punti Vendita</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Città</th>
+                <th>Indirizzo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pv : ${puntiVendita}">
+                <td th:text="${pv.citta}">Città</td>
+                <td th:text="${pv.indirizzo}">Indirizzo</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

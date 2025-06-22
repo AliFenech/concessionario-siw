@@ -44,7 +44,7 @@ public class AuthConfiguration{
 		.authorizeHttpRequests()
 		//.requestMatchers("/**").permitAll()
 		//chiunque (autenticato o no) può eccedere alle pagine index, login, register e i css e le immagini
-		.requestMatchers(HttpMethod.GET, "/", "/index", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
+		.requestMatchers(HttpMethod.GET, "/", "/index","/punti-vendita", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
 		//chiunque (autenticato o no)può mandare richieste POST al punto di accesso per login e register
 		.requestMatchers(HttpMethod.POST,"/registrazione", "/formRegistrazione", "/login").permitAll()
 		.requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
