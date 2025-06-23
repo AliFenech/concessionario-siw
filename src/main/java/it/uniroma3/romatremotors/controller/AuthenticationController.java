@@ -75,7 +75,7 @@ public class AuthenticationController {
             credentials.setCliente(utente);
             credentialsService.saveCredentials(credentials);
             model.addAttribute("cliente", utente); // Come nel branch `edit`
-            return "cliente/index";
+            return "/index.html";
         }
 
         if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {
@@ -94,11 +94,15 @@ public class AuthenticationController {
         Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
         if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
-            return "admin/index.html";
+        	model.addAttribute("admin", userDetails);
+        	model.addAttribute("credentials", credentials);
+            return "index.html";
         } else if (credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
+        	model.addAttribute("cliente", userDetails);
+        	model.addAttribute("credentials", credentials);
             return "index.html";
         } else {
-            return "/";
+            return "index.html";
         }
     }
 

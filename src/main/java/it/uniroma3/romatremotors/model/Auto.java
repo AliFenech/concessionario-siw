@@ -6,6 +6,7 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -28,11 +29,17 @@ public class Auto {
 	@Column(nullable = false)
 	private Float prezzo;
 	
+	@Column(nullable = false)
+	private String carburante;
+	
 	@ManyToOne(optional = true)
 	private Utente proprietario;
 	
 	@OneToMany(mappedBy= "auto")
 	private List<TestDrive> testDrive;
+	
+	@Lob
+	private byte[] immagine;
 
 	@ManyToMany
 	private List<AutoOptional> optionalAuto;
@@ -189,9 +196,42 @@ public class Auto {
 		this.optionalAuto = optionalAuto;
 	}
 
+	
+	
+	/**
+	 * @return the immagine
+	 */
+	public byte[] getImmagine() {
+		return immagine;
+	}
+
+	/**
+	 * @param immagine the immagine to set
+	 */
+	public void setImmagine(byte[] immagine) {
+		this.immagine = immagine;
+	}
+
+	
+	
+	
+	/**
+	 * @return the carburante
+	 */
+	public String getCarburante() {
+		return carburante;
+	}
+
+	/**
+	 * @param carburante the carburante to set
+	 */
+	public void setCarburante(String carburante) {
+		this.carburante = carburante;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(telaio);
+		return Objects.hash(carburante, colore, km, targa);
 	}
 
 	@Override
@@ -203,8 +243,11 @@ public class Auto {
 		if (getClass() != obj.getClass())
 			return false;
 		Auto other = (Auto) obj;
-		return Objects.equals(telaio, other.telaio);
+		return Objects.equals(carburante, other.carburante) && Objects.equals(colore, other.colore)
+				&& Objects.equals(km, other.km) && Objects.equals(targa, other.targa);
 	}
+
+
 	
 	
 	
