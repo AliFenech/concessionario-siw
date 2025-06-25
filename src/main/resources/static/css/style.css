@@ -550,8 +550,11 @@ background:
 }
 
 
+/* ------------------------
+# - Bottone
+--------------------------- */
 
-.credentials .bottone button {
+ .bottone button {
   display: inline-block; 
   width: fit-content;
   background-color: var(--accent-color);
@@ -561,7 +564,7 @@ background:
   border-radius: 20px;       
 }
 
-.credentials .bottone button:hover{
+ .bottone button:hover{
 	background-color: white;
 	transition: 0.5s ease;
 	border: 1px var(--accent-color) solid;
