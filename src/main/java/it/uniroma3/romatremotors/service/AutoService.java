@@ -23,4 +23,8 @@ public class AutoService {
 	public Auto findById(String id) {
 		return autoRepository.findById(id).get();
 	}
+	
+	public List<Auto> findByFilter( List<String> categorie, List<String> marche, List<String> optionalAuto, List<String> colori, List<String> carburante, int kmMin, int kmMax, int prezzoMin, int prezzoMax) {
+		return autoRepository.findByCategoriaInAndMarcaInAndOptionalAutoInAndColoreInAndCarburanteInAndKmBetweenAndPrezzoBetween(categorie, marche, optionalAuto, colori, carburante, kmMin, kmMax, prezzoMin, prezzoMax);
+	}
 }

@@ -24,6 +24,9 @@ public class Auto {
 	private Float km;
 	
 	@Column(nullable = false)
+	private String marca;
+	
+	@Column(nullable = false)
 	private String colore;
 	
 	@Column(nullable = false)
@@ -32,14 +35,17 @@ public class Auto {
 	@Column(nullable = false)
 	private String carburante;
 	
+	@Column(nullable = false)
+	private String categoria;
+	
+	@Lob
+	private byte[] immagine;
+	
 	@ManyToOne(optional = true)
 	private Utente proprietario;
 	
 	@OneToMany(mappedBy= "auto")
 	private List<TestDrive> testDrive;
-	
-	@Lob
-	private byte[] immagine;
 
 	@ManyToMany
 	private List<AutoOptional> optionalAuto;
@@ -227,6 +233,42 @@ public class Auto {
 	 */
 	public void setCarburante(String carburante) {
 		this.carburante = carburante;
+	}
+
+	
+	
+	
+	/**
+	 * @return the categoria
+	 */
+	public String getCategoria() {
+		return categoria;
+	}
+
+	/**
+	 * @param categoria the categoria to set
+	 */
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+	
+	
+	
+	
+	
+
+	/**
+	 * @return the marca
+	 */
+	public String getMarca() {
+		return marca;
+	}
+
+	/**
+	 * @param marca the marca to set
+	 */
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 
 	@Override
