@@ -67,15 +67,15 @@ public class AuthenticationController {
         this.credentialsValidation.validate(credentials, credentialsBindingResult);
 
         if (!credentials.getPassword().equals(credentials.getPasswordConfirm())) {
-            System.out.println("Password non corrette");
             credentialsBindingResult.rejectValue("passwordConfirm", "error.credentials", "Le password non coincidono");
         }
 
         if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             credentials.setCliente(utente);
+            credentials.setRuolo(Credentials.CLIENT_ROLE); // assegna il ruolo CLIENT
             credentialsService.saveCredentials(credentials);
-            model.addAttribute("cliente", utente); // Come nel branch `edit`
-            return "/index.html";
+            model.addAttribute("cliente", utente);
+            return "redirect:/login";
         }
 
         if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {
@@ -87,6 +87,7 @@ public class AuthenticationController {
 
         return "formRegistrazione";
     }
+
 
     @GetMapping(value= "/success")
     public String nextLogin(Model model) {

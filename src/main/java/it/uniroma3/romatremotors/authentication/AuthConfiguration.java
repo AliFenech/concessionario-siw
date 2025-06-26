@@ -15,59 +15,54 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static it.uniroma3.romatremotors.model.Credentials.ADMIN_ROLE;
-//import static it.uniroma3.siw.model.Credentials.DEFAULT_ROLE;
 
 @Configuration
 @EnableWebSecurity
+public class AuthConfiguration {
 
-public class AuthConfiguration{
-	
 	@Autowired
 	private DataSource dataSource;
-	
-	
+
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+	private LoginSuccessHandler loginSuccessHandler;
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		System.out.println("Provo l'autenticazione");
-		auth.jdbcAuthentication().dataSource(dataSource).authoritiesByUsernameQuery("SELECT username, ruolo from credentials WHERE username = ?")
-		.usersByUsernameQuery("SELECT username, password_encode, 1 as enabled FROM credentials WHERE username = ?");
+		auth.jdbcAuthentication().dataSource(dataSource)
+			.authoritiesByUsernameQuery("SELECT username, ruolo from credentials WHERE username = ?")
+			.usersByUsernameQuery("SELECT username, password_encode, 1 as enabled FROM credentials WHERE username = ?");
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().and().cors().disable()
 		.authorizeHttpRequests()
-		//.requestMatchers("/**").permitAll()
-		//chiunque (autenticato o no) può eccedere alle pagine index, login, register e i css e le immagini
-		.requestMatchers(HttpMethod.GET, "/", "/index","/punti-vendita", "/catalogo", "/catalogo/filtra", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
-		//chiunque (autenticato o no)può mandare richieste POST al punto di accesso per login e register
-		.requestMatchers(HttpMethod.POST,"/registrazione", "/formRegistrazione", "/login", "/catalogo/filtra").permitAll()
-		.requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
-		.requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
-		// tutti gli utenti autenticati possono accere alle pagine rimanenti 
-		.anyRequest().authenticated()
-		// LOGIN: qui definiamo il login
-		.and().formLogin()
-		.loginPage("/login")
-		.permitAll()
-		.defaultSuccessUrl("/success", true)
-		
-		// LOGOUT: qui definiamo il logout
+			.requestMatchers(HttpMethod.GET, "/", "/index", "/punti-vendita", "/catalogo", "/catalogo/filtra", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
+			.requestMatchers(HttpMethod.POST, "/registrazione", "/formRegistrazione", "/login", "/catalogo/filtra").permitAll()
+			.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+			.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+			.anyRequest().authenticated()
 		.and()
-		.logout()
-		// il logout è attivato con una richiesta GET a "/logout"
-		.logoutUrl("/logout")
-		// in caso di successo, si viene reindirizzati alla home
-		.logoutSuccessUrl("/")
-		.invalidateHttpSession(true)
-		.deleteCookies("JSESSIONID")
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.clearAuthentication(true).permitAll();
+			.formLogin()
+			.loginPage("/login")
+			.permitAll()
+			.successHandler(loginSuccessHandler)
+		.and()
+			.logout()
+			.logoutUrl("/logout")
+			.logoutSuccessUrl("/")
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID")
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.clearAuthentication(true)
+			.permitAll();
+
 		return httpSecurity.build();
-		}
 	}
+}

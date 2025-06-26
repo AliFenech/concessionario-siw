@@ -1453,6 +1453,23 @@ background:
   margin-right: 8px;
   color: var(--accent-color);
 }
+.logout-as-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 10px;
+    color: inherit; /* usa lo stesso colore degli altri link */
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline; /* opzionale ma consigliato */
+}
+
+.logout-as-link:hover {
+    text-decoration: underline; /* o usa lo stesso hover dei link nav */
+}
+
+
 
 /*--------------------------------------------------------------
 # Starter Section Section
