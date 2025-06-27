@@ -72,7 +72,7 @@ public class AuthenticationController {
 
         if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             credentials.setCliente(utente);
-            credentials.setRuolo(Credentials.CLIENT_ROLE); // assegna il ruolo CLIENT
+            credentials.setRuolo(Credentials.CLIENTE_ROLE); // assegna il ruolo CLIENT
             credentialsService.saveCredentials(credentials);
             model.addAttribute("cliente", utente);
             return "redirect:/login";
@@ -89,23 +89,20 @@ public class AuthenticationController {
     }
 
 
-    @GetMapping(value= "/success")
+    @GetMapping(value = "/success")
     public String nextLogin(Model model) {
-        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
         if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
-        	model.addAttribute("admin", userDetails);
-        	model.addAttribute("credentials", credentials);
-            return "index.html";
-        } else if (credentials.getRuolo().equals(Credentials.CLIENT_ROLE)) {
-        	model.addAttribute("cliente", userDetails);
-        	model.addAttribute("credentials", credentials);
-            return "index.html";
+            return "redirect:/admin/index";
+        } else if (credentials.getRuolo().equals(Credentials.CLIENTE_ROLE)) {
+            return "redirect:/cliente/index";
         } else {
-            return "index.html";
+            return "redirect:/";
         }
     }
+
 
     @GetMapping(value= "/login")
     public String login(Model model) {

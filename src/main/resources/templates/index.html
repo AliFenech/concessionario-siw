@@ -24,17 +24,29 @@
       </a>
 
       <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/" class="active">Home</a></li>
-          <li><a href="/catalogo">Catalogo Auto</a></li>
+		<ul>
+		  <li><a href="/" class="active">Home</a></li>
+		  <li><a href="/catalogo">Catalogo Auto</a></li>
+
+		  <!-- Voci per admin -->
 		  <li sec:authorize="hasAuthority('ADMIN')">
-		    <a href="/punti-vendita">Punti Vendita</a>
+		    <a href="/punti-vendita">Visualizza Punti Vendita</a>
+		  </li>
+		  <li sec:authorize="hasAuthority('ADMIN')">
+		    <a href="/dipendenti/aggiungi">Aggiungi Dipendente</a>
+		  </li>
+		  
+		  <!-- Voce per cliente -->
+		  <li sec:authorize="hasAuthority('CLIENTE')">
+		    <a href="/prenotazioni">Le mie prenotazioni</a>
+		  </li>
+
+		  <!-- Login/Logout -->
+		  <li sec:authorize="!isAuthenticated()">
+		    <a href="/login">Accedi</a>
 		  </li>
 		  <li sec:authorize="!isAuthenticated()">
-		      <a href="/login">Accedi</a>
-		  </li>
-		  <li sec:authorize="!isAuthenticated()">
-		      <a href="/registrazione">Registrati</a>
+		    <a href="/registrazione">Registrati</a>
 		  </li>
 		  <li sec:authorize="isAuthenticated()">
 		    <form th:action="@{/logout}" method="post" style="display: inline;">
@@ -45,7 +57,8 @@
 		      </button>
 		    </form>
 		  </li>
-        </ul>
+		</ul>
+		
         <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
           <i class="bi bi-list fs-2"></i>
         </button>
@@ -64,7 +77,6 @@
 					  <span th:if="${username != null}" th:text="${username}"></span>
 					  <span th:unless="${username != null}">da Roma Tre Motors</span>
 				
-
 					</h2>
 					
 			</div>

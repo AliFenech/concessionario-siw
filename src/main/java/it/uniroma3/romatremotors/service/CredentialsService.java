@@ -25,7 +25,7 @@ public class CredentialsService {
 	}
 	
 	public Credentials saveCredentials(Credentials credentials) {
-		credentials.setRuolo(Credentials.CLIENT_ROLE);		
+		credentials.setRuolo(Credentials.CLIENTE_ROLE);		
 		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
 		return this.credentialsRepository.save(credentials);
 	}

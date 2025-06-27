@@ -19,7 +19,7 @@ public class Credentials {
 
 	public static final String DEFAULT_ROLE = "DEFAULT";
 	public static final String ADMIN_ROLE = "ADMIN";
-	public static final String CLIENT_ROLE = "CLIENT";
+	public static final String CLIENTE_ROLE = "CLIENTE";
 	
 	
 	
@@ -134,7 +134,7 @@ public class Credentials {
 	 * @return the clientRole
 	 */
 	public static String getClientRole() {
-		return CLIENT_ROLE;
+		return CLIENTE_ROLE;
 	}
 
 	@Override

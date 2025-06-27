@@ -40,29 +40,31 @@ public class AuthConfiguration {
 	}
 
 	@Bean
-	protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().and().cors().disable()
-		.authorizeHttpRequests()
-			.requestMatchers(HttpMethod.GET, "/", "/index", "/punti-vendita", "/catalogo", "/catalogo/filtra", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
-			.requestMatchers(HttpMethod.POST, "/registrazione", "/formRegistrazione", "/login", "/catalogo/filtra").permitAll()
-			.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
-			.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
-			.anyRequest().authenticated()
-		.and()
-			.formLogin()
-			.loginPage("/login")
-			.permitAll()
-			.successHandler(loginSuccessHandler)
-		.and()
-			.logout()
-			.logoutUrl("/logout")
-			.logoutSuccessUrl("/")
-			.invalidateHttpSession(true)
-			.deleteCookies("JSESSIONID")
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.clearAuthentication(true)
-			.permitAll();
+	protected SecurityFilterChain configure(final HttpSecurity http) throws Exception {
+	    http
+	        .cors().disable()
+	        .csrf().disable()
+	        .authorizeHttpRequests()
+	            .requestMatchers(HttpMethod.GET, "/", "/index", "/punti-vendita", "/catalogo", "/catalogo/filtra", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
+	            .requestMatchers(HttpMethod.POST, "/registrazione", "/formRegistrazione", "/login", "/catalogo/filtra").permitAll()
+	            .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+	            .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+	            .anyRequest().authenticated()
+	        .and()
+	            .formLogin()
+	            .loginPage("/login")
+	            .permitAll()
+	            .successHandler(loginSuccessHandler)
+	        .and()
+	            .logout()
+	            .logoutUrl("/logout")
+	            .logoutSuccessUrl("/")
+	            .invalidateHttpSession(true)
+	            .deleteCookies("JSESSIONID")
+	            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+	            .clearAuthentication(true)
+	            .permitAll();
 
-		return httpSecurity.build();
+	    return http.build();
 	}
 }
