@@ -48,7 +48,6 @@ public class AuthenticationController {
         }
     
     
-    
 
     @GetMapping("/registrazione")    
     public String showRegisterForm(Model model) {

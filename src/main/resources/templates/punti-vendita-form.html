@@ -1,26 +1,95 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
     <meta charset="UTF-8">
     <title>Nuovo Punto Vendita</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(61, 61, 61);
+            color: white;
+            margin: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(244, 255, 235);
+            margin-bottom: 2rem;
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #222;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: rgb(196, 63, 66);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(154, 23, 9);
+        }
+
+        .link-back {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .link-back a {
+            color: rgb(200, 200, 200);
+            text-decoration: none;
+        }
+
+        .link-back a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Inserisci Nuovo Punto Vendita</h1>
 
-    <form th:action="@{/punti-vendita}" th:object="${puntoVendita}" method="post">
-        <label for="citta">Città:</label>
-        <input type="text" id="citta" th:field="*{citta}" required />
-        <br/><br/>
+<h1>Inserisci Nuovo Punto Vendita</h1>
 
-        <label for="indirizzo">Indirizzo:</label>
-        <input type="text" id="indirizzo" th:field="*{indirizzo}" required />
-        <br/><br/>
+<form th:action="@{/punti-vendita}" th:object="${puntoVendita}" method="post">
 
-        <button type="submit">Salva</button>
-    </form>
+    <!-- Rimosso il campo ID per evitare conflitti -->
+    <!-- L'ID sarà generato automaticamente da Hibernate -->
 
-    <br/>
-    <a th:href="@{/punti-vendita}">Torna alla lista</a>
+    <label for="citta">Città:</label>
+    <input type="text" id="citta" th:field="*{citta}" required />
+
+    <label for="indirizzo">Indirizzo:</label>
+    <input type="text" id="indirizzo" th:field="*{indirizzo}" required />
+
+    <button type="submit">Salva</button>
+</form>
+
+<div class="link-back">
+    <a th:href="@{/punti-vendita}">← Torna alla lista punti vendita</a>
+</div>
+
 </body>
 </html>

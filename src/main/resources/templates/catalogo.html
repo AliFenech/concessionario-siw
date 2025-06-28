@@ -24,20 +24,31 @@
       </a>
 
       <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/" >Home</a></li>
-          <li><a href="/catalogo" class="active">Catalogo Auto</a></li>
-		  <li><a href="/catalogo" class="active">Le mie prenotazioni</a></li>
+		<ul>
+		  <li><a href="/" >Home</a></li>
+		  <li><a href="/catalogo" class="active">Catalogo Auto</a></li>
+
+		  <!-- Visibile solo per CLIENTE -->
+		  <li sec:authorize="hasAuthority('CLIENTE')">
+		    <a href="/cliente/prenotazioni">Le mie prenotazioni</a>
+		  </li>
+
+		  <!-- Visibile solo per ADMIN -->
+		  <li sec:authorize="hasAuthority('ADMIN')">
+		    <a href="/admin/punti-vendita">Aggiunta Punti Vendita</a>
+		  </li>
+
+		  <!-- Logout per utenti autenticati -->
 		  <li sec:authorize="isAuthenticated()">
-		  		    <form th:action="@{/logout}" method="post" style="display: inline;">
-		  		      <button type="submit"
-		  		              class="nav-link"
-		  		              style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
-		  		        <i class="bi bi-box-arrow-right me-1"></i> Logout
-		  		      </button>
-		  		    </form>
-		  		  </li>
-        </ul>
+		    <form th:action="@{/logout}" method="post" style="display: inline;">
+		      <button type="submit"
+		              class="nav-link"
+		              style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
+		        <i class="bi bi-box-arrow-right me-1"></i> Logout
+		      </button>
+		    </form>
+		  </li>
+		</ul>
         <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
           <i class="bi bi-list fs-2"></i>
         </button>

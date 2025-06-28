@@ -27,17 +27,20 @@ public class PuntoVenditaController {
         return "punti-vendita-form";
     }
 
-    // Salva il nuovo punto vendita nel database
+    // Salva il nuovo punto vendita nel database (con controllo ID duplicato evitato)
     @PostMapping("/punti-vendita")
-    public String savePuntoVendita(@ModelAttribute PuntoVendita puntoVendita) {
+    public String savePuntoVendita(@ModelAttribute PuntoVendita puntoVendita, Model model) {
+        // Forza ID a null per creare un nuovo oggetto
+        puntoVendita.setId(null);
         puntoVenditaRepository.save(puntoVendita);
         return "redirect:/punti-vendita";
     }
+
+    // Mostra i dettagli di un punto vendita
     @GetMapping("/punti-vendita/{id}")
     public String mostraDettagli(@PathVariable("id") Long id, Model model) {
         PuntoVendita puntoVendita = puntoVenditaRepository.findById(id).orElse(null);
         model.addAttribute("puntoVendita", puntoVendita);
         return "dettagli-punto-vendita";
     }
-
 }

@@ -23,46 +23,35 @@
         <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">
-		<ul>
-		  <li><a href="/" class="active">Home</a></li>
-		  <li><a href="/catalogo">Catalogo Auto</a></li>
+	  <nav id="navmenu" class="navmenu">
+	    <ul>
+	      <li><a href="/" class="active">Home</a></li>
+	      <li><a href="/catalogo">Catalogo Auto</a></li>
 
-		  <!-- Voci per admin -->
-		  <li sec:authorize="hasAuthority('ADMIN')">
-		    <a href="/punti-vendita">Visualizza Punti Vendita</a>
-		  </li>
-		  <li sec:authorize="hasAuthority('ADMIN')">
-		    <a href="/dipendenti/aggiungi">Aggiungi Dipendente</a>
-		  </li>
-		  
-		  <!-- Voce per cliente -->
-		  <li sec:authorize="hasAuthority('CLIENTE')">
-		    <a href="/prenotazioni">Le mie prenotazioni</a>
-		  </li>
+	      <!-- Login/Registrazione solo per utenti non autenticati -->
+	      <li sec:authorize="!isAuthenticated()">
+	        <a href="/login">Accedi</a>
+	      </li>
+	      <li sec:authorize="!isAuthenticated()">
+	        <a href="/registrazione">Registrati</a>
+	      </li>
 
-		  <!-- Login/Logout -->
-		  <li sec:authorize="!isAuthenticated()">
-		    <a href="/login">Accedi</a>
-		  </li>
-		  <li sec:authorize="!isAuthenticated()">
-		    <a href="/registrazione">Registrati</a>
-		  </li>
-		  <li sec:authorize="isAuthenticated()">
-		    <form th:action="@{/logout}" method="post" style="display: inline;">
-		      <button type="submit"
-		              class="nav-link"
-		              style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
-		        <i class="bi bi-box-arrow-right me-1"></i> Logout
-		      </button>
-		    </form>
-		  </li>
-		</ul>
-		
-        <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
-          <i class="bi bi-list fs-2"></i>
-        </button>
-      </nav>
+	      <!-- Logout per utenti autenticati -->
+	      <li sec:authorize="isAuthenticated()">
+	        <form th:action="@{/logout}" method="post" style="display: inline;">
+	          <button type="submit"
+	                  class="nav-link"
+	                  style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
+	            <i class="bi bi-box-arrow-right me-1"></i> Logout
+	          </button>
+	        </form>
+	      </li>
+	    </ul>
+
+	    <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
+	      <i class="bi bi-list fs-2"></i>
+	    </button>
+	  </nav>
     </div>
   </header>
 
