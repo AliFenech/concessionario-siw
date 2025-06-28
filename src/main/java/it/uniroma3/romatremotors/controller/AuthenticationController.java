@@ -38,7 +38,6 @@ public class AuthenticationController {
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 			  model.addAttribute("username", userDetails.getUsername());
-			  System.out.println("Username in controller: " + userDetails.getUsername());
 
 			if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
 				return "admin/indexAdmin";
@@ -70,11 +69,11 @@ public class AuthenticationController {
         }
 
         if (!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-            credentials.setCliente(utente);
+            credentials.setUtente(utente);
             credentials.setRuolo(Credentials.CLIENTE_ROLE); // assegna il ruolo CLIENT
             credentialsService.saveCredentials(credentials);
             model.addAttribute("cliente", utente);
-            return "redirect:/login";
+            return "redirect:/index";
         }
 
         if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {

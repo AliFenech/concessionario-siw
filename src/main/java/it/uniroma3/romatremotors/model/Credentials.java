@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -24,8 +25,9 @@ public class Credentials {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "credentials_generator")
+    @SequenceGenerator(name = "credentials_generator", sequenceName = "credentials_sequence", allocationSize = 1)
+    private Long id;
 	
 	@Column(nullable = false)
 	private String username;
@@ -41,10 +43,8 @@ public class Credentials {
 	private String ruolo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private Utente cliente;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Utente dipendente;
+	private Utente utente;
+
 
 	/**
 	 * @return the username
@@ -88,32 +88,55 @@ public class Credentials {
 		this.ruolo = ruolo;
 	}
 
+
+
 	/**
-	 * @return the cliente
+	 * @return the id
 	 */
-	public Utente getCliente() {
-		return cliente;
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @param cliente the cliente to set
+	 * @param id the id to set
 	 */
-	public void setCliente(Utente cliente) {
-		this.cliente = cliente;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
-	 * @return the dipendente
+	 * @return the passwordEncode
 	 */
-	public Utente getDipendente() {
-		return dipendente;
+	public String getPasswordEncode() {
+		return passwordEncode;
 	}
 
 	/**
-	 * @param dipendente the dipendente to set
+	 * @param passwordEncode the passwordEncode to set
 	 */
-	public void setDipendente(Utente dipendente) {
-		this.dipendente = dipendente;
+	public void setPasswordEncode(String passwordEncode) {
+		this.passwordEncode = passwordEncode;
+	}
+
+	/**
+	 * @return the utente
+	 */
+	public Utente getUtente() {
+		return utente;
+	}
+
+	/**
+	 * @param utente the utente to set
+	 */
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+	/**
+	 * @return the clienteRole
+	 */
+	public static String getClienteRole() {
+		return CLIENTE_ROLE;
 	}
 
 	/**

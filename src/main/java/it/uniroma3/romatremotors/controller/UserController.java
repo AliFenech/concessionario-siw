@@ -17,14 +17,14 @@ public class UserController {
 	@GetMapping("/cliente/index")
 	public String clienteIndex(Model model, Principal principal) {
 	Credentials credentials = credentialsService.getCredentials(principal.getName());
-	model.addAttribute("cliente", credentials.getCliente());
+	model.addAttribute("cliente", credentials.getUtente());
 	return "cliente/index";
 	}
 
 	@GetMapping("/admin/index")
 	public String adminIndex(Model model, Principal principal) {
 	Credentials credentials = credentialsService.getCredentials(principal.getName());
-	model.addAttribute("admin", credentials.getCliente());
+	model.addAttribute("admin", credentials.getUtente());
 	return "admin/index";
 	}
 }

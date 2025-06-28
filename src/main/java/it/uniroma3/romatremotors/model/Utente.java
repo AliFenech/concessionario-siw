@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Email;
@@ -20,8 +21,9 @@ import jakarta.validation.constraints.Min;
 public class Utente {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "utente_generator")
+    @SequenceGenerator(name = "utente_generator", sequenceName = "hibernate_sequence", allocationSize = 1)
+    private Long id;
 	
 	@Column(nullable = false)
 	@NotBlank
