@@ -65,6 +65,12 @@
 
 <h1>Lista Punti Vendita</h1>
 
+<div style="text-align: center; margin-bottom: 20px;">
+    <a th:href="@{/puntivendita/new}">
+        <button class="details-btn">Aggiungi Punto Vendita</button>
+    </a>
+</div>
+
 <table border="0">
     <thead>
         <tr>
@@ -82,7 +88,9 @@
                 <div>
                     <strong>Città:</strong> <span th:text="${pv.citta}">Città</span><br>
                     <strong>Indirizzo:</strong> <span th:text="${pv.indirizzo}">Indirizzo</span><br>
-                    <button class="details-btn">Dettagli punto vendita</button>
+					<a th:href="@{'/punti-vendita/' + ${pv.id}}">
+					    <button class="details-btn">Dettagli punto vendita</button>
+					</a>
                 </div>
             </td>
         </tr>

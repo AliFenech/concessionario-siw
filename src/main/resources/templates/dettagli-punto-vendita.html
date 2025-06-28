@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettagli Punto Vendita - RomaTreMotors</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(61, 61, 61);
+            color: white;
+            margin: 2rem;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #222;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: rgb(244, 255, 235);
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .details-btn {
+            padding: 8px 16px;
+            background-color: rgb(196, 63, 66);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .details-btn:hover {
+            background-color: rgb(154, 23, 9);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dettagli Punto Vendita</h1>
+
+    <p><strong>Città:</strong> <span th:text="${puntoVendita.citta}">Roma</span></p>
+    <p><strong>Indirizzo:</strong> <span th:text="${puntoVendita.indirizzo}">Via...</span></p>
+
+    <div class="back-link">
+        <a th:href="@{/puntivendita}">
+            <button class="details-btn">Torna alla lista</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

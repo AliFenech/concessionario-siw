@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuovo Punto Vendita</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <h1>Inserisci Nuovo Punto Vendita</h1>
+
+    <form th:action="@{/punti-vendita}" th:object="${puntoVendita}" method="post">
+        <label for="citta">Città:</label>
+        <input type="text" id="citta" th:field="*{citta}" required />
+        <br/><br/>
+
+        <label for="indirizzo">Indirizzo:</label>
+        <input type="text" id="indirizzo" th:field="*{indirizzo}" required />
+        <br/><br/>
+
+        <button type="submit">Salva</button>
+    </form>
+
+    <br/>
+    <a th:href="@{/punti-vendita}">Torna alla lista</a>
+</body>
+</html>
