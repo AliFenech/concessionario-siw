@@ -21,7 +21,7 @@ public class PuntoVenditaController {
     }
 
     // Mostra il form per creare un nuovo punto vendita
-    @GetMapping("/punti-vendita/new")
+    @GetMapping("/punti-vendita-form/new")
     public String showForm(Model model) {
         model.addAttribute("puntoVendita", new PuntoVendita());
         return "punti-vendita-form";

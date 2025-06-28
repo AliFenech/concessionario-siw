@@ -29,9 +29,7 @@
           <li><a href="/catalogo">Catalogo Auto</a></li>
 
           <!-- Voci solo per admin -->
-          <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/gestione-auto">Gestione Auto</a></li>
-          <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/gestione-prenotazioni">Gestione Prenotazioni</a></li>
-          <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/utenti">Gestione Utenti</a></li>
+		  <li sec:authorize="hasAuthority('ADMIN')"><a href="/punti-vendita">Aggiunta Punti Vendita</a></li>
 
           <!-- Login/Logout -->
           <li sec:authorize="!isAuthenticated()"><a href="/login">Accedi</a></li>
