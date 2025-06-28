@@ -11,14 +11,6 @@ insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_seq
 insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Milano', 'Via Bianchi 44');
 insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Napoli', 'Via Verdi 33');
 
--- Inserimento ruoli
-insert into ruolo (id, nome) values (1, 'ADMIN');
-insert into ruolo (id, nome) values (2, 'CLIENTE');
-
--- Inserimento utenti
-insert into utente (id, username, password, enabled) values (1, 'admin', '$2a$10$EIX/bL6L9Q38Z2H6QrRAUe3uoJZLoUeCL3KpBSHLkaJeKnQ2UFieG', true);
-insert into utente (id, username, password, enabled) values (2, 'cliente', '$2a$10$JwTzPxSnHMBZHfG88EvOQOcVUZd1N9xd/xQkaK0c3YV3GMKHsZUwW', true);
-
--- Associazione utenti-ruoli
-insert into utente_ruoli (utente_id, ruoli_id) values (1, 1);
-insert into utente_ruoli (utente_id, ruoli_id) values (2, 2);
+--Account Admin
+insert into utente(data_nascita,id,cognome,email,nome)VALUES( '2000-11-11',1, 'admin', 'admin@gmail.com', 'admin');
+insert into credentials(cliente_id,dipendente_id,id,password_encode,ruolo,username) values(null,1,1,'$2a$10$aAvomhOB.EGPdDyDJsJV4uMElQrtDFdjE4j5S3GcqE0TVULNYD/FS','ADMIN','admin');
