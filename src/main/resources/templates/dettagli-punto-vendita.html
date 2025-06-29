@@ -112,10 +112,7 @@
 
     <div class="button-group">
         <a th:href="@{/punti-vendita}" class="btn btn-back">← Torna alla lista</a>
-        <a th:href="@{/auto/new(puntoVenditaId=${puntoVendita.id})}" class="btn btn-add">➕ Aggiungi Auto</a>
-        <a th:href="@{/auto/modifica(puntoVenditaId=${puntoVendita.id})}" class="btn btn-edit">✏️ Modifica Auto</a>
-        <a th:href="@{/auto/elimina(puntoVenditaId=${puntoVendita.id})}" class="btn btn-delete">🗑️ Rimuovi Auto</a>
-        <a th:href="@{/auto/lista(puntoVenditaId=${puntoVendita.id})}" class="btn btn-view">🚗 Visualizza Lista Auto</a>
+        <a th:href="@{/lista(puntoVenditaId=${puntoVendita.id})}" class="btn btn-view">🚗 Visualizza Lista Auto</a>
     </div>
 </div>
 

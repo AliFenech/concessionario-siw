@@ -289,6 +289,11 @@ public class Auto {
 				&& Objects.equals(km, other.km) && Objects.equals(targa, other.targa);
 	}
 
+	@Override
+	public String toString() {
+		return "Auto [telaio=" + telaio + "]";
+	}
+
 
 	
 	
