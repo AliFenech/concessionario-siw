@@ -39,8 +39,8 @@ public class AutoController {
 		return "catalogo";
 	}
 	
-	@GetMapping("/auto/immagine/{id}")
-    public ResponseEntity<byte[]> getImmagine(@PathVariable String id) {
+	@GetMapping("/auto/{id}/immagine")
+    public ResponseEntity<byte[]> getImmagine(@PathVariable Long id) {
         Auto auto = autoRepository.findById(id).get();
         if (auto == null || auto.getImmagine() == null) {
             return ResponseEntity.notFound().build();
@@ -79,6 +79,13 @@ public class AutoController {
 	        model.addAttribute("prezzoMax", prezzoMax);
 
         return "catalogo";
+    }
+    
+    @GetMapping("/auto/{id}")
+    public String dettagliAuto(@PathVariable Long id, Model model) {
+    	Auto auto = autoService.findById(id);
+    	model.addAttribute("auto", auto);
+    	return "dettagliAuto";
     }
     	
   }

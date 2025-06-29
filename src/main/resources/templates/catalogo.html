@@ -38,6 +38,14 @@
 		    <a href="/admin/punti-vendita">Aggiunta Punti Vendita</a>
 		  </li>
 
+		  <!-- Login/Registrazione solo per utenti non autenticati -->
+		  	      <li sec:authorize="!isAuthenticated()">
+		  	        <a href="/login">Accedi</a>
+		  	      </li>
+		  	      <li sec:authorize="!isAuthenticated()">
+		  	        <a href="/registrazione">Registrati</a>
+		  	      </li>
+		  
 		  <!-- Logout per utenti autenticati -->
 		  <li sec:authorize="isAuthenticated()">
 		    <form th:action="@{/logout}" method="post" style="display: inline;">

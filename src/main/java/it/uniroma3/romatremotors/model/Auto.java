@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
@@ -15,7 +17,8 @@ import jakarta.persistence.OneToMany;
 public class Auto {
 
 	@Id
-	private String telaio;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@Column(nullable = false)
 	private String targa;
@@ -85,18 +88,20 @@ public class Auto {
 		this.puntoVendita = puntoVendita;
 	}
 
+	
+
 	/**
-	 * @return the telaio
+	 * @return the id
 	 */
-	public String getTelaio() {
-		return telaio;
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @param telaio the telaio to set
+	 * @param id the id to set
 	 */
-	public void setTelaio(String telaio) {
-		this.telaio = telaio;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**

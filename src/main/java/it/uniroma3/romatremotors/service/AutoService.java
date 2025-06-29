@@ -20,7 +20,7 @@ public class AutoService {
 		return (List<Auto>) autoRepository.findAll();
 	}
 	
-	public Auto findById(String id) {
+	public Auto findById(Long id) {
 		return autoRepository.findById(id).get();
 	}
 	
