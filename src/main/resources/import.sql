@@ -1,4 +1,3 @@
-
 DROP SEQUENCE IF EXISTS hibernate_sequence CASCADE;
 DROP SEQUENCE IF EXISTS credentials_sequence CASCADE;
 
@@ -10,7 +9,7 @@ insert into credentials(utente_id,id,password_encode,ruolo,username) values(curr
 
 
 
-insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Roma', 'Via Rossi 55');
-insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Milano', 'Via Bianchi 44');
-insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Napoli', 'Via Verdi 33');
+--insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Roma', 'Via Rossi 55');
+--insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Milano', 'Via Bianchi 44');
+--insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Napoli', 'Via Verdi 33');
 

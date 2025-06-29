@@ -4,104 +4,198 @@
     <title>Lista Punti Vendita - RomaTreMotors</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: rgb(61, 61, 61);
-            margin: 2rem;
-            color: #fff;
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
-        h1 {
-            color: rgb(244, 255, 235);
+
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
             text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            color: #c0392b;
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h2 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #555;
+            margin: 0;
+        }
+
+        .button-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background: #222;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            color: white;
-        }
-        thead {
-            background-color: rgb(154, 23, 9);
-            color: white;
-        }
-        th, td {
-            padding: 12px 20px;
-            text-align: left;
-        }
-        tbody tr.main-row:hover {
-            background-color: rgb(192, 16, 0);
-            cursor: pointer;
-        }
-        tbody tr.details-row {
-            display: none;
-            background-color: rgb(35, 35, 35);
-            color: #f5f5f5;
-        }
-        .details-cell {
-            padding: 15px 20px;
-            font-style: italic;
-        }
-        button.details-btn {
-            margin-top: 10px;
-            padding: 6px 12px;
-            background-color: rgb(196, 63, 66);
+
+        .details-btn {
+            padding: 10px 18px;
+            background-color: #c0392b;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .details-btn:hover {
+            background-color: #a93226;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fafafa;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #c0392b;
+            color: white;
+        }
+
+        th, td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr.main-row:hover {
+            background-color: #ffe6e4;
             cursor: pointer;
         }
-        button.details-btn:hover {
-            background-color: rgb(154, 23, 9);
+
+        tbody tr.details-row {
+            display: none;
+            background-color: #f1f1f1;
+        }
+
+        .details-cell {
+            padding: 20px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .delete-form {
+            display: flex;
+            justify-content: center;
+        }
+
+        .delete-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .delete-btn:hover {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.2rem;
+            }
+
+            .details-btn {
+                font-size: 14px;
+                padding: 8px 14px;
+            }
+
+            th, td {
+                padding: 10px 14px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header h2 {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<h1>Lista Punti Vendita</h1>
+	<div style="background-color: #c0392b; padding: 1rem 0; text-align: center;">
+	    <h1 style="margin: 0; color: white; font-size: 2rem;">RomaTreMotors</h1>
+	</div>
 
-<div style="text-align: center; margin-bottom: 20px;">
-	<a th:href="@{/punti-vendita-form/new}">
-        <button class="details-btn">Aggiungi Punto Vendita</button>
-    </a>
+	<div class="container">
+	    <div class="header">
+	        <h2>Lista Punti Vendita</h2>
+	    </div>
+
+	    <div class="button-bar">
+	        <a th:href="@{/admin/index}">
+	            <button class="details-btn">🏠 Torna alla Home</button>
+	        </a>
+	        <a th:href="@{/punti-vendita-form/new}">
+	            <button class="details-btn">➕ Aggiungi Punto Vendita</button>
+	        </a>
+	    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Città</th>
+                <th>Indirizzo</th>
+                <th style="text-align:center; width: 60px;">🗑</th>
+            </tr>
+        </thead>
+        <tbody th:each="pv, iterStat : ${puntiVendita}">
+            <tr class="main-row" th:attr="data-index=${iterStat.index}">
+                <td th:text="${pv.id}">ID</td>
+                <td th:text="${pv.citta}">Città</td>
+                <td th:text="${pv.indirizzo}">Indirizzo</td>
+                <td>
+					<form th:action="@{'/punti-vendita/' + ${pv.id} + '/delete'}" method="post" class="delete-form" onsubmit="return confirm('Sei sicuro di voler eliminare questo punto vendita?');">
+                        <button type="submit" class="delete-btn" title="Elimina">🗑️</button>
+                    </form>
+                </td>
+            </tr>
+            <tr class="details-row" th:id="'details-' + ${iterStat.index}">
+                <td class="details-cell" colspan="4"> 
+                    <div>
+                        <strong>ID:</strong> <span th:text="${pv.id}">ID</span><br>
+                        <strong>Città:</strong> <span th:text="${pv.citta}">Città</span><br>
+                        <strong>Indirizzo:</strong> <span th:text="${pv.indirizzo}">Indirizzo</span><br><br>
+                        <a th:href="@{'/punti-vendita/' + ${pv.id}}">
+                            <button class="details-btn">🔍 Dettagli punto vendita</button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<table border="0">
-    <thead>
-        <tr>
-			<th>ID</th>
-            <th>Città</th>
-            <th>Indirizzo</th>
-        </tr>
-    </thead>
-    <tbody th:each="pv, iterStat : ${puntiVendita}">
-        <tr class="main-row" th:attr="data-index=${iterStat.index}">
-			<td th:text="${pv.id}">ID</td>
-            <td th:text="${pv.citta}">Città</td>
-            <td th:text="${pv.indirizzo}">Indirizzo</td>
-        </tr>
-		<tr class="details-row" th:id="'details-' + ${iterStat.index}">
-		    <td class="details-cell" colspan="3"> 
-		        <div>
-		            <strong>ID:</strong> <span th:text="${pv.id}">ID</span><br>
-		            <strong>Città:</strong> <span th:text="${pv.citta}">Città</span><br>
-		            <strong>Indirizzo:</strong> <span th:text="${pv.indirizzo}">Indirizzo</span><br>
-		            <a th:href="@{'/punti-vendita/' + ${pv.id}}">
-		                <button class="details-btn">Dettagli punto vendita</button>
-		            </a>
-		        </div>
-		    </td>
-		</tr>
-    </tbody>
-</table>
-
 <script>
-    // Prendo tutte le righe principali cliccabili
     document.querySelectorAll('tbody tr.main-row').forEach(row => {
         row.addEventListener('click', () => {
             const index = row.getAttribute('data-index');
@@ -110,9 +204,7 @@
             if (detailsRow.style.display === 'table-row') {
                 detailsRow.style.display = 'none';
             } else {
-                // Chiudo tutte le altre tendine aperte
                 document.querySelectorAll('tbody tr.details-row').forEach(r => r.style.display = 'none');
-                // Apro quella cliccata
                 detailsRow.style.display = 'table-row';
             }
         });

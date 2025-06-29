@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,6 +80,13 @@ public class AutoController {
 	        model.addAttribute("prezzoMax", prezzoMax);
 
         return "catalogo";
+    }
+    
+    @GetMapping("/catalogo-admin")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String getCatalogoAdmin(Model model) {
+        model.addAttribute("autoList", this.autoService.findAll());
+        return "admin/catalogoAdmin";
     }
     	
   }
