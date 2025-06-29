@@ -8,7 +8,6 @@ insert into utente(id, data_nascita, cognome,email,nome)VALUES(nextval('hibernat
 insert into credentials(utente_id,id,password_encode,ruolo,username) values(currval('hibernate_sequence'),nextval('credentials_sequence'),'$2a$10$aAvomhOB.EGPdDyDJsJV4uMElQrtDFdjE4j5S3GcqE0TVULNYD/FS','ADMIN','admin');
 
 
-
 --insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Roma', 'Via Rossi 55');
 --insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Milano', 'Via Bianchi 44');
 --insert into punto_vendita (id, citta, indirizzo) values  (nextval('hibernate_sequence'), 'Napoli', 'Via Verdi 33');
