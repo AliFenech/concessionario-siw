@@ -1,123 +1,159 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<html lang="it"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Lista Punti Vendita - RomaTreMotors</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: rgb(61, 61, 61);
-            margin: 2rem;
-            color: #fff;
-        }
-        h1 {
-            color: rgb(244, 255, 235);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background: #222;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            color: white;
-        }
-        thead {
-            background-color: rgb(154, 23, 9);
-            color: white;
-        }
-        th, td {
-            padding: 12px 20px;
-            text-align: left;
-        }
-        tbody tr.main-row:hover {
-            background-color: rgb(192, 16, 0);
-            cursor: pointer;
-        }
-        tbody tr.details-row {
-            display: none;
-            background-color: rgb(35, 35, 35);
-            color: #f5f5f5;
-        }
-        .details-cell {
-            padding: 15px 20px;
-            font-style: italic;
-        }
-        button.details-btn {
-            margin-top: 10px;
-            padding: 6px 12px;
-            background-color: rgb(196, 63, 66);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button.details-btn:hover {
-            background-color: rgb(154, 23, 9);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Lista Punti Vendita - RomaTreMotors</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Fonts -->
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap}" rel="stylesheet"/>
+
+  <!-- Bootstrap CSS -->
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css}"
+        rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+        crossorigin="anonymous"/>
+
+  <!-- Bootstrap Icons -->
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css}" rel="stylesheet"/>
+
+  <!-- CSS personalizzato -->
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body>
+<body class="index-page">
 
-<h1>Lista Punti Vendita</h1>
+  <!-- Navbar unificata -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a th:href="@{/{}}" class="logo d-flex align-items-center">
+        <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul class="d-flex list-unstyled mb-0">
+          <li sec:authorize="hasAuthority('ADMIN')" class="me-3">
+            <a th:href="@{/admin/index}" class="nav-link p-0">Home</a>
+          </li>
+          <li sec:authorize="hasAuthority('CLIENTE')" class="me-3">
+            <a th:href="@{/cliente/index}" class="nav-link p-0">Home</a>
+          </li>
+          <li sec:authorize="isAnonymous()" class="me-3">
+            <a th:href="@{/{}}" class="nav-link p-0">Home</a>
+          </li>
+          <li class="me-3">
+            <a th:href="@{/catalogo}" class="nav-link p-0">Catalogo Auto</a>
+          </li>
+          <li sec:authorize="hasAuthority('CLIENTE')" class="me-3">
+            <a th:href="@{/cliente/prenotazioni}" class="nav-link p-0">Le mie prenotazioni</a>
+          </li>
+          <li sec:authorize="hasAuthority('ADMIN')" class="me-3">
+            <a th:href="@{/admin/punti-vendita}" class="nav-link p-0">Aggiungi Punti Vendita</a>
+          </li>
+          <li sec:authorize="isAnonymous()" class="me-3">
+            <a th:href="@{/login}" class="nav-link p-0">Accedi</a>
+          </li>
+          <li sec:authorize="isAnonymous()" class="me-3">
+            <a th:href="@{/registrazione}" class="nav-link p-0">Registrati</a>
+          </li>
+          <li sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline">
+              <button type="submit"
+                      class="nav-link btn btn-link p-0"
+                      style="font:inherit;cursor:pointer">
+                <i class="bi bi-box-arrow-right me-1"></i>Logout
+              </button>
+            </form>
+          </li>
+        </ul>
+        <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
+          <i class="bi bi-list fs-2"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-<div style="text-align: center; margin-bottom: 20px;">
-	<a th:href="@{/punti-vendita-form/new}">
-        <button class="details-btn">Aggiungi Punto Vendita</button>
-    </a>
-</div>
+  <main class="container py-5 mt-5">
+    <div class="text-center mb-4">
+      <h2>Lista Punti Vendita</h2>
+    </div>
 
-<table border="0">
-    <thead>
-        <tr>
-			<th>ID</th>
-            <th>Città</th>
-            <th>Indirizzo</th>
-        </tr>
-    </thead>
-    <tbody th:each="pv, iterStat : ${puntiVendita}">
-        <tr class="main-row" th:attr="data-index=${iterStat.index}">
-			<td th:text="${pv.id}">ID</td>
-            <td th:text="${pv.citta}">Città</td>
-            <td th:text="${pv.indirizzo}">Indirizzo</td>
-        </tr>
-		<tr class="details-row" th:id="'details-' + ${iterStat.index}">
-		    <td class="details-cell" colspan="3"> 
-		        <div>
-		            <strong>ID:</strong> <span th:text="${pv.id}">ID</span><br>
-		            <strong>Città:</strong> <span th:text="${pv.citta}">Città</span><br>
-		            <strong>Indirizzo:</strong> <span th:text="${pv.indirizzo}">Indirizzo</span><br>
-		            <a th:href="@{'/punti-vendita/' + ${pv.id}}">
-		                <button class="details-btn">Dettagli punto vendita</button>
-		            </a>
-		        </div>
-		    </td>
-		</tr>
-    </tbody>
-</table>
+    <div class="d-flex justify-content-center mb-4 flex-wrap gap-2">
+      <a th:href="@{/admin/index}" class="btn btn-outline-secondary">
+        <i class="bi bi-house-door-fill"></i> Torna alla Home
+      </a>
+      <a th:href="@{/punti-vendita-form/new}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Aggiungi Punto Vendita
+      </a>
+    </div>
 
-<script>
-    // Prendo tutte le righe principali cliccabili
-    document.querySelectorAll('tbody tr.main-row').forEach(row => {
-        row.addEventListener('click', () => {
-            const index = row.getAttribute('data-index');
-            const detailsRow = document.getElementById(`details-${index}`);
+    <div th:if="${#lists.isEmpty(puntiVendita)}" class="alert alert-warning text-center">
+      Nessun punto vendita presente.
+    </div>
+	
+	<table class="table table-hover table-striped shadow-sm rounded">
+	  <thead class="table-dark">
+	    <tr>
+	      <th>ID</th>
+	      <th>Città</th>
+	      <th>Indirizzo</th>
+	      <th class="text-center" style="width: 60px;">🗑</th>
+	    </tr>
+	  </thead>
+	  <tbody th:each="pv, iterStat : ${puntiVendita}">
+	    <!-- Riga principale -->
+	    <tr class="main-row align-middle" th:attr="data-index=${iterStat.index}">
+	      <td th:text="${pv.id}"></td>
+	      <td th:text="${pv.citta}"></td>
+	      <td th:text="${pv.indirizzo}"></td>
+	      <td class="text-center">
+	        <form th:action="@{'/punti-vendita/' + ${pv.id} + '/delete'}"
+	              method="post"
+	              onsubmit="return confirm('Sei sicuro di voler eliminare questo punto vendita?');"
+	              class="d-inline">
+	          <button type="submit" class="btn btn-link p-0 text-danger" title="Elimina">
+	            🗑️
+	          </button>
+	        </form>
+	      </td>
+	    </tr>
+	    <!-- Riga dettaglio (tendina) -->
+	    <tr class="details-row" th:id="'details-' + ${iterStat.index}" style="display:none;">
+	      <td colspan="4" class="details-cell">
+	        <strong>ID:</strong> <span th:text="${pv.id}"></span><br>
+	        <strong>Città:</strong> <span th:text="${pv.citta}"></span><br>
+	        <strong>Indirizzo:</strong> <span th:text="${pv.indirizzo}"></span><br><br>
+	        <a th:href="@{'/punti-vendita/' + ${pv.id}}">
+	          <button class="btn btn-primary btn-sm details-btn">
+	            🔍 Dettagli punto vendita
+	          </button>
+	        </a>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
 
-            if (detailsRow.style.display === 'table-row') {
-                detailsRow.style.display = 'none';
-            } else {
-                // Chiudo tutte le altre tendine aperte
-                document.querySelectorAll('tbody tr.details-row').forEach(r => r.style.display = 'none');
-                // Apro quella cliccata
-                detailsRow.style.display = 'table-row';
-            }
-        });
-    });
-</script>
+	<!-- Script per il toggle dei dettagli -->
+	<script>
+	  document.querySelectorAll('tr.main-row').forEach(row => {
+	    row.addEventListener('click', () => {
+	      const idx     = row.getAttribute('data-index');
+	      const details = document.getElementById(`details-${idx}`);
+	      const isOpen  = details.style.display === 'table-row';
+
+	      // prima chiudi tutte
+	      document.querySelectorAll('tr.details-row')
+	              .forEach(r => r.style.display = 'none');
+
+	      // se non era già aperta, aprila
+	      if (!isOpen) {
+	        details.style.display = 'table-row';
+	      }
+	    });
+	  });
+	</script>
 
 </body>
 </html>
+
+

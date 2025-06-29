@@ -43,4 +43,12 @@ public class PuntoVenditaController {
         model.addAttribute("puntoVendita", puntoVendita);
         return "dettagli-punto-vendita";
     }
+    // Elimina punto vendita
+    @PostMapping("/punti-vendita/{id}/delete")
+    public String deletePuntoVendita(@PathVariable("id") Long id) {
+        puntoVenditaRepository.deleteById(id);
+        return "redirect:/punti-vendita";
+    }
+
+
 }

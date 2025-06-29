@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import it.uniroma3.romatremotors.model.Credentials;
-import it.uniroma3.romatremotors.model.Utente;
 import it.uniroma3.romatremotors.service.CredentialsService;
 
 @Controller

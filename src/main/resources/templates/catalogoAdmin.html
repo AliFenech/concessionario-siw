@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>RomaTreMotors - Catalogo Auto Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- CSS personalizzato -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="index-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+		<ul>
+		  <li><a href="/" >Home</a></li>
+		  <li><a href="/catalogo" class="active">Catalogo Auto</a></li>
+
+		  <!-- Visibile solo per CLIENTE -->
+		  <li sec:authorize="hasAuthority('CLIENTE')">
+		    <a href="/cliente/prenotazioni">Le mie prenotazioni</a>
+		  </li>
+
+		  <!-- Visibile solo per ADMIN -->
+		  <li sec:authorize="hasAuthority('ADMIN')">
+		    <a href="/admin/punti-vendita">Aggiunta Punti Vendita</a>
+		  </li>
+
+		  <!-- Logout per utenti autenticati -->
+		  <li sec:authorize="isAuthenticated()">
+		    <form th:action="@{/logout}" method="post" style="display: inline;">
+		      <button type="submit"
+		              class="nav-link"
+		              style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
+		        <i class="bi bi-box-arrow-right me-1"></i> Logout
+		      </button>
+		    </form>
+		  </li>
+		</ul>
+        <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
+          <i class="bi bi-list fs-2"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main pt-5 mt-5">
+
+    <form>
+		<!-- Filtri in alto -->
+		    <section id="filters" class="filters section pt-3">
+		      <div class="container align-items-center">
+		        <div class="row">
+		          <div class="col-md-3 me-3 col-lg-2 mb-3">
+					<p>Categoria auto:</p>
+		            <select class="form-select" id="categoria" aria-label="Categoria">
+		              <option selected>Tutte</option>
+		              <option value="1">SUV</option>
+		              <option value="2">Berline</option>
+		              <option value="3">Coupé</option>
+		              <!-- Aggiungi altre categorie -->
+		            </select>
+		          </div>
+		          <div class="col-md-3 me-3 col-lg-2 mb-3">
+					<p>Marca auto:</p>
+		            <select class="form-select" id="marca" aria-label="Marca">
+		              <option selected>Tutte</option>
+		              <option value="1">Toyota</option>
+		              <option value="2">BMW</option>
+		              <option value="3">Mercedes</option>
+		              <!-- Aggiungi altre marche -->
+		            </select>
+		          </div>
+		          <div class="col-md-3 me-3 col-lg-2 mb-3">
+					<p>Seleziona Optional:</p>
+		            <select class="form-select" id="optional" aria-label="Optional">
+		              <option selected>Tutti</option>
+		              <option value="1">Navigatore</option>
+		              <option value="2">Sedili in pelle</option>
+		              <!-- Aggiungi altri optional -->
+		            </select>
+		          </div>
+				  <div class="col-md-3 me-3 col-lg-2 mb-3">
+					<p>Colore auto:</p>
+  		            <select class="form-select" id="colore" aria-label="Colore">
+  		              <option selected>Tutti</option>
+  		              <option value="1">Bianco</option>
+  		              <option value="2">Nero</option>
+  		              <option value="3">Blu</option>
+  		              <!-- Aggiungi altri colori -->
+  		            </select>
+  		          </div>
+  		          <div class="col-md-3 col-lg-2 mb-3">
+					<p>Tipo carburante:</p>
+  		            <select class="form-select" id="carburante" aria-label="Tipo di carburante">
+  		              <option value="Tutti" selected>Tutti</option>
+  		              <option value="Benzina">Benzina</option>
+  		              <option value="Diesel">Diesel</option>
+  		              <option value="Elettrico">Elettrico</option>
+  		              <option value="Ibrido">Ibrido</option>
+  		            </select>
+  		          </div>
+		        </div>
+
+		        <div class="row mt-3 mb-3">
+		          <!-- Range KM -->
+		          <div class="col-md-3 col-lg-2 mb-3 me-3">
+		            <p>Km minimi:</p>
+		            <input type="range" class="form-range" min="0" max="300000" step="10000" value="0" id="customRangeMin">
+		            <output for="customRangeMin" id="rangeMinValue" aria-hidden="true">0</output>
+		          </div>
+		          <div class="col-md-3 col-lg-2 mb-3 me-3">
+		            <p>Km massimi:</p>
+		            <input type="range" class="form-range" min="0" max="300000" step="10000" value="300000" id="customRangeMax">
+		            <output for="customRangeMax" id="rangeMaxValue" aria-hidden="true">300000</output>
+		          </div>
+		          <script>
+		            const rangeMin = document.getElementById('customRangeMin');
+		            const rangeMax = document.getElementById('customRangeMax');
+		            const rangeMinValue = document.getElementById('rangeMinValue');
+		            const rangeMaxValue = document.getElementById('rangeMaxValue');
+
+		            // Set initial values
+		            rangeMinValue.textContent = rangeMin.value;
+		            rangeMaxValue.textContent = rangeMax.value;
+
+		            rangeMin.addEventListener('input', function() {
+		              rangeMinValue.textContent = this.value;
+		              if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+						rangeMin.value = rangeMax.value;
+						rangeMinValue.textContent = rangeMaxValue.textContent;
+						}
+		            });
+
+		            rangeMax.addEventListener('input', function() {
+		              rangeMaxValue.textContent = this.value;
+		              if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
+						rangeMax.value = rangeMin.value;
+						rangeMaxValue.textContent = rangeMinValue.textContent;
+		              }
+		            });
+		          </script>
+
+		          <!-- Filtro Prezzo -->
+		          <div class="col-md-3 col-lg-2 mb-3 me-3">
+		            <p>Prezzo minimo:</p>
+		            <input type="range" class="form-range" min="0" max="100000" step="1000" value="0" id="prezzoMin">
+		            <output for="prezzoMin" id="prezzoMinValue" aria-hidden="true">0</output>
+		          </div>
+		          <div class="col-md-3 col-lg-2 mb-3 me-3">
+		            <p>Prezzo massimo:</p>
+		            <input type="range" class="form-range" min="0" max="100000" step="1000" value="100000" id="prezzoMax">
+		            <output for="prezzoMax" id="prezzoMaxValue" aria-hidden="true">100000</output>
+		          </div>
+				  <div class="bottone col-md-3 col-lg-2 mt-3 ms-3">
+					<button type="submit" class="btn btn">Filtra</button>
+				</div>
+		          <script>
+		            const prezzoMin = document.getElementById('prezzoMin');
+		            const prezzoMax = document.getElementById('prezzoMax');
+		            const prezzoMinValue = document.getElementById('prezzoMinValue');
+		            const prezzoMaxValue = document.getElementById('prezzoMaxValue');
+
+		            // Set initial values
+		            prezzoMinValue.textContent = prezzoMin.value;
+		            prezzoMaxValue.textContent = prezzoMax.value;
+
+		            prezzoMin.addEventListener('input', function() {
+		              prezzoMinValue.textContent = this.value;
+		              if (parseInt(prezzoMin.value) > parseInt(prezzoMax.value)) {
+		                
+						prezzoMin.value = prezzoMax.value;
+						prezzoMinValue.textContent = prezzoMaxValue.textContent;
+		              }
+		            });
+
+		            prezzoMax.addEventListener('input', function() {
+		              prezzoMaxValue.textContent = this.value;
+		              if (parseInt(prezzoMax.value) < parseInt(prezzoMin.value)) {
+		                prezzoMax.value= prezzoMin.value;
+						prezzoMaxValue.textContent = prezzoMinValue.textContent;
+		              }
+		            });
+		          </script>
+					
+		        </div>
+					
+		      </div>
+		    </section>
+	</form>
+
+    
+    <section id="real-estate" class="real-estate section">
+      <div class="container">
+        <div class="row gy-4">
+          <!-- Se la lista auto è vuota, visualizzare un messaggio -->
+          <div th:if="${#lists.isEmpty(autoList)}" class="col-12 text-center">
+            <p>Nessuna auto trovata per i criteri selezionati.</p>
+          </div>
+
+          <!-- Ciclo per visualizzare le auto -->
+          <div th:each="auto : ${autoList}" class="col-xl-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card">
+              <!-- Immagine auto dinamica -->
+              <img th:src="@{/auto/immagine/{id}(id=${auto.id})}" alt="Immagine auto" class="img-fluid">
+              <div class="card-body">
+                <h3><a th:href="@{/auto/{id}(id=${auto.id})}" class="stretched-link" th:text="${auto.marca} + ' ' + ${auto.modello}"></a></h3>
+              </div>
+            </div>
+          </div><!-- End Property Item -->
+        </div>
+      </div>
+    </section><!-- / Real Estate Section -->
+
+  </main>
+
+</body>
+</html>

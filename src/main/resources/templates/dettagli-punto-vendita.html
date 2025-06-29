@@ -3,46 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>Dettagli Punto Vendita - RomaTreMotors</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: rgb(61, 61, 61);
-            color: white;
-            margin: 2rem;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #222;
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f6fa;
+            color: #2c3e50;
+            margin: 0;
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
+
+        .container {
+            max-width: 700px;
+            margin: 2rem auto;
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
         h1 {
             text-align: center;
-            color: rgb(244, 255, 235);
+            color: #c0392b;
+            margin-bottom: 2rem;
         }
+
         p {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
         }
-        .back-link {
-            display: block;
+
+        .label {
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
             margin-top: 2rem;
-            text-align: center;
         }
-        .details-btn {
-            padding: 8px 16px;
-            background-color: rgb(196, 63, 66);
-            color: white;
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
             text-decoration: none;
+            display: inline-block;
         }
-        .details-btn:hover {
-            background-color: rgb(154, 23, 9);
+
+        .btn-back {
+            background-color: #7f8c8d;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #636e72;
+        }
+
+        .btn-view {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-add {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-add:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-edit {
+            background-color: #f1c40f;
+            color: #2c3e50;
+        }
+
+        .btn-edit:hover {
+            background-color: #d4ac0d;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -51,15 +107,13 @@
 <div class="container">
     <h1>Dettagli Punto Vendita</h1>
 
-    <p><strong>Città:</strong> <span th:text="${puntoVendita.citta}">Roma</span></p>
-    <p><strong>Indirizzo:</strong> <span th:text="${puntoVendita.indirizzo}">Via...</span></p>
+    <p><span class="label">Città:</span> <span th:text="${puntoVendita.citta}">Roma</span></p>
+    <p><span class="label">Indirizzo:</span> <span th:text="${puntoVendita.indirizzo}">Via...</span></p>
 
-	<div class="back-link">
-	    <a th:href="@{/punti-vendita}">
-	        <button class="details-btn">Torna alla lista</button>
-	    </a>
-	</div>
-
+    <div class="button-group">
+        <a th:href="@{/punti-vendita}" class="btn btn-back">← Torna alla lista</a>
+        <a th:href="@{/lista(puntoVenditaId=${puntoVendita.id})}" class="btn btn-view">🚗 Visualizza Lista Auto</a>
+    </div>
 </div>
 
 </body>
