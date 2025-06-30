@@ -2,6 +2,7 @@ package it.uniroma3.romatremotors.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -164,4 +165,62 @@ public class AutoController {
 
         return "catalogo";
     }
+    //eliminazione auto
+    @PostMapping("/eliminaAuto/{id}")
+    public String deleteAuto(@PathVariable Long id) {
+        Optional<Auto> optAuto = autoRepository.findById(id);
+        if (optAuto.isPresent()) {
+            Long puntoVenditaId = optAuto.get().getPuntoVendita().getId();
+            autoRepository.deleteById(id);
+            return "redirect:/lista?puntoVenditaId=" + puntoVenditaId;
+        } else {
+            throw new IllegalArgumentException("ID auto non valido: " + id);
+        }
+    }
+
+    //modifica Auto GET
+    @GetMapping("/modificaAuto")
+    public String modificaAutoQueryParam(@RequestParam("id") Long id, Model model) {
+        Auto auto = autoRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("ID auto non valido: " + id));
+        model.addAttribute("auto", auto);
+        return "modificaAuto";
+    }
+
+
+    
+    
+    //modifica auto POST
+    @PostMapping("/modificaAuto")
+    public String modificaAuto(@ModelAttribute("auto") Auto auto,
+                              @RequestParam("file") MultipartFile file) {
+        Optional<Auto> optAuto = autoRepository.findById(auto.getId());
+        if (optAuto.isPresent()) {
+            Auto existingAuto = optAuto.get();
+
+            // Aggiorna campi manualmente
+            existingAuto.setTarga(auto.getTarga());
+            existingAuto.setMarca(auto.getMarca());
+            existingAuto.setColore(auto.getColore());
+            existingAuto.setKm(auto.getKm());
+            existingAuto.setPrezzo(auto.getPrezzo());
+            existingAuto.setCarburante(auto.getCarburante());
+            existingAuto.setCategoria(auto.getCategoria());
+
+            // Aggiorna immagine solo se file caricato
+            if (!file.isEmpty()) {
+                try {
+                    existingAuto.setImmagine(file.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            autoRepository.save(existingAuto);
+            return "redirect:/lista?puntoVenditaId=" + existingAuto.getPuntoVendita().getId();
+        } else {
+            throw new IllegalArgumentException("ID auto non valido: " + auto.getId());
+        }
+    }
+
+
 }
