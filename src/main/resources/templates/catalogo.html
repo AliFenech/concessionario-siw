@@ -96,44 +96,41 @@
 	         <div class="row">
 	           <div class="col-md-3 me-3 col-lg-2 mb-3">
 	             <p>Categoria auto:</p>
-	             <select class="form-select" id="categoria" aria-label="Categoria">
-	               <option selected>Tutte</option>
-	               <option value="Fiat">Fiat</option>
-	               <option value="2">Berline</option>
-	               <option value="3">Coupé</option>
-	               <!-- Aggiungi altre categorie -->
-	             </select>
+				 <select class="form-select" id="categoria" name="categoria" th:value="${categoria}">
+	 			    <option th:value="All"  th:selected="${categoria == null}">Tutte</option>
+	 			    <option th:value="Utilitaria" th:selected="${categoria == 'Utilitaria'}">Utilitaria</option>
+	 			    <option th:value="SUV" th:selected="${categoria == 'SUV'}">SUV</option>
+	 			    <option th:value="'Sportiva'" th:selected="${categoria == 'Sportiva'}">Sportiva</option>
+					<option th:value="'Berlina'" th:selected="${categoria == 'Berlina'}">Berlina</option>
+	 			  </select>
 	           </div>
 	           <div class="col-md-3 me-3 col-lg-2 mb-3">
 	             <p>Marca auto:</p>
-			  <select class="form-select" id="marca" name="marca" th:value="${marca}">
-			    <option  th:selected="${marca == null}">Tutte</option>
-			    <option th:value="Fiat" th:selected="${marca == 'Fiat'}">Fiat</option>
-			    <option th:value="BMW" th:selected="${marca == 'BMW'}">BMW</option>
-			    <option th:value="'Mercedes'" th:selected="${marca == 'Mercedes'}">Mercedes</option>
-			  </select>
+				  <input type="text" class="form-control" style="width: 300px;" name="marca" th:value="${marca}" placeholder="Inserisci la marca dell'auto">
 
 	           </div>
 	          
 	           <div class="col-md-3 me-3 col-lg-2 mb-3">
 	             <p>Colore auto:</p>
-	             <select class="form-select" id="colore" aria-label="Colore">
-	               <option selected>Tutti</option>
-	               <option value="1">Bianco</option>
-	               <option value="2">Nero</option>
-	               <option value="3">Blu</option>
-	               <!-- Aggiungi altri colori -->
-	             </select>
+				 <select class="form-select" id="colore" name="colore" th:value="${colore}">
+	 	 		    <option th:value="All" th:selected="${colore == null || colore == 'All'}">Tutti</option>
+	 	 		    <option th:value="Bianco" th:selected="${colore == 'Bianco'}">Bianco</option>
+	 	 		    <option th:value="Nero" th:selected="${colore == 'Nero'}">Nero</option>
+	 	 		    <option th:value="Rosso" th:selected="${colore == 'Rosso'}">Rosso</option>
+	 				<option th:value="Blu" th:selected="${colore == 'Blu'}">Blu</option>
+					<option th:value="Blu" th:selected="${colore == 'Grigio'}">Grigio</option>
+	 	 		  </select>
 	           </div>
 	           <div class="col-md-3 col-lg-2 mb-3">
 	             <p>Tipo carburante:</p>
-	             <select class="form-select" id="carburante" aria-label="Tipo di carburante">
-	               <option  selected>Tutti</option>
-	               <option value="Benzina">Benzina</option>
-	               <option value="Diesel">Diesel</option>
-	               <option value="Elettrico">Elettrico</option>
-	               <option value="Ibrido">Ibrido</option>
-	             </select>
+	             
+				 <select class="form-select" id="carburante" name="carburante" th:value="${carburante}">
+		 		    <option th:value="All" th:selected="${carburante == null || carburante == 'All'}">Tutti</option>
+		 		    <option th:value="Benzina" th:selected="${carburante == 'Benzina'}">Benzina</option>
+		 		    <option th:value="Diesel" th:selected="${carburante == 'Diesel'}">Diesel</option>
+		 		    <option th:value="Elettrico" th:selected="${carburante == 'Elettrico'}">Elettrico</option>
+					<option th:value="Ibrido" th:selected="${carburante == 'Ibrido'}">Ibrido</option>
+		 		  </select>
 	           </div>
 	         </div>
 
@@ -141,12 +138,12 @@
 	           <!-- Range KM -->
 	           <div class="col-md-3 col-lg-2 mb-3 me-3">
 	             <p>Km minimi:</p>
-	             <input type="range" class="form-range" min="0" max="300000" step="10000" value="0" id="customRangeMin">
+	             <input type="range" class="form-range" name="kmMin" min="0" max="500000" step="10000" th:value="${kmMin}" id="customRangeMin">
 	             <output for="customRangeMin" id="rangeMinValue" aria-hidden="true">0</output>
 	           </div>
 	           <div class="col-md-3 col-lg-2 mb-3 me-3">
 	             <p>Km massimi:</p>
-	             <input type="range" class="form-range" min="0" max="300000" step="10000" value="300000" id="customRangeMax">
+	             <input type="range" class="form-range" name="kmMax" min="0" max="500000" step="10000" th:value="${kmMax}" id="customRangeMax">
 	             <output for="customRangeMax" id="rangeMaxValue" aria-hidden="true">300000</output>
 	           </div>
 	           <script>
@@ -177,12 +174,12 @@
 	           <!-- Filtro Prezzo -->
 	           <div class="col-md-3 col-lg-2 mb-3 me-3">
 	             <p>Prezzo minimo:</p>
-	             <input type="range" class="form-range" min="0" max="100000" step="10000" value="0" id="prezzoMin">
+	             <input type="range" class="form-range" name="prezzoMin" min="0" max="300000" step="10000" th:value="${prezzoMin}" id="prezzoMin">
 	             <output for="prezzoMin" id="prezzoMinValue" aria-hidden="true">0</output>
 	           </div>
 	           <div class="col-md-3 col-lg-2 mb-3 me-3">
 	             <p>Prezzo massimo:</p>
-	             <input type="range" class="form-range" min="0" max="100000" step="10000" value="100000" id="prezzoMax">
+	             <input type="range" class="form-range" name="prezzoMax" min="0" max="300000" step="10000" th:value="${prezzoMax}" id="prezzoMax">
 	             <output for="prezzoMax" id="prezzoMaxValue" aria-hidden="true">100000</output>
 	           </div>
 	           <div class="bottone col-md-3 col-lg-2 mt-3 ms-3">
@@ -220,7 +217,11 @@
   <!-- Real Estate Section -->
   <section id="real-estate" class="real-estate section">
 
-    <div class="container">
+	
+	
+    <div class="container-catalogo">
+		
+		
 
       <div class="row gy-4">
 
@@ -231,11 +232,11 @@
 	              <span class="sale-rent">Acquista per <span th:text="${auto.prezzo}"></span> €</span>
 				  <h3>
 	                  <a th:href="@{/auto/{id}(id=${auto.id})}" class="stretched-link"
-	                     th:text="${auto.marca}"></a>
+	                     > <span th:text="${auto.marca}"> </span> <span th:text="${auto.modello}"> </span> </a>
 	                </h3>
 	                <div class="card-content d-flex flex-column justify-content-center text-center">
 	                  <div class="row propery-info">
-	                    <div class="col">Km percorsi</div>
+	                    <div class="col">Km</div>
 	                    <div class="col">Carburante</div>
 	                    <div class="col">Categoria</div>
 	                    <div class="col">Colore</div>

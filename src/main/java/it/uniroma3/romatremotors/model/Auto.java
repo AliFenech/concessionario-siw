@@ -27,6 +27,9 @@ public class Auto {
 	private Float km;
 	
 	@Column(nullable = false)
+	private String modello;
+	
+	@Column(nullable = false)
 	private String marca;
 	
 	@Column(nullable = false)
@@ -60,6 +63,22 @@ public class Auto {
 	private PuntoVendita puntoVendita;
 	
 	
+	
+	
+	/**
+	 * @return the modello
+	 */
+	public String getModello() {
+		return modello;
+	}
+
+	/**
+	 * @param modello the modello to set
+	 */
+	public void setModello(String modello) {
+		this.modello = modello;
+	}
+
 	/**
 	 * @return the dipendente
 	 */
@@ -276,9 +295,12 @@ public class Auto {
 		this.marca = marca;
 	}
 
+	
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(carburante, colore, km, targa);
+		return Objects.hash(carburante, categoria, colore, km, marca, modello, targa);
 	}
 
 	@Override
@@ -290,8 +312,10 @@ public class Auto {
 		if (getClass() != obj.getClass())
 			return false;
 		Auto other = (Auto) obj;
-		return Objects.equals(carburante, other.carburante) && Objects.equals(colore, other.colore)
-				&& Objects.equals(km, other.km) && Objects.equals(targa, other.targa);
+		return Objects.equals(carburante, other.carburante) && Objects.equals(categoria, other.categoria)
+				&& Objects.equals(colore, other.colore) && Objects.equals(km, other.km)
+				&& Objects.equals(marca, other.marca) && Objects.equals(modello, other.modello)
+				&& Objects.equals(targa, other.targa);
 	}
 
 	@Override

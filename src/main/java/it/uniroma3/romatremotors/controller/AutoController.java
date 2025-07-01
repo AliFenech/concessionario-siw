@@ -129,10 +129,10 @@ public class AutoController {
         model.addAttribute("marca", null);
         model.addAttribute("colore", null);
         model.addAttribute("carburante", null);
-        model.addAttribute("kmMin", null);
-        model.addAttribute("kmMax", null);
-        model.addAttribute("prezzoMin", null);
-        model.addAttribute("prezzoMax", null);
+        model.addAttribute("kmMin", 0);
+        model.addAttribute("kmMax", 500000);
+        model.addAttribute("prezzoMin", 0);
+        model.addAttribute("prezzoMax", 300000);
         return "catalogo";
     }
 
@@ -144,16 +144,16 @@ public class AutoController {
             @RequestParam(value = "colore", required = false) String colore,
             @RequestParam(value = "carburante", required = false) String carburante,
             @RequestParam(value = "kmMin", defaultValue = "0") int kmMin,
-            @RequestParam(value = "kmMax", defaultValue = "300000") int kmMax,
+            @RequestParam(value = "kmMax", defaultValue = "500000") int kmMax,
             @RequestParam(value = "prezzoMin", defaultValue = "0") int prezzoMin,
-            @RequestParam(value = "prezzoMax", defaultValue = "100000") int prezzoMax,
+            @RequestParam(value = "prezzoMax", defaultValue = "300000") int prezzoMax,
             Model model) {
 
-        List<Auto> autoList = autoService.filtraAuto(
+    	
+    	List<Auto> autoList = autoService.filtraAuto(
                 categoria, marca,  colore, carburante, kmMin, kmMax, prezzoMin, prezzoMax);
 
-        System.out.println("Filtri applicati: "+ categoria + marca + colore + carburante + kmMin + kmMax + prezzoMin + prezzoMax);
-        
+      
         model.addAttribute("autoList", autoList);
         model.addAttribute("categoria", categoria);
         model.addAttribute("marca", marca);

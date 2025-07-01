@@ -607,6 +607,11 @@ background:
 	min-width: 500px;
 }
 
+.container-catalogo{
+	max-width: none;
+	padding:  0px 60px ;
+}
+
 /*---------------------------------------------------------------
 # Dettagli auto
 ------------------------------------*/
