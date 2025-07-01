@@ -131,9 +131,23 @@
 			<p>
               La tua auto si trova presso il punto vendita di <span th:text="${puntoVendita.citta}"></span> in <span th:text="${puntoVendita.indirizzo}"></span> 
             </p>
-			<a href="#" class="btn btn-success mb-5">
-			       <i class="bi bi-calendar2-week"></i> Prenota test drive
-			 </a>
+			
+			<div sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
+					<a th:href="@{/cliente/prenotatestdrive/{id}(id=${auto.id})}" class="btn btn-success mb-5">
+					       <i class="bi bi-calendar2-week"></i> Prenota test drive
+					 </a>
+	        </div>
+			
+			<div sec:authorize="hasAuthority('ADMIN') and !hasAuthority('CLIENTE')">
+				<p>Attenzione, solo i clienti possono prenotare un test drive. Effettua il <a href="/logout">logout</a> e poi accedi come cliente</p>
+        </div>
+		
+		
+		<div sec:authorize="isAnonymous()">
+				<p>Per prenotare un test drive, <a href="/login">accedi</a> oppure <a href="/registrazione">registrati</a></p>
+        </div>
+			
+			
            
 
            

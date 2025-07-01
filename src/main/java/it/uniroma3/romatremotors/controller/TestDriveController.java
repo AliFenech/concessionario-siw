@@ -60,7 +60,7 @@ public class TestDriveController {
         return "/cliente/prenotazioneTestDrive";
     }
 
-    @PostMapping("/testdrive/prenota/{autoId}")
+    @PostMapping("/cliente/prenotatestdrive/{autoId}")
     public String prenotaTestDrive(@PathVariable Long autoId,
                                    @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
                                    @RequestParam("ora") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime ora,

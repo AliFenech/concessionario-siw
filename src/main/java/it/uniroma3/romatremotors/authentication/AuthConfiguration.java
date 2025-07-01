@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static it.uniroma3.romatremotors.model.Credentials.ADMIN_ROLE;
+import static it.uniroma3.romatremotors.model.Credentials.CLIENTE_ROLE;
 
 @Configuration
 @EnableWebSecurity
@@ -49,6 +50,8 @@ public class AuthConfiguration {
 	            .requestMatchers(HttpMethod.POST, "/registrazione", "/formRegistrazione", "/login", "/catalogo/filtra").permitAll()
 	            .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
 	            .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+	            .requestMatchers(HttpMethod.GET, "/cliente/**", "/cliente/prenotatestdrive").hasAnyAuthority(CLIENTE_ROLE)
+	            .requestMatchers(HttpMethod.POST, "/cliente/**", "/cliente/prenotatestdrive").hasAnyAuthority(CLIENTE_ROLE)
 	            .anyRequest().authenticated()
 	        .and()
 	            .formLogin()

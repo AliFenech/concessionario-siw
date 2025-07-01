@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>RomaTreMotors - Le tue Prenotazioni</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- CSS personalizzato -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="index-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <!-- Logo / Home pubblica -->
+      <a th:href="@{/{}}" class="logo d-flex align-items-center">
+        <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <!-- Home Admin -->
+          <li sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/index}" class="nav-link">Home</a>
+          </li>
+
+          <!-- Home Cliente -->
+          <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
+            <a th:href="@{/cliente/index}" class="nav-link">Home</a>
+          </li>
+
+          <!-- Home Anonimo -->
+          <li sec:authorize="isAnonymous()">
+            <a th:href="@{/{}}" class="nav-link">Home</a>
+          </li>
+
+          <!-- Catalogo Auto -->
+          <li>
+            <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
+          </li>
+
+          <!-- Le mie prenotazioni -->
+          <li sec:authorize="hasAuthority('CLIENTE')">
+            <a th:href="@{/prenotazioni}" class="nav-link active">Le mie prenotazioni</a>
+          </li>
+
+          <!-- Logout (autenticati) -->
+          <li sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline">
+              <button type="submit" class="nav-link btn btn-link p-0" style="font:inherit;cursor:pointer">
+                <i class="bi bi-box-arrow-right me-1"></i>Logout
+              </button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<main class="main pt-5 mt-5">
+  <div class="container mt-4">
+    <h2 class="mb-4">Le tue Prenotazioni</h2>
+
+    <!-- Lista Prenotazioni -->
+    <div th:if="${prenotazioni != null && !prenotazioni.isEmpty()}">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Auto</th>
+            <th scope="col">Data</th>
+            <th scope="col">Orario</th>
+            <th scope="col">Azione</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="prenotazione : ${prenotazioni}">
+            <td th:text="${prenotazione.auto.marca} + ' ' + ${prenotazione.auto.categoria}"></td>
+            <td th:text="${prenotazione.data}"></td>
+            <td th:text="${prenotazione.orario}"></td>
+            <td>
+              <form method="post" th:action="@{'/prenotazioni/annulla/' + ${prenotazione.id}}">
+                <button type="submit" class="btn btn-danger">
+                  <i class="bi bi-x-circle"></i> Annulla
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Messaggio se non ci sono prenotazioni -->
+    <div th:if="${prenotazioni == null || prenotazioni.isEmpty()}" class="alert alert-warning">
+      Non hai ancora effettuato prenotazioni.
+    </div>
+  </div>
+</main>
+</body>
+</html>
