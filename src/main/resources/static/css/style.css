@@ -292,7 +292,7 @@ h6 {
 }
 
 .page-title .heading {
-  padding: 160px 0 80px 0;
+  padding: 120px 0 10px 0;
   border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
@@ -336,6 +336,14 @@ section,
   padding: 60px 0;
   scroll-margin-top: 90px;
   overflow: clip;
+}
+
+.section-catalogo{
+	color: var(--default-color);
+	  background-color: var(--background-color);
+	  padding: 0px 0;
+	  scroll-margin-top: 90px;
+	  overflow: clip;
 }
 
 @media (max-width: 1199px) {
@@ -591,7 +599,25 @@ background:
 }
 
 
+/*---------------------------------------------------------------
+# Catalogo auto
+------------------------------------*/
 
+.autoCard{
+	min-width: 500px;
+}
+
+/*---------------------------------------------------------------
+# Dettagli auto
+------------------------------------*/
+
+.details-car{
+	text-align: center;
+}
+
+.details-car img{
+	max-width: 750px;
+}
 
 
 /*--------------------------------------------------------------
@@ -1175,7 +1201,7 @@ background:
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit:none ;
   z-index: 1;
 }
 

@@ -116,6 +116,8 @@ public class AutoController {
     public String dettagliAuto(@PathVariable Long id, Model model) {
         Auto auto = autoService.findById(id);
         model.addAttribute("auto", auto);
+        PuntoVendita puntoVendita = auto.getPuntoVendita();
+        model.addAttribute("puntoVendita", puntoVendita);
         return "dettagliAuto";
     }
 
@@ -123,10 +125,9 @@ public class AutoController {
     @GetMapping("/catalogo")
     public String getCatalogo(Model model) {
         model.addAttribute("autoList", autoRepository.findAll());
-        model.addAttribute("categorie", null);
-        model.addAttribute("marche", null);
-        model.addAttribute("optional", null);
-        model.addAttribute("colori", null);
+        model.addAttribute("categoria", null);
+        model.addAttribute("marca", null);
+        model.addAttribute("colore", null);
         model.addAttribute("carburante", null);
         model.addAttribute("kmMin", null);
         model.addAttribute("kmMax", null);
@@ -138,25 +139,25 @@ public class AutoController {
     // Catalogo filtrato
     @PostMapping("/catalogo/filtra")
     public String getAutoFiltrate(
-            @RequestParam(value = "categoria", required = false) List<String> categorie,
-            @RequestParam(value = "marca", required = false) List<String> marche,
-            @RequestParam(value = "optional", required = false) List<String> optional,
-            @RequestParam(value = "colore", required = false) List<String> colori,
-            @RequestParam(value = "carburante", required = false) List<String> carburante,
+            @RequestParam(value = "categoria", required = false) String categoria,
+            @RequestParam(value = "marca", required = false) String marca,
+            @RequestParam(value = "colore", required = false) String colore,
+            @RequestParam(value = "carburante", required = false) String carburante,
             @RequestParam(value = "kmMin", defaultValue = "0") int kmMin,
             @RequestParam(value = "kmMax", defaultValue = "300000") int kmMax,
             @RequestParam(value = "prezzoMin", defaultValue = "0") int prezzoMin,
             @RequestParam(value = "prezzoMax", defaultValue = "100000") int prezzoMax,
             Model model) {
 
-        List<Auto> autoList = autoService.findByFilter(
-                categorie, marche, optional, colori, carburante, kmMin, kmMax, prezzoMin, prezzoMax);
+        List<Auto> autoList = autoService.filtraAuto(
+                categoria, marca,  colore, carburante, kmMin, kmMax, prezzoMin, prezzoMax);
 
+        System.out.println("Filtri applicati: "+ categoria + marca + colore + carburante + kmMin + kmMax + prezzoMin + prezzoMax);
+        
         model.addAttribute("autoList", autoList);
-        model.addAttribute("categorie", categorie);
-        model.addAttribute("marche", marche);
-        model.addAttribute("optional", optional);
-        model.addAttribute("colori", colori);
+        model.addAttribute("categoria", categoria);
+        model.addAttribute("marca", marca);
+        model.addAttribute("colore", colore);
         model.addAttribute("carburante", carburante);
         model.addAttribute("kmMin", kmMin);
         model.addAttribute("kmMax", kmMax);

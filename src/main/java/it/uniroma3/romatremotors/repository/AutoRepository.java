@@ -10,7 +10,12 @@ import it.uniroma3.romatremotors.model.PuntoVendita;
 @Repository
 public interface AutoRepository extends CrudRepository<Auto, Long>{
 
-	List<Auto> findByCategoriaInAndMarcaInAndOptionalAutoInAndColoreInAndCarburanteInAndKmBetweenAndPrezzoBetween(List<String> categorie, List<String> marche, List<String> optional, List<String> colori, List<String> carburante, int kmMin, int kmMax, int prezzoMin, int prezzoMax);
+	
+	List<Auto> findByCategoriaAndKmBetweenAndPrezzoBetween(String categoria, int kmMin, int kmMax, int prezzoMin, int prezzoMax);
+    List<Auto> findByMarcaAndKmBetweenAndPrezzoBetween(String marca, int kmMin, int kmMax, int prezzoMin, int prezzoMax);
+    List<Auto> findByColoreAndKmBetweenAndPrezzoBetween(String colore, int kmMin, int kmMax, int prezzoMin, int prezzoMax);
+    List<Auto> findByCarburanteAndKmBetweenAndPrezzoBetween(String carburante, int kmMin, int kmMax, int prezzoMin, int prezzoMax);
+	
 	List<Auto> findByPuntoVendita(PuntoVendita puntoVendita);
 	
 }

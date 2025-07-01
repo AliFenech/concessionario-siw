@@ -88,164 +88,177 @@
 	</header>
 
   <main class="main pt-5 mt-5">
+	
+	<form action="/catalogo/filtra" method="POST">
+	     <!-- Filtri in alto -->
+	     <section id="filters" class="filters section pt-3">
+	       <div class="container align-items-center">
+	         <div class="row">
+	           <div class="col-md-3 me-3 col-lg-2 mb-3">
+	             <p>Categoria auto:</p>
+	             <select class="form-select" id="categoria" aria-label="Categoria">
+	               <option selected>Tutte</option>
+	               <option value="Fiat">Fiat</option>
+	               <option value="2">Berline</option>
+	               <option value="3">Coupé</option>
+	               <!-- Aggiungi altre categorie -->
+	             </select>
+	           </div>
+	           <div class="col-md-3 me-3 col-lg-2 mb-3">
+	             <p>Marca auto:</p>
+			  <select class="form-select" id="marca" name="marca" th:value="${marca}">
+			    <option  th:selected="${marca == null}">Tutte</option>
+			    <option th:value="Fiat" th:selected="${marca == 'Fiat'}">Fiat</option>
+			    <option th:value="BMW" th:selected="${marca == 'BMW'}">BMW</option>
+			    <option th:value="'Mercedes'" th:selected="${marca == 'Mercedes'}">Mercedes</option>
+			  </select>
 
-    <form>
-      <!-- Filtri in alto -->
-      <section id="filters" class="filters section pt-3">
-        <div class="container align-items-center">
-          <div class="row">
-            <div class="col-md-3 me-3 col-lg-2 mb-3">
-              <p>Categoria auto:</p>
-              <select class="form-select" id="categoria" aria-label="Categoria">
-                <option selected>Tutte</option>
-                <option value="1">SUV</option>
-                <option value="2">Berline</option>
-                <option value="3">Coupé</option>
-                <!-- Aggiungi altre categorie -->
-              </select>
-            </div>
-            <div class="col-md-3 me-3 col-lg-2 mb-3">
-              <p>Marca auto:</p>
-              <select class="form-select" id="marca" aria-label="Marca">
-                <option selected>Tutte</option>
-                <option value="1">Toyota</option>
-                <option value="2">BMW</option>
-                <option value="3">Mercedes</option>
-                <!-- Aggiungi altre marche -->
-              </select>
-            </div>
-            <div class="col-md-3 me-3 col-lg-2 mb-3">
-              <p>Seleziona Optional:</p>
-              <select class="form-select" id="optional" aria-label="Optional">
-                <option selected>Tutti</option>
-                <option value="1">Navigatore</option>
-                <option value="2">Sedili in pelle</option>
-                <!-- Aggiungi altri optional -->
-              </select>
-            </div>
-            <div class="col-md-3 me-3 col-lg-2 mb-3">
-              <p>Colore auto:</p>
-              <select class="form-select" id="colore" aria-label="Colore">
-                <option selected>Tutti</option>
-                <option value="1">Bianco</option>
-                <option value="2">Nero</option>
-                <option value="3">Blu</option>
-                <!-- Aggiungi altri colori -->
-              </select>
-            </div>
-            <div class="col-md-3 col-lg-2 mb-3">
-              <p>Tipo carburante:</p>
-              <select class="form-select" id="carburante" aria-label="Tipo di carburante">
-                <option value="Tutti" selected>Tutti</option>
-                <option value="Benzina">Benzina</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Elettrico">Elettrico</option>
-                <option value="Ibrido">Ibrido</option>
-              </select>
-            </div>
-          </div>
+	           </div>
+	          
+	           <div class="col-md-3 me-3 col-lg-2 mb-3">
+	             <p>Colore auto:</p>
+	             <select class="form-select" id="colore" aria-label="Colore">
+	               <option selected>Tutti</option>
+	               <option value="1">Bianco</option>
+	               <option value="2">Nero</option>
+	               <option value="3">Blu</option>
+	               <!-- Aggiungi altri colori -->
+	             </select>
+	           </div>
+	           <div class="col-md-3 col-lg-2 mb-3">
+	             <p>Tipo carburante:</p>
+	             <select class="form-select" id="carburante" aria-label="Tipo di carburante">
+	               <option  selected>Tutti</option>
+	               <option value="Benzina">Benzina</option>
+	               <option value="Diesel">Diesel</option>
+	               <option value="Elettrico">Elettrico</option>
+	               <option value="Ibrido">Ibrido</option>
+	             </select>
+	           </div>
+	         </div>
 
-          <div class="row mt-3 mb-3">
-            <!-- Range KM -->
-            <div class="col-md-3 col-lg-2 mb-3 me-3">
-              <p>Km minimi:</p>
-              <input type="range" class="form-range" min="0" max="300000" step="10000" value="0" id="customRangeMin">
-              <output for="customRangeMin" id="rangeMinValue" aria-hidden="true">0</output>
-            </div>
-            <div class="col-md-3 col-lg-2 mb-3 me-3">
-              <p>Km massimi:</p>
-              <input type="range" class="form-range" min="0" max="300000" step="10000" value="300000" id="customRangeMax">
-              <output for="customRangeMax" id="rangeMaxValue" aria-hidden="true">300000</output>
-            </div>
-            <script>
-              const rangeMin = document.getElementById('customRangeMin');
-              const rangeMax = document.getElementById('customRangeMax');
-              const rangeMinValue = document.getElementById('rangeMinValue');
-              const rangeMaxValue = document.getElementById('rangeMaxValue');
+	         <div class="row mt-3 mb-3">
+	           <!-- Range KM -->
+	           <div class="col-md-3 col-lg-2 mb-3 me-3">
+	             <p>Km minimi:</p>
+	             <input type="range" class="form-range" min="0" max="300000" step="10000" value="0" id="customRangeMin">
+	             <output for="customRangeMin" id="rangeMinValue" aria-hidden="true">0</output>
+	           </div>
+	           <div class="col-md-3 col-lg-2 mb-3 me-3">
+	             <p>Km massimi:</p>
+	             <input type="range" class="form-range" min="0" max="300000" step="10000" value="300000" id="customRangeMax">
+	             <output for="customRangeMax" id="rangeMaxValue" aria-hidden="true">300000</output>
+	           </div>
+	           <script>
+	             const rangeMin = document.getElementById('customRangeMin');
+	             const rangeMax = document.getElementById('customRangeMax');
+	             const rangeMinValue = document.getElementById('rangeMinValue');
+	             const rangeMaxValue = document.getElementById('rangeMaxValue');
 
-              rangeMinValue.textContent = rangeMin.value;
-              rangeMaxValue.textContent = rangeMax.value;
+	             rangeMinValue.textContent = rangeMin.value;
+	             rangeMaxValue.textContent = rangeMax.value;
 
-              rangeMin.addEventListener('input', function() {
-                rangeMinValue.textContent = this.value;
-                if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
-                  rangeMin.value = rangeMax.value;
-                  rangeMinValue.textContent = rangeMaxValue.textContent;
-                }
-              });
-              rangeMax.addEventListener('input', function() {
-                rangeMaxValue.textContent = this.value;
-                if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
-                  rangeMax.value = rangeMin.value;
-                  rangeMaxValue.textContent = rangeMinValue.textContent;
-                }
-              });
-            </script>
+	             rangeMin.addEventListener('input', function() {
+	               rangeMinValue.textContent = this.value;
+	               if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+	                 rangeMin.value = rangeMax.value;
+	                 rangeMinValue.textContent = rangeMaxValue.textContent;
+	               }
+	             });
+	             rangeMax.addEventListener('input', function() {
+	               rangeMaxValue.textContent = this.value;
+	               if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
+	                 rangeMax.value = rangeMin.value;
+	                 rangeMaxValue.textContent = rangeMinValue.textContent;
+	               }
+	             });
+	           </script>
 
-            <!-- Filtro Prezzo -->
-            <div class="col-md-3 col-lg-2 mb-3 me-3">
-              <p>Prezzo minimo:</p>
-              <input type="range" class="form-range" min="0" max="100000" step="1000" value="0" id="prezzoMin">
-              <output for="prezzoMin" id="prezzoMinValue" aria-hidden="true">0</output>
-            </div>
-            <div class="col-md-3 col-lg-2 mb-3 me-3">
-              <p>Prezzo massimo:</p>
-              <input type="range" class="form-range" min="0" max="100000" step="1000" value="100000" id="prezzoMax">
-              <output for="prezzoMax" id="prezzoMaxValue" aria-hidden="true">100000</output>
-            </div>
-            <div class="bottone col-md-3 col-lg-2 mt-3 ms-3">
-              <button type="submit" class="btn btn">Filtra</button>
-            </div>
-            <script>
-              const prezzoMin = document.getElementById('prezzoMin');
-              const prezzoMax = document.getElementById('prezzoMax');
-              const prezzoMinValue = document.getElementById('prezzoMinValue');
-              const prezzoMaxValue = document.getElementById('prezzoMaxValue');
+	           <!-- Filtro Prezzo -->
+	           <div class="col-md-3 col-lg-2 mb-3 me-3">
+	             <p>Prezzo minimo:</p>
+	             <input type="range" class="form-range" min="0" max="100000" step="10000" value="0" id="prezzoMin">
+	             <output for="prezzoMin" id="prezzoMinValue" aria-hidden="true">0</output>
+	           </div>
+	           <div class="col-md-3 col-lg-2 mb-3 me-3">
+	             <p>Prezzo massimo:</p>
+	             <input type="range" class="form-range" min="0" max="100000" step="10000" value="100000" id="prezzoMax">
+	             <output for="prezzoMax" id="prezzoMaxValue" aria-hidden="true">100000</output>
+	           </div>
+	           <div class="bottone col-md-3 col-lg-2 mt-3 ms-3">
+	             <button type="submit" class="btn btn">Filtra</button>
+	           </div>
+	           <script>
+	             const prezzoMin = document.getElementById('prezzoMin');
+	             const prezzoMax = document.getElementById('prezzoMax');
+	             const prezzoMinValue = document.getElementById('prezzoMinValue');
+	             const prezzoMaxValue = document.getElementById('prezzoMaxValue');
 
-              prezzoMinValue.textContent = prezzoMin.value;
-              prezzoMaxValue.textContent = prezzoMax.value;
+	             prezzoMinValue.textContent = prezzoMin.value;
+	             prezzoMaxValue.textContent = prezzoMax.value;
 
-              prezzoMin.addEventListener('input', function() {
-                prezzoMinValue.textContent = this.value;
-                if (parseInt(prezzoMin.value) > parseInt(prezzoMax.value)) {
-                  prezzoMin.value = prezzoMax.value;
-                  prezzoMinValue.textContent = prezzoMaxValue.textContent;
-                }
-              });
-              prezzoMax.addEventListener('input', function() {
-                prezzoMaxValue.textContent = this.value;
-                if (parseInt(prezzoMax.value) < parseInt(prezzoMin.value)) {
-                  prezzoMax.value = prezzoMin.value;
-                  prezzoMaxValue.textContent = prezzoMinValue.textContent;
-                }
-              });
-            </script>
-          </div>
-        </div>
-      </section>
-    </form>
+	             prezzoMin.addEventListener('input', function() {
+	               prezzoMinValue.textContent = this.value;
+	               if (parseInt(prezzoMin.value) > parseInt(prezzoMax.value)) {
+	                 prezzoMin.value = prezzoMax.value;
+	                 prezzoMinValue.textContent = prezzoMaxValue.textContent;
+	               }
+	             });
+	             prezzoMax.addEventListener('input', function() {
+	               prezzoMaxValue.textContent = this.value;
+	               if (parseInt(prezzoMax.value) < parseInt(prezzoMin.value)) {
+	                 prezzoMax.value = prezzoMin.value;
+	                 prezzoMaxValue.textContent = prezzoMinValue.textContent;
+	               }
+	             });
+	           </script>
+	         </div>
+	       </div>
+	     </section>
+	   </form>
 
-    <section id="real-estate" class="real-estate section">
-      <div class="container">
-        <div class="row gy-4">
-          <div th:if="${#lists.isEmpty(autoList)}" class="col-12 text-center">
-            <p>Nessuna auto trovata per i criteri selezionati.</p>
-          </div>
-          <div th:each="auto : ${autoList}" class="col-xl-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="card">
-              <img th:src="@{/auto/immagine/{id}(id=${auto.id})}" alt="Immagine auto" class="img-fluid">
-              <div class="card-body">
-                <h3>
-                  <a th:href="@{/auto/{id}(id=${auto.id})}" class="stretched-link"
-                     th:text="${auto.marca} + ' ' + ${auto.modello}"></a>
-                </h3>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!-- Real Estate Section -->
+  <section id="real-estate" class="real-estate section">
+
+    <div class="container">
+
+      <div class="row gy-4">
+
+		<div th:each="auto : ${autoList}" class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+			<div class="card">
+	            <img th:src="@{/auto/{id}/immagine(id=${auto.id})}" alt="Immagine auto" class="img-fluid">
+	            <div class="card-body">
+	              <span class="sale-rent">Acquista per <span th:text="${auto.prezzo}"></span> €</span>
+				  <h3>
+	                  <a th:href="@{/auto/{id}(id=${auto.id})}" class="stretched-link"
+	                     th:text="${auto.marca}"></a>
+	                </h3>
+	                <div class="card-content d-flex flex-column justify-content-center text-center">
+	                  <div class="row propery-info">
+	                    <div class="col">Km percorsi</div>
+	                    <div class="col">Carburante</div>
+	                    <div class="col">Categoria</div>
+	                    <div class="col">Colore</div>
+	                  </div>
+	                  <div class="row">
+	                    <div class="col" th:text="${auto.km}"></div>
+	                    <div class="col" th:text="${auto.carburante}"></div>
+	                    <div class="col" th:text="${auto.categoria}"></div>
+	                    <div class="col" th:text="${auto.colore}"></div>
+	                  </div>
+	                </div>
+	            </div>
+	          </div>
+		</div>
+		
+		
+
       </div>
-    </section><!-- /Real Estate Section -->
 
-  </main>
+    </div>
+
+  </section><!-- /Real Estate Section -->
+
+</main>
 </body>
 </html>
