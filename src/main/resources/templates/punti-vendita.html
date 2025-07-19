@@ -24,65 +24,62 @@
 </head>
 <body class="index-page">
 
-  <!-- Navbar unificata -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-      <a th:href="@{/{}}" class="logo d-flex align-items-center">
-        <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul class="d-flex list-unstyled mb-0">
-          <li sec:authorize="hasAuthority('ADMIN')" class="me-3">
-            <a th:href="@{/admin/index}" class="nav-link p-0">Home</a>
-          </li>
-          <li sec:authorize="hasAuthority('CLIENTE')" class="me-3">
-            <a th:href="@{/cliente/index}" class="nav-link p-0">Home</a>
-          </li>
-          <li sec:authorize="isAnonymous()" class="me-3">
-            <a th:href="@{/{}}" class="nav-link p-0">Home</a>
-          </li>
-          <li class="me-3">
-            <a th:href="@{/catalogo}" class="nav-link p-0">Catalogo Auto</a>
-          </li>
-          <li sec:authorize="hasAuthority('CLIENTE')" class="me-3">
-            <a th:href="@{/cliente/prenotazioni}" class="nav-link p-0">Le mie prenotazioni</a>
-          </li>
-          <li sec:authorize="hasAuthority('ADMIN')" class="me-3">
-            <a th:href="@{/admin/punti-vendita}" class="nav-link p-0">Aggiungi Punti Vendita</a>
-          </li>
-          <li sec:authorize="isAnonymous()" class="me-3">
-            <a th:href="@{/login}" class="nav-link p-0">Accedi</a>
-          </li>
-          <li sec:authorize="isAnonymous()" class="me-3">
-            <a th:href="@{/registrazione}" class="nav-link p-0">Registrati</a>
-          </li>
-          <li sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" method="post" style="display:inline">
-              <button type="submit"
-                      class="nav-link btn btn-link p-0"
-                      style="font:inherit;cursor:pointer">
-                <i class="bi bi-box-arrow-right me-1"></i>Logout
-              </button>
-            </form>
-          </li>
-        </ul>
-        <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
-          <i class="bi bi-list fs-2"></i>
-        </button>
-      </nav>
-    </div>
-  </header>
+	<header id="header" class="header d-flex align-items-center fixed-top">
+	   <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+	     <a href="index.html" class="logo d-flex align-items-center">
+	       <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
+	     </a>
+
+	  <nav id="navmenu" class="navmenu">
+	    <ul>
+	     
+
+	      <li>
+	        <a th:href="@{/}" class="nav-link">Home</a>
+	      </li>
+
+	      <li>
+	        <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
+	      </li>
+
+	      <li>
+	        <a th:href="@{/punti-vendita}" class="nav-link active">Punti Vendita</a>
+	      </li>
+
+	      <!-- Le mie prenotazioni (solo CLIENTE) -->
+	      <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
+	        <a th:href="@{/cliente/prenotazioni}" class="nav-link">Le mie prenotazioni</a>
+	      </li>
+
+	      <!-- Accedi / Registrati (solo anonimi) -->
+	      <li sec:authorize="isAnonymous()">
+	        <a th:href="@{/login}" class="nav-link">Accedi</a>
+	      </li>
+	      <li sec:authorize="isAnonymous()">
+	        <a th:href="@{/registrazione}" class="nav-link">Registrati</a>
+	      </li>
+
+	      <!-- Logout (tutti gli autenticati) -->
+	      <li sec:authorize="isAuthenticated()">
+	       <a th:href="@{/logout}" class="nav-link">Logout</a>
+	      </li>
+	    </ul>
+
+	    <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
+	      <i class="bi bi-list fs-2"></i>
+	    </button>
+	  </nav>
+	   </div>
+	 </header>
+
 
   <main class="container py-5 mt-5">
-    <div class="text-center mb-4">
+    <div class="text-center mb-4 mt-3">
       <h2>Lista Punti Vendita</h2>
     </div>
 
-    <div class="d-flex justify-content-center mb-4 flex-wrap gap-2">
-      <a th:href="@{/admin/index}" class="btn btn-outline-secondary">
-        <i class="bi bi-house-door-fill"></i> Torna alla Home
-      </a>
-      <a th:href="@{/punti-vendita-form/new}" class="btn btn-success">
+    <div sec:authorize="hasAuthority('ADMIN')" class="d-flex justify-content-center mb-4 flex-wrap gap-2">
+      <a th:href="@{/admin/punti-vendita-form/new}" class="btn btn-success">
         <i class="bi bi-plus-circle"></i> Aggiungi Punto Vendita
       </a>
     </div>
@@ -94,33 +91,29 @@
 	<table class="table table-hover table-striped shadow-sm rounded">
 	  <thead class="table-dark">
 	    <tr>
-	      <th>ID</th>
 	      <th>Città</th>
 	      <th>Indirizzo</th>
-	      <th class="text-center" style="width: 60px;">🗑</th>
+	      <th sec:authorize="hasAuthority('ADMIN')" class="text-center">Elimina punto vendita</th>
 	    </tr>
 	  </thead>
 	  <tbody th:each="pv, iterStat : ${puntiVendita}">
 	    <!-- Riga principale -->
 	    <tr class="main-row align-middle" th:attr="data-index=${iterStat.index}">
-	      <td th:text="${pv.id}"></td>
 	      <td th:text="${pv.citta}"></td>
 	      <td th:text="${pv.indirizzo}"></td>
-	      <td class="text-center">
-	        <form th:action="@{'/punti-vendita/' + ${pv.id} + '/delete'}"
-	              method="post"
-	              onsubmit="return confirm('Sei sicuro di voler eliminare questo punto vendita?');"
-	              class="d-inline">
-	          <button type="submit" class="btn btn-link p-0 text-danger" title="Elimina">
-	            🗑️
-	          </button>
-	        </form>
+	      <td sec:authorize="hasAuthority('ADMIN')" class="text-center">
+			<a  th:href="@{/admin/punti-vendita/{id}/delete(id=${pv.id})}" 
+																           class="btn btn-sm btn-danger"
+																           th:onclick="'event.stopPropagation();'">
+																          <i class="bi bi-trash"></i> Elimina
+																        </a>
+	       
 	      </td>
 	    </tr>
 	    <!-- Riga dettaglio (tendina) -->
 	    <tr class="details-row" th:id="'details-' + ${iterStat.index}" style="display:none;">
 	      <td colspan="4" class="details-cell">
-	        <strong>ID:</strong> <span th:text="${pv.id}"></span><br>
+	        
 	        <strong>Città:</strong> <span th:text="${pv.citta}"></span><br>
 	        <strong>Indirizzo:</strong> <span th:text="${pv.indirizzo}"></span><br><br>
 	        <a th:href="@{'/punti-vendita/' + ${pv.id}}">

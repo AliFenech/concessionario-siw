@@ -383,7 +383,7 @@ section,
   background-size: cover;
   background-position: center;
   width: 100%;
-  min-height: 100vh;
+  min-height: 89.7vh;
   padding: 15%;
   margin: 0;
   background-color: var(--background-color);
@@ -399,9 +399,7 @@ section,
   color: var(--background-color);
 }
 
-.title h2 span {
-  color: var(--accent-color);
-}
+
 
 @media (max-width: 768px) {
   .hero h2 {

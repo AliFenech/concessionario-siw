@@ -27,29 +27,18 @@
 
 	  <nav id="navmenu" class="navmenu">
 	    <ul>
-	      <!-- Home Admin (src/main/resources/templates/admin/index.html) -->
-	      <li sec:authorize="hasAuthority('ADMIN')">
-	        <a th:href="@{/admin/index}" class="nav-link">Home</a>
+	     
+
+	      <li >
+	        <a th:href="@{/}" class="nav-link active">Home</a>
 	      </li>
 
-	      <!-- Home Cliente (src/main/resources/templates/cliente/index.html) -->
-	      <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
-	        <a th:href="@{/cliente/index}" class="nav-link">Home</a>
-	      </li>
-
-	      <!-- Home Pubblica (src/main/resources/templates/index.html) -->
-	      <li sec:authorize="isAnonymous()">
-	        <a th:href="@{/{}}" class="nav-link">Home</a>
-	      </li>
-
-	      <!-- Catalogo Auto (tutti i ruoli) -->
 	      <li>
 	        <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
 	      </li>
 
-	      <!-- Aggiungi Punti Vendita (solo ADMIN) -->
-	      <li sec:authorize="hasAuthority('ADMIN')">
-	        <a th:href="@{/punti-vendita}" class="nav-link">Aggiungi Punti Vendita</a>
+	      <li>
+	        <a th:href="@{/punti-vendita}" class="nav-link">Punti Vendita</a>
 	      </li>
 
 	      <!-- Le mie prenotazioni (solo CLIENTE) -->
@@ -67,13 +56,7 @@
 
 	      <!-- Logout (tutti gli autenticati) -->
 	      <li sec:authorize="isAuthenticated()">
-	        <form th:action="@{/logout}" method="post" style="display:inline">
-	          <button type="submit"
-	                  class="nav-link btn btn-link p-0"
-	                  style="font:inherit;cursor:pointer">
-	            <i class="bi bi-box-arrow-right me-1"></i>Logout
-	          </button>
-	        </form>
+	       <a th:href="@{/logout}" class="nav-link">Logout</a>
 	      </li>
 	    </ul>
 
@@ -84,7 +67,7 @@
     </div>
   </header>
 
-  <main class="main pt-5 mt-5">
+  <main class="main pt-5 mt-4">
     <section class="title py-5">
       <div class="container">
         <div class="row align-items-start">
@@ -141,77 +124,7 @@
       </div>
     </section>
 
-    <!-- Sezione Servizi -->
-    <section id="services" class="services section py-5">
-      <div class="container">
-        <div class="section-title mb-4">
-          <h2>I nostri servizi</h2>
-          <p>Offriamo una gamma di servizi per soddisfare ogni tua esigenza automobilistica.</p>
-        </div>
-
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-tools"></i></div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Manutenzione Auto</h3>
-              </a>
-              <p>Servizi di manutenzione ordinaria e straordinaria per mantenere la tua auto sempre efficiente.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-currency-euro"></i></div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Finanziamenti</h3>
-              </a>
-              <p>Soluzioni di pagamento flessibili e personalizzate per ogni esigenza.</p>
-            </div>
-          </div>
-
-		  <div class="col-lg-4 col-md-6">
-		      <div class="service-item position-relative">
-		          <div class="icon"><i class="bi bi-cart4"></i></div>
-		          <a th:href="@{/vendita-accessori}" class="stretched-link">
-		              <h3>Vendita Accessori</h3>
-		          </a>
-		          <p>Scopri i nostri accessori per personalizzare la tua auto con qualità e stile.</p>
-		      </div>
-		  </div>
-
-		  <div class="col-lg-4 col-md-6">
-		    <div class="service-item position-relative">
-		      <div class="icon"><i class="bi bi-headset"></i></div>
-		      <a th:href="@{/assistenza-clienti}" class="stretched-link">
-		        <h3>Assistenza Clienti</h3>
-		      </a>
-		      <p>Supporto rapido ed efficace per ogni tua richiesta o problema.</p>
-		    </div>
-		  </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-car-front"></i></div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Noleggio Auto</h3>
-              </a>
-              <p>Servizi di noleggio a breve e lungo termine a condizioni vantaggiose.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-speedometer"></i></div>
-              <a href="service-details.html" class="stretched-link">
-                <h3>Test Drive</h3>
-              </a>
-              <p>Prova la tua auto preferita prima di acquistarla con il nostro servizio test drive.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
 
   </main>
 
@@ -222,36 +135,6 @@
     });
   </script>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white pt-5 pb-4 mt-5">
-    <div class="container text-center text-md-start">
-      <div class="row">
-        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
-          <h5 class="text-uppercase fw-bold mb-3 text-white">Sede di Roma</h5>
-          <p><i class="bi bi-geo-alt-fill me-2"></i>Via Appia Nuova 123, 00183 Roma</p>
-          <p><i class="bi bi-telephone-fill me-2"></i>+39 06 1234 5678</p>
-          <p><i class="bi bi-envelope-fill me-2"></i>roma@romatremotors.it</p>
-        </div>
-
-        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
-          <h5 class="text-uppercase fw-bold mb-3 text-white">Sede di Milano</h5>
-          <p><i class="bi bi-geo-alt-fill me-2"></i>Via Torino 45, 20123 Milano</p>
-          <p><i class="bi bi-telephone-fill me-2"></i>+39 02 8765 4321</p>
-          <p><i class="bi bi-envelope-fill me-2"></i>milano@romatremotors.it</p>
-        </div>
-
-        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
-          <h5 class="text-uppercase fw-bold mb-3 text-white">Sede di Napoli</h5>
-          <p><i class="bi bi-geo-alt-fill me-2"></i>Corso Umberto I 99, 80138 Napoli</p>
-          <p><i class="bi bi-telephone-fill me-2"></i>+39 081 765 4321</p>
-          <p><i class="bi bi-envelope-fill me-2"></i>napoli@romatremotors.it</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-center p-3 bg-secondary mt-3">
-      © 2025 RomaTreMotors. Tutti i diritti riservati.
-    </div>
-  </footer>
+  
 </body>
 </html>

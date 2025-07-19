@@ -17,26 +17,53 @@
 </head>
 
 <body class="pag-credentials">
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+	   <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+	     <a href="index.html" class="logo d-flex align-items-center">
+	       <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
+	     </a>
 
-      <a href="/" class="logo d-flex align-items-center">
-        <!-- <img src="assets/img/logo.png" alt="Logo RomaTreMotors"> -->
-        <h1 class="sitename">RomaTre<span>Motors</span></h1>
-      </a>
+	  <nav id="navmenu" class="navmenu">
+	    <ul>
+	     
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/" >Home</a></li>
-          <li><a href="/catalogo">Catalogo Auto</a></li>
-          <li><a href="/login">Accedi</a></li>
-          <li><a href="/registrazione" class="active">Registrati</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+	      <li>
+	        <a th:href="@{/}" class="nav-link">Home</a>
+	      </li>
 
-    </div>
-  </header>
+	      <li>
+	        <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
+	      </li>
+
+	      <li>
+	        <a th:href="@{/punti-vendita}" class="nav-link">Punti Vendita</a>
+	      </li>
+
+	      <!-- Le mie prenotazioni (solo CLIENTE) -->
+	      <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
+	        <a th:href="@{/cliente/prenotazioni}" class="nav-link">Le mie prenotazioni</a>
+	      </li>
+
+	      <!-- Accedi / Registrati (solo anonimi) -->
+	      <li sec:authorize="isAnonymous()">
+	        <a th:href="@{/login}" class="nav-link">Accedi</a>
+	      </li>
+	      <li sec:authorize="isAnonymous()">
+	        <a th:href="@{/registrazione}" class="nav-link active">Registrati</a>
+	      </li>
+
+	      <!-- Logout (tutti gli autenticati) -->
+	      <li sec:authorize="isAuthenticated()">
+	       <a th:href="@{/logout}" class="nav-link">Logout</a>
+	      </li>
+	    </ul>
+
+	    <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
+	      <i class="bi bi-list fs-2"></i>
+	    </button>
+	  </nav>
+	   </div>
+	 </header>
 
   <main class="main">
     <div class="credentials">

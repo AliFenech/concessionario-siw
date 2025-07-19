@@ -21,19 +21,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        for (GrantedAuthority authority : authorities) {
-            String role = authority.getAuthority();
-
-            if (role.equals("ADMIN")) {
-                response.sendRedirect("/admin/index");
-                return;
-            } else if (role.equals("CLIENTE")) {
-                response.sendRedirect("/cliente/index");
-                return;
-            }
-        }
-
-        // default fallback
         response.sendRedirect("/");
+        return;
+
+
     }
 }

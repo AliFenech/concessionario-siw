@@ -49,9 +49,9 @@ public class AutoController {
     }
 
     // Mostra form nuova auto
-    @GetMapping("/nuova")
-    public String mostraFormNuovaAuto(@RequestParam("puntoVenditaId") Long puntoVenditaId, Model model) {
-        PuntoVendita puntoVendita = puntoVenditaRepository.findById(puntoVenditaId).orElse(null);
+    @GetMapping("/admin/nuova/{id}/")
+    public String mostraFormNuovaAuto(@PathVariable Long id, Model model) {
+        PuntoVendita puntoVendita = puntoVenditaRepository.findById(id).orElse(null);
 
         if (puntoVendita == null) {
             model.addAttribute("errore", "Punto vendita non trovato.");
@@ -63,11 +63,11 @@ public class AutoController {
 
         model.addAttribute("auto", auto);
         model.addAttribute("puntoVendita", puntoVendita);
-        return "formNewAuto";
+        return "/admin/formNewAuto";
     }
 
     // Salva nuova auto
-    @PostMapping("/nuova")
+    @PostMapping("/admin/nuova")
     public String salvaNuovaAuto(@ModelAttribute("auto") Auto auto,
                                  BindingResult bindingResult,
                                  @RequestParam("immagine") MultipartFile file,
@@ -75,13 +75,13 @@ public class AutoController {
 
         if (auto.getPuntoVendita() == null || auto.getPuntoVendita().getId() == null) {
             model.addAttribute("errore", "ID punto vendita mancante");
-            return "formNewAuto";
+            return "/admin/formNewAuto";
         }
 
         PuntoVendita puntoVendita = puntoVenditaRepository.findById(auto.getPuntoVendita().getId()).orElse(null);
         if (puntoVendita == null) {
             model.addAttribute("errore", "Punto vendita non valido");
-            return "formNewAuto";
+            return "/admin/formNewAuto";
         }
         auto.setPuntoVendita(puntoVendita);
 
@@ -92,11 +92,11 @@ public class AutoController {
         } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("errore", "Errore nel caricamento dell'immagine");
-            return "formNewAuto";
+            return "/admin/formNewAuto";
         }
 
         autoRepository.save(auto);
-        return "redirect:/lista?puntoVenditaId=" + puntoVendita.getId();
+        return "redirect:/punti-vendita/" + puntoVendita.getId();
     }
 
     // Restituisce immagine dell'auto
@@ -166,33 +166,39 @@ public class AutoController {
 
         return "catalogo";
     }
+    
+    
+    
+    
     //eliminazione auto
-    @PostMapping("/eliminaAuto/{id}")
+    @PostMapping("/admin/eliminaAuto/{id}")
     public String deleteAuto(@PathVariable Long id) {
         Optional<Auto> optAuto = autoRepository.findById(id);
         if (optAuto.isPresent()) {
             Long puntoVenditaId = optAuto.get().getPuntoVendita().getId();
             autoRepository.deleteById(id);
-            return "redirect:/lista?puntoVenditaId=" + puntoVenditaId;
+            return "redirect:/punti-vendita/" + puntoVenditaId;
         } else {
             throw new IllegalArgumentException("ID auto non valido: " + id);
         }
     }
 
+    
+    
     //modifica Auto GET
-    @GetMapping("/modificaAuto")
-    public String modificaAutoQueryParam(@RequestParam("id") Long id, Model model) {
+    @GetMapping("/admin/modificaAuto/{id}")
+    public String modificaAutoQueryParam(@PathVariable Long id, Model model) {
         Auto auto = autoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("ID auto non valido: " + id));
         model.addAttribute("auto", auto);
-        return "modificaAuto";
+        return "/admin/modificaAuto";
     }
 
 
     
     
     //modifica auto POST
-    @PostMapping("/modificaAuto")
+    @PostMapping("/admin/modificaAuto")
     public String modificaAuto(@ModelAttribute("auto") Auto auto,
                               @RequestParam("file") MultipartFile file) {
         Optional<Auto> optAuto = autoRepository.findById(auto.getId());
@@ -217,7 +223,7 @@ public class AutoController {
                 }
             }
             autoRepository.save(existingAuto);
-            return "redirect:/lista?puntoVenditaId=" + existingAuto.getPuntoVendita().getId();
+            return "redirect:/punto-vendita/" + existingAuto.getPuntoVendita().getId();
         } else {
             throw new IllegalArgumentException("ID auto non valido: " + auto.getId());
         }

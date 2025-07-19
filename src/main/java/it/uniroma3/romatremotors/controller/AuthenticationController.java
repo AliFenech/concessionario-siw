@@ -30,19 +30,7 @@ public class AuthenticationController {
     
     @GetMapping(value = "/") 
 	public String index(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication instanceof AnonymousAuthenticationToken) {
-	        return "index";
-		}
-		else {		
-			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			  model.addAttribute("username", userDetails.getUsername());
-
-			if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
-				return "admin/indexAdmin";
-			}
-		}
+		
         return "index"; 
         }
     
@@ -54,6 +42,7 @@ public class AuthenticationController {
         model.addAttribute("credentials", new Credentials());
         return "formRegistrazione";
     }
+    
     
     @PostMapping("/registrazione")
     public String registerClient(@Valid @ModelAttribute("utente") Utente utente,
@@ -73,7 +62,7 @@ public class AuthenticationController {
             credentials.setRuolo(Credentials.CLIENTE_ROLE); // assegna il ruolo CLIENT
             credentialsService.saveCredentials(credentials);
             model.addAttribute("cliente", utente);
-            return "redirect:/index";
+            return "redirect:/";
         }
 
         if (credentialsBindingResult.hasFieldErrors("passwordConfirm")) {
@@ -87,19 +76,7 @@ public class AuthenticationController {
     }
 
 
-    @GetMapping(value = "/success")
-    public String nextLogin(Model model) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 
-        if (credentials.getRuolo().equals(Credentials.ADMIN_ROLE)) {
-            return "redirect:/admin/index";
-        } else if (credentials.getRuolo().equals(Credentials.CLIENTE_ROLE)) {
-            return "redirect:/cliente/index";
-        } else {
-            return "redirect:/";
-        }
-    }
 
 
     @GetMapping(value= "/login")

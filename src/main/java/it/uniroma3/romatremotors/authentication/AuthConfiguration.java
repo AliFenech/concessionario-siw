@@ -46,10 +46,12 @@ public class AuthConfiguration {
 	        .cors().disable()
 	        .csrf().disable()
 	        .authorizeHttpRequests()
-	            .requestMatchers(HttpMethod.GET, "/", "/index", "/punti-vendita", "/catalogo", "/catalogo/filtra", "/registrazione", "/formRegistrazione", "/css/**", "/images/**", "favicon.ico").permitAll()
+	            .requestMatchers(HttpMethod.GET, "/", "/index", "/punti-vendita/**", "/catalogo", "/catalogo/filtra", "/registrazione", "/formRegistrazione", "/css/**", "/auto/**", "/images/**", "favicon.ico").permitAll()
 	            .requestMatchers(HttpMethod.POST, "/registrazione", "/formRegistrazione", "/login", "/catalogo/filtra").permitAll()
+	            
 	            .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
 	            .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+	            
 	            .requestMatchers(HttpMethod.GET, "/cliente/**", "/cliente/prenotatestdrive").hasAnyAuthority(CLIENTE_ROLE)
 	            .requestMatchers(HttpMethod.POST, "/cliente/**", "/cliente/prenotatestdrive").hasAnyAuthority(CLIENTE_ROLE)
 	            .anyRequest().authenticated()
