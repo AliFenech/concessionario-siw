@@ -19,53 +19,53 @@
 </head>
 
 <body class="index-page">
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+	  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+	    <a href="index.html" class="logo d-flex align-items-center">
+	      <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
+	    </a>
 
-      <!-- Logo / Home pubblica -->
-      <a th:href="@{/{}}" class="logo d-flex align-items-center">
-        <h1 class="sitename mb-0">RomaTre<span>Motors</span></h1>
-      </a>
+	  <nav id="navmenu" class="navmenu">
+	    <ul>
+	     
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <!-- Home Admin -->
-          <li sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/admin/index}" class="nav-link">Home</a>
-          </li>
+	      <li >
+	        <a th:href="@{/}" class="nav-link">Home</a>
+	      </li>
 
-          <!-- Home Cliente -->
-          <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
-            <a th:href="@{/cliente/index}" class="nav-link">Home</a>
-          </li>
+	      <li>
+	        <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
+	      </li>
 
-          <!-- Home Anonimo -->
-          <li sec:authorize="isAnonymous()">
-            <a th:href="@{/{}}" class="nav-link">Home</a>
-          </li>
+	      <li>
+	        <a th:href="@{/punti-vendita}" class="nav-link">Punti Vendita</a>
+	      </li>
 
-          <!-- Catalogo Auto -->
-          <li>
-            <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
-          </li>
+	      <!-- Le mie prenotazioni (solo CLIENTE) -->
+	      <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
+	        <a th:href="@{/cliente/prenotazioni}" class="nav-link active">Le mie prenotazioni</a>
+	      </li>
 
-          <!-- Le mie prenotazioni -->
-          <li sec:authorize="hasAuthority('CLIENTE')">
-            <a th:href="@{/prenotazioni}" class="nav-link active">Le mie prenotazioni</a>
-          </li>
+	      <!-- Accedi / Registrati (solo anonimi) -->
+	      <li sec:authorize="isAnonymous()">
+	        <a th:href="@{/login}" class="nav-link">Accedi</a>
+	      </li>
+	      <li sec:authorize="isAnonymous()">
+	        <a th:href="@{/registrazione}" class="nav-link">Registrati</a>
+	      </li>
 
-          <!-- Logout (autenticati) -->
-          <li sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" method="post" style="display:inline">
-              <button type="submit" class="nav-link btn btn-link p-0" style="font:inherit;cursor:pointer">
-                <i class="bi bi-box-arrow-right me-1"></i>Logout
-              </button>
-            </form>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+	      <!-- Logout (tutti gli autenticati) -->
+	      <li sec:authorize="isAuthenticated()">
+	       <a th:href="@{/logout}" class="nav-link">Logout</a>
+	      </li>
+	    </ul>
+
+	    <button class="mobile-nav-toggle d-xl-none btn btn-link p-0" aria-label="Menu mobile">
+	      <i class="bi bi-list fs-2"></i>
+	    </button>
+	  </nav>
+	  </div>
+	</header>
 
 <main class="main pt-5 mt-5">
   <div class="container mt-4">
@@ -84,7 +84,7 @@
         </thead>
         <tbody>
           <tr th:each="prenotazione : ${prenotazioni}">
-            <td th:text="${prenotazione.auto.marca} + ' ' + ${prenotazione.auto.categoria}"></td>
+            <td th:text="${prenotazione.auto.marca} + ' ' + ${prenotazione.auto.modello}"></td>
             <td th:text="${prenotazione.data}"></td>
             <td th:text="${prenotazione.orario}"></td>
             <td>

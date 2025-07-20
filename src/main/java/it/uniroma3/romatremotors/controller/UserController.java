@@ -34,12 +34,4 @@ public class UserController {
 	return "admin/index";
 	}
 	
-	@GetMapping("/cliente/prenotazioni")
-	public String showPrenotazioni(Model model, Principal principal) {
-		Credentials credentials = credentialsService.getCredentials(principal.getName());
-		Utente utente = credentials.getUtente();
-		List<TestDrive> listaPrenotazioni = testDriveService.findByCliente(utente.getId());
-		model.addAttribute("prenotazioni", listaPrenotazioni);
-		return "cliente/listaPrenotazioni";
-	}
 }

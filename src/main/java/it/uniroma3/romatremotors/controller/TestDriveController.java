@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniroma3.romatremotors.model.Credentials;
-import it.uniroma3.romatremotors.model.Utente;
+import it.uniroma3.romatremotors.model.TestDrive;
 import it.uniroma3.romatremotors.model.Auto;
 import it.uniroma3.romatremotors.service.AutoService;
 import it.uniroma3.romatremotors.service.TestDriveService;
@@ -26,8 +26,16 @@ public class TestDriveController {
     @Autowired private AutoService autoService;
     @Autowired private TestDriveService testDriveService;
     @Autowired private CredentialsService credentialsService;
+    
+    @GetMapping("/cliente/prenotatestdrive/{id}")
+    public String showOrari(@PathVariable Long id,  Model model) {
+    	
+    	
+    	model.addAttribute("auto", this.autoService.findById(id));
+    	return "/cliente/prenotazioneTestDrive";
+    }
 
-    @GetMapping("/prenotazioneTestDrive/{autoId}")
+    @GetMapping("/cliente/prenotazioneTestDrive/{autoId}")
     public String showOrari(@PathVariable Long autoId,
                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataSelezionata,
                             Model model) {
@@ -69,7 +77,7 @@ public class TestDriveController {
 
         Auto auto = autoService.findById(autoId);
         Credentials credentials = credentialsService.getCredentials(principal.getName());
-        Utente cliente = credentials.getUtente();
+       
         LocalDateTime dataEOra = LocalDateTime.of(data, ora);
 
         if (testDriveService.existsByAutoAndDataEOra(autoId, dataEOra)) {
@@ -79,10 +87,24 @@ public class TestDriveController {
             return "/cliente/prenotazioneTestDrive";
         }
 
-        testDriveService.creaPrenotazione(auto, cliente, dataEOra);
+        testDriveService.creaPrenotazione(auto, credentials, dataEOra);
 
-        model.addAttribute("auto", auto);
-        model.addAttribute("successMessage", "✅ Prenotazione avvenuta con successo per il " + data + " alle " + ora + ".");
-        return "/cliente/prenotazioneTestDrive";
+        
+        return "redirect:/cliente/prenotazioni";
     }
+    
+    @GetMapping("/cliente/prenotazioni")
+    public String showPrenotazioni(Model model, Principal principal) {
+    	
+    	Credentials credentials = credentialsService.getCredentials(principal.getName());
+    	
+    	List<TestDrive> prenotazioni = this.testDriveService.findByCredentials(credentials);
+    	
+    	model.addAttribute("prenotazioni", prenotazioni);
+    	
+    	return "/cliente/listaPrenotazioni";
+    	
+    }
+    
+    
 }

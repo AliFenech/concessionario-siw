@@ -21,12 +21,9 @@ public class TestDrive {
 	private LocalDateTime dataEOra;
 	
 	
-	 @ManyToOne
-	 private Utente dipendente;
-	 
-	
+
 	@ManyToOne
-	private Utente cliente;
+	private Credentials credentials;
 	
 	@ManyToOne
 	private Auto auto;
@@ -60,17 +57,17 @@ public class TestDrive {
 	}
 
 	/**
-	 * @return the cliente
+	 * @return the credentials
 	 */
-	public Utente getCliente() {
-		return cliente;
+	public Credentials getCredentials() {
+		return credentials;
 	}
 
 	/**
-	 * @param cliente the cliente to set
+	 * @param credentials the credentials to set
 	 */
-	public void setCliente(Utente cliente) {
-		this.cliente = cliente;
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 
 	/**
@@ -86,20 +83,10 @@ public class TestDrive {
 	public void setAuto(Auto auto) {
 		this.auto = auto;
 	}
-	
-	
-
-	public Utente getDipendente() {
-		return dipendente;
-	}
-
-	public void setDipendente(Utente dipendente) {
-		this.dipendente = dipendente;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(auto, cliente, dataEOra, id);
+		return Objects.hash(auto, credentials, dataEOra);
 	}
 
 	@Override
@@ -111,9 +98,11 @@ public class TestDrive {
 		if (getClass() != obj.getClass())
 			return false;
 		TestDrive other = (TestDrive) obj;
-		return Objects.equals(auto, other.auto) && Objects.equals(cliente, other.cliente)
-				&& Objects.equals(dataEOra, other.dataEOra) && Objects.equals(id, other.id);
+		return Objects.equals(auto, other.auto) && Objects.equals(credentials, other.credentials)
+				&& Objects.equals(dataEOra, other.dataEOra);
 	}
+
+	
 	
 	
 	

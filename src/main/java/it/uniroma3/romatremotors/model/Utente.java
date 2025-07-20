@@ -46,12 +46,6 @@ public class Utente {
 	
 	@OneToMany(mappedBy= "dipendente")
 	private List<Auto> autoInserite;
-	
-	@OneToMany(mappedBy= "cliente")
-	private List<TestDrive> testdriveCliente;
-	
-	@OneToMany(mappedBy= "dipendente")
-	private List<TestDrive> testdriveDipendente;
 
 	/**
 	 * @return the id
@@ -151,34 +145,6 @@ public class Utente {
 		this.autoInserite = autoInserite;
 	}
 
-	/**
-	 * @return the testdriveCliente
-	 */
-	public List<TestDrive> getTestdriveCliente() {
-		return testdriveCliente;
-	}
-
-	/**
-	 * @param testdriveCliente the testdriveCliente to set
-	 */
-	public void setTestdriveCliente(List<TestDrive> testdriveCliente) {
-		this.testdriveCliente = testdriveCliente;
-	}
-
-	/**
-	 * @return the testdriveDipendente
-	 */
-	public List<TestDrive> getTestdriveDipendente() {
-		return testdriveDipendente;
-	}
-
-	/**
-	 * @param testdriveDipendente the testdriveDipendente to set
-	 */
-	public void setTestdriveDipendente(List<TestDrive> testdriveDipendente) {
-		this.testdriveDipendente = testdriveDipendente;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(cognome, dataNascita, email, nome);
@@ -196,6 +162,7 @@ public class Utente {
 		return Objects.equals(cognome, other.cognome) && Objects.equals(dataNascita, other.dataNascita)
 				&& Objects.equals(email, other.email) && Objects.equals(nome, other.nome);
 	}
+	
 	
 	
 }

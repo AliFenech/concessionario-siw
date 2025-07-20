@@ -1,6 +1,7 @@
 package it.uniroma3.romatremotors.service;
 
 import it.uniroma3.romatremotors.model.Auto;
+import it.uniroma3.romatremotors.model.Credentials;
 import it.uniroma3.romatremotors.model.TestDrive;
 import it.uniroma3.romatremotors.model.Utente;
 import it.uniroma3.romatremotors.repository.TestDriveRepository;
@@ -31,16 +32,16 @@ public class TestDriveService {
         return testDriveRepository.existsByAutoIdAndDataEOra(autoId, dataEOra);
     }
 
-    public void creaPrenotazione(Auto auto, Utente cliente, LocalDateTime dataEOra) {
+    public void creaPrenotazione(Auto auto, Credentials credentials, LocalDateTime dataEOra) {
         TestDrive td = new TestDrive();
         td.setAuto(auto);
-        td.setCliente(cliente);
+        td.setCredentials(credentials);
         td.setDataEOra(dataEOra);
         testDriveRepository.save(td);
     }
 
-    public List<TestDrive> findByCliente(Long clienteId) {
-        return testDriveRepository.findByClienteId(clienteId);
+    public List<TestDrive> findByCredentials(Credentials credentials) {
+        return testDriveRepository.findByCredentials(credentials);
     }
     
 

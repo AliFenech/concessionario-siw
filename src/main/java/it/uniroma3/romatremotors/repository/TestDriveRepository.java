@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import it.uniroma3.romatremotors.model.Credentials;
 import it.uniroma3.romatremotors.model.TestDrive;
 
 public interface TestDriveRepository extends CrudRepository<TestDrive, Long> {
@@ -13,5 +14,5 @@ public interface TestDriveRepository extends CrudRepository<TestDrive, Long> {
 
     boolean existsByAutoIdAndDataEOra(Long autoId, LocalDateTime dataEOra);
 
-    List<TestDrive> findByClienteId(Long clienteId);
+    List<TestDrive> findByCredentials(Credentials credentials);
 }

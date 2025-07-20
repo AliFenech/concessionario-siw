@@ -76,9 +76,13 @@
     <div class="text-center mb-4 mt-4">
       <h2>Dettagli Punto Vendita</h2>
 
-	  					          <a sec:authorize="hasAuthority('ADMIN')"   th:href="@{/admin/nuova/{id}/(id=${puntoVendita.id})}" class="btn mt-3 btn-success">
-	  					            Aggiungi un auto
-	  					          </a>
+      <a sec:authorize="hasAuthority('ADMIN')"   th:href="@{/admin/nuova/{id}/(id=${puntoVendita.id})}" class="btn mt-3 btn-success">
+        Aggiungi un auto
+      </a>
+	  
+	  <div th:if="${puntoVendita.auto.empty}">
+		<p>Nessuna auto presente per questo punto vendita</p>
+	  </div>
 
 
     </div>
@@ -96,7 +100,7 @@
 		<div class="container mt-4">
 			
 			
-		    <div th:each="auto : ${puntoVendita.auto}" class="mb-4 p-3 border rounded shadow-sm" style="max-width: 900px; margin: 0 auto;">
+		    <div th:unless="${puntoVendita.auto.empty}" th:each="auto : ${puntoVendita.auto}" class="mb-4 p-3 border rounded shadow-sm" style="max-width: 900px; margin: 0 auto;">
 		        <div class="d-flex align-items-start">
 		            <!-- Immagine a sinistra -->
 		            <img th:src="@{/auto/{id}/immagine(id=${auto.id})}" alt="Immagine auto"

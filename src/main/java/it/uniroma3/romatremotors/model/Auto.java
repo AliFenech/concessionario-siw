@@ -53,9 +53,7 @@ public class Auto {
 	@OneToMany(mappedBy= "auto")
 	private List<TestDrive> testDrive;
 
-	@ManyToMany
-	private List<AutoOptional> optionalAuto;
-	
+
 	@ManyToOne
 	private Utente dipendente;
 	
@@ -208,24 +206,6 @@ public class Auto {
 	public void setTestDrive(List<TestDrive> testDrive) {
 		this.testDrive = testDrive;
 	}
-
-
-	
-
-	/**
-	 * @return the optionalAuto
-	 */
-	public List<AutoOptional> getOptionalAuto() {
-		return optionalAuto;
-	}
-
-	/**
-	 * @param optionalAuto the optionalAuto to set
-	 */
-	public void setOptionalAuto(List<AutoOptional> optionalAuto) {
-		this.optionalAuto = optionalAuto;
-	}
-
 	
 	
 	/**

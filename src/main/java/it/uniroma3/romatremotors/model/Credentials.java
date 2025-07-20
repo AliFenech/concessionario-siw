@@ -1,5 +1,6 @@
 package it.uniroma3.romatremotors.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
@@ -44,7 +45,23 @@ public class Credentials {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Utente utente;
+	
+	@OneToMany(mappedBy= "credentials")
+	private List<TestDrive> testdriveCliente;
 
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the username
@@ -75,6 +92,20 @@ public class Credentials {
 	}
 
 	/**
+	 * @return the passwordConfirm
+	 */
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	/**
+	 * @param passwordConfirm the passwordConfirm to set
+	 */
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	/**
 	 * @return the ruolo
 	 */
 	public String getRuolo() {
@@ -86,36 +117,6 @@ public class Credentials {
 	 */
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
-	}
-
-
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the passwordEncode
-	 */
-	public String getPasswordEncode() {
-		return passwordEncode;
-	}
-
-	/**
-	 * @param passwordEncode the passwordEncode to set
-	 */
-	public void setPasswordEncode(String passwordEncode) {
-		this.passwordEncode = passwordEncode;
 	}
 
 	/**
@@ -133,10 +134,17 @@ public class Credentials {
 	}
 
 	/**
-	 * @return the clienteRole
+	 * @return the testdriveCliente
 	 */
-	public static String getClienteRole() {
-		return CLIENTE_ROLE;
+	public List<TestDrive> getTestdriveCliente() {
+		return testdriveCliente;
+	}
+
+	/**
+	 * @param testdriveCliente the testdriveCliente to set
+	 */
+	public void setTestdriveCliente(List<TestDrive> testdriveCliente) {
+		this.testdriveCliente = testdriveCliente;
 	}
 
 	/**
@@ -154,36 +162,16 @@ public class Credentials {
 	}
 
 	/**
-	 * @return the clientRole
+	 * @return the clienteRole
 	 */
-	public static String getClientRole() {
+	public static String getClienteRole() {
 		return CLIENTE_ROLE;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ruolo, username);
+		return Objects.hash(ruolo, username, utente);
 	}
-	
-	
-
-	/**
-	 * @return the passwordConfirm
-	 */
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	/**
-	 * @param passwordConfirm the passwordConfirm to set
-	 */
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-	 // Validazione password
-    public boolean isPasswordConfirmed() {
-        return this.passwordEncode != null && this.passwordEncode.equals(this.passwordConfirm);
-    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -194,7 +182,8 @@ public class Credentials {
 		if (getClass() != obj.getClass())
 			return false;
 		Credentials other = (Credentials) obj;
-		return Objects.equals(ruolo, other.ruolo) && Objects.equals(username, other.username);
+		return Objects.equals(ruolo, other.ruolo) && Objects.equals(username, other.username)
+				&& Objects.equals(utente, other.utente);
 	}
 
 	
