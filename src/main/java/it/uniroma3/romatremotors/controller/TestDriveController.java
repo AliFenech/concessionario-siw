@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import it.uniroma3.romatremotors.model.Credentials;
 import it.uniroma3.romatremotors.model.TestDrive;
@@ -26,83 +27,139 @@ public class TestDriveController {
     @Autowired private AutoService autoService;
     @Autowired private TestDriveService testDriveService;
     @Autowired private CredentialsService credentialsService;
+
     
-    @GetMapping("/cliente/prenotatestdrive/{id}")
-    public String showOrari(@PathVariable Long id,  Model model) {
-    	
-    	
-    	model.addAttribute("auto", this.autoService.findById(id));
-    	return "/cliente/prenotazioneTestDrive";
-    }
-
-    @GetMapping("/cliente/prenotazioneTestDrive/{autoId}")
-    public String showOrari(@PathVariable Long autoId,
-                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataSelezionata,
-                            Model model) {
-
+    // Mostra pagina con form per selezionare la data
+    @GetMapping("/cliente/prenotatestdrive/{autoId}")
+    public String mostraFormData(@PathVariable Long autoId, Model model) {
         Auto auto = autoService.findById(autoId);
         model.addAttribute("auto", auto);
-        model.addAttribute("dataSelezionata", dataSelezionata);
+        return "/cliente/prenotazioneTestDrive";
+    }
+    
+    /**
+     * Trova gli orari e mostra la pagina con gli orari disponibili
+     * @param autoId
+     * @param dataSelezionata
+     * @param model
+     * @return
+     */
+    @PostMapping("/cliente/orariDisponibili")
+    public String mostraOrariDisponibili(@RequestParam("autoId") Long autoId, @RequestParam("dataSelezionata") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataSelezionata, Model model) {
+    	Auto auto = this.autoService.findById(autoId);
+    	model.addAttribute("auto", auto);
+    	model.addAttribute("dataSelezionata", dataSelezionata);
+    	List<LocalDateTime> appuntamentiPrenotati = testDriveService.findAppuntamentiPerDataEAuto(dataSelezionata, autoId);
 
-        if (dataSelezionata != null) {
-            List<LocalDateTime> appuntamentiPrenotati = testDriveService.findAppuntamentiPerDataEAuto(dataSelezionata, autoId);
-
-            List<LocalTime> orariFissi = List.of(
-                    LocalTime.of(10, 0),
-                    LocalTime.of(14, 0),
-                    LocalTime.of(16, 0),
-                    LocalTime.of(18, 0)
-            );
-
-            List<LocalTime> appuntamentiDisponibili = new ArrayList<>();
-            for (LocalTime orario : orariFissi) {
-                LocalDateTime slot = LocalDateTime.of(dataSelezionata, orario);
-                if (!appuntamentiPrenotati.contains(slot)) {
-                    appuntamentiDisponibili.add(orario);
-                }
+        List<LocalTime> orariFissi = List.of(
+                LocalTime.of(10, 0),
+                LocalTime.of(14, 0),
+                LocalTime.of(16, 0),
+                LocalTime.of(18, 0)
+        );
+        
+        List<LocalTime> appuntamentiDisponibili = new ArrayList<>();
+        for (LocalTime orario : orariFissi) {
+            LocalDateTime slot = LocalDateTime.of(dataSelezionata, orario);
+            if (!appuntamentiPrenotati.contains(slot)) {
+                appuntamentiDisponibili.add(orario);
             }
-
-            model.addAttribute("appuntamenti", appuntamentiDisponibili);
         }
+        
+        model.addAttribute("appuntamenti", appuntamentiDisponibili);
 
         return "/cliente/prenotazioneTestDrive";
     }
+    
+    
+ 
 
-    @PostMapping("/cliente/prenotatestdrive/{autoId}")
-    public String prenotaTestDrive(@PathVariable Long autoId,
-                                   @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
-                                   @RequestParam("ora") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime ora,
+   
+
+    /**
+     * Prende la data l'ora e salva la prenotazione
+     * @param autoId
+     * @param data
+     * @param ora
+     * @param principal
+     * @param model
+     * @return
+     */
+    @PostMapping("/cliente/salvataggioPrenotazione")
+    public String prenotaTestDrive(@RequestParam("autoId") Long autoId,
+                                   @RequestParam("dataSelezionata") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+                                   @RequestParam("orario") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime ora,
                                    Principal principal,
                                    Model model) {
 
         Auto auto = autoService.findById(autoId);
         Credentials credentials = credentialsService.getCredentials(principal.getName());
-       
+
         LocalDateTime dataEOra = LocalDateTime.of(data, ora);
 
         if (testDriveService.existsByAutoAndDataEOra(autoId, dataEOra)) {
-            model.addAttribute("auto", auto);
-            model.addAttribute("dataSelezionata", data);
-            model.addAttribute("successMessage", "⚠️ Orario non disponibile.");
-            return "/cliente/prenotazioneTestDrive";
-        }
+		            // Ricarica la pagina con messaggio di errore
+		            model.addAttribute("auto", auto);
+		            model.addAttribute("dataSelezionata", data);
+		            model.addAttribute("successMessage", "⚠️ Orario non disponibile.");
+		            
+		            // Calcolo orari disponibili per la stessa data per mostrare i bottoni di scelta
+		            List<LocalDateTime> appuntamentiPrenotati = testDriveService.findAppuntamentiPerDataEAuto(data, autoId);
+		
+		            List<LocalTime> orariFissi = List.of(
+		                    LocalTime.of(10, 0),
+		                    LocalTime.of(14, 0),
+		                    LocalTime.of(16, 0),
+		                    LocalTime.of(18, 0)
+		            );
+		
+		            List<LocalTime> appuntamentiDisponibili = new ArrayList<>();
+		            for (LocalTime orarioFisso : orariFissi) {
+		                LocalDateTime slot = LocalDateTime.of(data, orarioFisso);
+		                if (!appuntamentiPrenotati.contains(slot)) {
+		                    appuntamentiDisponibili.add(orarioFisso);
+		                }
+		            }
+		
+		            model.addAttribute("appuntamenti", appuntamentiDisponibili);
+		
+		            return "/cliente/prenotazioneTestDrive";
+		        }
 
         testDriveService.creaPrenotazione(auto, credentials, dataEOra);
 
-        
         return "redirect:/cliente/prenotazioni";
     }
-    
+
+    // Mostra tutte le prenotazioni dell'utente
     @GetMapping("/cliente/prenotazioni")
-    public String showPrenotazioni(Model model, Principal principal) {
+    public String mostraPrenotazioni(Model model, Principal principal) {
+        Credentials credentials = credentialsService.getCredentials(principal.getName());
+        List<TestDrive> prenotazioni = this.testDriveService.findByCredentials(credentials);
+        model.addAttribute("prenotazioni", prenotazioni);
+        return "/cliente/listaPrenotazioni";
+    }
+    
+    
+    @GetMapping("/cliente/annullaPrenotazione/{id}")
+    public String annullaPrenotazione(@PathVariable Long id, Principal principal) {
+        
+    	Optional<TestDrive> prenotazioneOpt = this.testDriveService.findById(id);
     	
-    	Credentials credentials = credentialsService.getCredentials(principal.getName());
+    	if(prenotazioneOpt.isPresent()) {
+    		
+    		TestDrive prenotazione = prenotazioneOpt.get();
+    		
+    		if (prenotazione == null) {
+                
+                return "redirect:/cliente/prenotazioni";
+            }
+    		
+    		this.testDriveService.removeTestDriveById(prenotazione);
+    		return "redirect:/cliente/prenotazioni";
+    	}
     	
-    	List<TestDrive> prenotazioni = this.testDriveService.findByCredentials(credentials);
-    	
-    	model.addAttribute("prenotazioni", prenotazioni);
-    	
-    	return "/cliente/listaPrenotazioni";
+    	return "/cliente/prenotazioni";
     	
     }
     

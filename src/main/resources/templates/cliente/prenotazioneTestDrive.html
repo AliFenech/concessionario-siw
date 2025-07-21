@@ -34,7 +34,7 @@
 	      </li>
 
 	      <li>
-	        <a th:href="@{/catalogo}" class="nav-link">Catalogo Auto</a>
+	        <a th:href="@{/catalogo}" class="nav-link active">Catalogo Auto</a>
 	      </li>
 
 	      <li>
@@ -43,7 +43,7 @@
 
 	      <!-- Le mie prenotazioni (solo CLIENTE) -->
 	      <li sec:authorize="hasAuthority('CLIENTE') and !hasAuthority('ADMIN')">
-	        <a th:href="@{/cliente/prenotazioni}" class="nav-link active">Le mie prenotazioni</a>
+	        <a th:href="@{/cliente/prenotazioni}" class="nav-link">Le mie prenotazioni</a>
 	      </li>
 
 	      <!-- Accedi / Registrati (solo anonimi) -->
@@ -73,7 +73,8 @@
     <h2 class="mb-4" th:text="'Prenotazione Test Drive per ' + ${auto.marca} + ' ' + ${auto.modello}"></h2>
 
     <!-- Form selezione data -->
-    <form method="get" th:action="@{'/cliente/prenotazioneTestDrive/' + ${auto.id}}">
+    <form method="post" th:action="@{/cliente/orariDisponibili}">
+		<input type="hidden" name="autoId" th:value="${auto.id}">
       <div class="mb-3">
         <label for="dataSelezionata" class="form-label">Seleziona una data:</label>
         <input type="date" id="dataSelezionata" name="dataSelezionata" class="form-control" th:value="${dataSelezionata}" required>
@@ -86,9 +87,10 @@
       <h4>Orari disponibili per la data selezionata</h4>
       <div class="row g-2 mt-2">
         <div class="col-6 col-md-3" th:each="orario : ${appuntamenti}">
-          <form method="post" th:action="@{'/cliente/prenotatestdrive/' + ${auto.id}}">
-            <input type="hidden" name="data" th:value="${dataSelezionata}">
-            <input type="hidden" name="ora" th:value="${orario}">
+          <form method="post" th:action="@{/cliente/salvataggioPrenotazione}">
+            <input type="hidden" name="dataSelezionata" th:value="${dataSelezionata}">
+			<input type="hidden" name="autoId" th:value="${auto.id}">
+            <input type="hidden" name="orario" th:value="${orario}">
             <button type="submit" class="btn btn-outline-success w-100"
                     th:text="${#temporals.format(orario, 'HH:mm')}"></button>
           </form>
@@ -97,7 +99,7 @@
     </div>
 
     <!-- Messaggio di successo -->
-    <div class="alert alert-success mt-4" th:if="${successMessage}" th:text="${successMessage}"></div>
+    <div class="alert alert-danger mt-4" th:if="${successMessage}" th:text="${successMessage}"></div>
   </div>
 </main>
 </body>

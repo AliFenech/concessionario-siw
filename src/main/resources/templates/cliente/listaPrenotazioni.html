@@ -73,30 +73,32 @@
 
     <!-- Lista Prenotazioni -->
     <div th:if="${prenotazioni != null && !prenotazioni.isEmpty()}">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Auto</th>
-            <th scope="col">Data</th>
-            <th scope="col">Orario</th>
-            <th scope="col">Azione</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="prenotazione : ${prenotazioni}">
-            <td th:text="${prenotazione.auto.marca} + ' ' + ${prenotazione.auto.modello}"></td>
-            <td th:text="${prenotazione.data}"></td>
-            <td th:text="${prenotazione.orario}"></td>
-            <td>
-              <form method="post" th:action="@{'/prenotazioni/annulla/' + ${prenotazione.id}}">
-                <button type="submit" class="btn btn-danger">
-                  <i class="bi bi-x-circle"></i> Annulla
-                </button>
-              </form>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">Auto</th>
+		      <th scope="col">Data e Ora</th>
+		      <th scope="col" class="text-endù"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="prenotazione : ${prenotazioni}">
+		      <td th:text="${prenotazione.auto.marca} + ' ' + ${prenotazione.auto.modello}"></td>
+		      <td th:text="${#temporals.format(prenotazione.dataEOra, 'dd/MM/yyyy HH:mm')}"></td>
+		      <td class="text-end">
+
+				<a th:href="@{'/cliente/annullaPrenotazione/' + ${prenotazione.id}}" class="btn btn-danger me-2">
+				  <i class="bi bi-x-circle"></i> Annulla
+				</a>
+
+		        
+
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+
+
     </div>
 
     <!-- Messaggio se non ci sono prenotazioni -->

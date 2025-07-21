@@ -76,6 +76,7 @@
   <main class="container py-5 mt-5">
     <div class="text-center mb-4 mt-3">
       <h2>Lista Punti Vendita</h2>
+	  <p>Scegli il punto vendita più comodo per te</p>
     </div>
 
     <div sec:authorize="hasAuthority('ADMIN')" class="d-flex justify-content-center mb-4 flex-wrap gap-2">
@@ -88,7 +89,40 @@
       Nessun punto vendita presente.
     </div>
 	
-	<table class="table table-hover table-striped shadow-sm rounded">
+	<div th:if="${!puntiVendita.empty}" 
+	     th:each="pv, iterStat : ${puntiVendita}" 
+	     class="card mb-4 shadow-sm" 
+	     style="max-width: 900px; margin: 0 auto;">
+	    
+	    <div class="card-body">
+	        <!-- Intestazione con città -->
+	        <div class="d-flex justify-content-between align-items-start mb-2">
+	            <h2 class="card-title mb-0" th:text="${pv.citta}">Nome città</h2>
+	        </div>
+
+	        <!-- Indirizzo -->
+	        <p class="card-text text-muted" th:text="${pv.indirizzo}">Via esempio, 123</p>
+
+	        <!-- Pulsanti Dettagli + Elimina -->
+	        <div class="d-flex justify-content-end gap-2">
+	            
+				<a sec:authorize="hasAuthority('ADMIN')" 
+				               th:href="@{/admin/punti-vendita/{id}/delete(id=${pv.id})}" 
+				               class="btn btn-sm btn-danger"
+				               th:onclick="'event.stopPropagation();'">
+				                <i class="bi bi-trash"></i> Elimina
+				            </a>
+				<a th:href="@{'/punti-vendita/' + ${pv.id}}" class="btn btn-sm btn-primary">
+	                🔍 Visualizza dettagli punto vendita
+	            </a>
+	           
+	        </div>
+	    </div>
+	</div>
+
+
+	
+	<!--<table class="table table-hover table-striped shadow-sm rounded">
 	  <thead class="table-dark">
 	    <tr>
 	      <th>Città</th>
@@ -97,7 +131,7 @@
 	    </tr>
 	  </thead>
 	  <tbody th:each="pv, iterStat : ${puntiVendita}">
-	    <!-- Riga principale -->
+	    <!-- Riga principale 
 	    <tr class="main-row align-middle" th:attr="data-index=${iterStat.index}">
 	      <td th:text="${pv.citta}"></td>
 	      <td th:text="${pv.indirizzo}"></td>
@@ -110,7 +144,7 @@
 	       
 	      </td>
 	    </tr>
-	    <!-- Riga dettaglio (tendina) -->
+	    <!-- Riga dettaglio (tendina)
 	    <tr class="details-row" th:id="'details-' + ${iterStat.index}" style="display:none;">
 	      <td colspan="4" class="details-cell">
 	        
@@ -124,7 +158,7 @@
 	      </td>
 	    </tr>
 	  </tbody>
-	</table>
+	</table>-->
 
 	<!-- Script per il toggle dei dettagli -->
 	<script>
