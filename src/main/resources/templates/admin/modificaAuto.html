@@ -165,8 +165,8 @@
         </div>
 
         <div class="d-flex justify-content-between">
-          <a
-		  <a th:href="@{/listaAuto(puntoVenditaId=${auto.puntoVendita.id})}" class="btn btn-secondary">
+          
+		  <a th:href="@{/punti-vendita/{id}(id=${auto.puntoVendita.id})}" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> Annulla
           </a>
           <button type="submit" class="btn btn-success">

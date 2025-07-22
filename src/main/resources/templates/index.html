@@ -75,15 +75,14 @@
          		<div class="col-lg-6 mb-4">
 					<h2>
 					  <span>Benvenuto </span><br>
-					  <span th:if="${username != null}" th:text="${username}"></span>
-					  <span th:unless="${username != null}">da Roma Tre Motors</span>
+					  <span th:unless="${username != null}">in Roma Tre Motors</span>
 					</h2>
 					
 			</div>
           <div class="col-lg-6">
             <div class="row gy-4">
               <div class="col-md-6">
-                <a href="#" aria-label="Utilitarie">
+                <a th:href="@{/filtroCategoria/Utilitaria}" aria-label="Utilitarie">
                   <div class="service-item d-flex align-items-center gap-3">
                     <div class="icon"><i class="bi bi-car-front-fill" aria-hidden="true"></i></div>
                     <div><h3 class="mb-2 fs-5">Utilitarie</h3></div>
@@ -92,7 +91,7 @@
               </div>
 
               <div class="col-md-6">
-                <a href="#" aria-label="Sportive">
+                <a th:href="@{/filtroCategoria/Sportiva}" aria-label="Sportive">
                   <div class="service-item d-flex align-items-center gap-3">
                     <div class="icon"><i class="bi bi-speedometer" aria-hidden="true"></i></div>
                     <div><h3 class="mb-2 fs-5">Sportive</h3></div>
@@ -100,8 +99,17 @@
                 </a>
               </div>
 
+			  <div class="col-md-6">
+                 <a th:href="@{/filtroCarburante/Ibrido}" aria-label="Ibdride">
+                   <div class="service-item d-flex align-items-center gap-3">
+                     <div class="icon"><i class="bi bi-fuel-pump" aria-hidden="true"></i></div>
+                     <div><h3 class="mb-2 fs-5">Ibride</h3></div>
+                   </div>
+                 </a>
+               </div>
+			  
               <div class="col-md-6">
-                <a href="#" aria-label="Elettriche">
+                <a th:href="@{/filtroCarburante/Elettrico}" aria-label="Elettriche">
                   <div class="service-item d-flex align-items-center gap-3">
                     <div class="icon"><i class="bi bi-ev-front" aria-hidden="true"></i></div>
                     <div><h3 class="mb-2 fs-5">Elettriche</h3></div>
@@ -109,14 +117,7 @@
                 </a>
               </div>
 
-              <div class="col-md-6">
-                <a href="#" aria-label="Altre">
-                  <div class="service-item d-flex align-items-center gap-3">
-                    <div class="icon"><i class="bi bi-grid-1x2-fill" aria-hidden="true"></i></div>
-                    <div><h3 class="mb-2 fs-5">Altre</h3></div>
-                  </div>
-                </a>
-              </div>
+             
             </div>
           </div>
 

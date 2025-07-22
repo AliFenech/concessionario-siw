@@ -1,0 +1,51 @@
+Caso d’uso 1 –   Inserimento auto  
+Attori:   Amministratore
+Descrizione:   Inserimento di una nuova auto nel catalogo.
+Scenario principale:  
+
+1. L’amministratore, dopo aver effettuato l'autenticazione, accede alla pagina "Punti vendita".
+2. Seleziona l'opzione "Visualizza dettagli punti vendita" relativa al punto vendita in cui vuole inserire l'auto
+2. Seleziona l’opzione “Aggiungi un'auto”.
+3. Compila il modulo con i dati dell'auto.
+4. Clicca su “Salva Auto”.
+5. Il sistema aggiorna e visualizza il catalogo con la nuova auto inserita.
+
+---
+
+Caso d’uso 2 –   Modifica dettagli auto  
+
+Attori:   Amministratore
+Descrizione:   Modifica delle informazioni relative a un'auto.
+Scenario principale:  
+
+1. L’amministratore, dopo aver effettuato l'autenticazione, accede alla pagina "Punti vendita".
+2. Seleziona l'opzione "Visualizza dettagli punti vendita" relativa al punto vendita in cui vuole inserire l'auto
+3. Seleziona l'opzione "Modifica"
+4. Il sistema mostra un modulo precompilato con i dati attuali dell'auto.
+5. L’amministratore apporta le modifiche desiderate e conferma con “Salva modifiche”.
+6. Il sistema aggiorna e mostra il catalogo con i dettagli dell'auto modificata.
+
+---
+
+Caso d’uso 3 –  Elimina auto  
+
+Attori:   Amministratore
+Descrizione:   Rimozione di un'auto dal catalogo
+Scenario principale:  
+
+1. L’amministratore, dopo aver effettuato l'autenticazione, accede alla pagina "Punti vendita".
+2. Seleziona l'opzione "Visualizza dettagli punti vendita" relativa al punto vendita in cui vuole inserire l'auto
+3. Seleziona l'opzione "Elimina"
+6. Il sistema elimina l'auto e mostra il catalogo aggiornato.
+
+---
+Caso d’uso 4 –  Visualizzazione dettagli auto
+
+Attori:   Tutti
+Descrizione:   Visualizzazione dettagli auto.
+Scenario principale:  
+
+1. L'utente accede alla pagina "Catalogo Auto"
+2. Il sistema restituisce l'elenco di tutte le auto presenti nel catalogo
+3. L'utente seleziona l'auto di cui vuole vedere i dettagli
+4. Il sistema mostra le informazioni relative all'auto selezionata

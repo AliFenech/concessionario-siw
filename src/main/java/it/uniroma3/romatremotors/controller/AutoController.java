@@ -48,6 +48,8 @@ public class AutoController {
         return "listaAuto";
     }
 
+    
+    
     // Mostra form nuova auto
     @GetMapping("/admin/nuova/{id}/")
     public String mostraFormNuovaAuto(@PathVariable Long id, Model model) {
@@ -66,6 +68,8 @@ public class AutoController {
         return "/admin/formNewAuto";
     }
 
+    
+    
     // Salva nuova auto
     @PostMapping("/admin/nuova")
     public String salvaNuovaAuto(@ModelAttribute("auto") Auto auto,
@@ -99,6 +103,9 @@ public class AutoController {
         return "redirect:/punti-vendita/" + puntoVendita.getId();
     }
 
+    
+    
+    
     // Restituisce immagine dell'auto
     @GetMapping("/auto/{id}/immagine")
     public ResponseEntity<byte[]> getImmagine(@PathVariable Long id) {
@@ -110,6 +117,10 @@ public class AutoController {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_JPEG_VALUE)
                 .body(auto.getImmagine());
     }
+    
+    
+    
+    
 
     // Mostra tutti i dettagli di un'auto
     @GetMapping("/auto/{id}")
@@ -121,6 +132,10 @@ public class AutoController {
         return "dettagliAuto";
     }
 
+    
+    
+    
+    
     // Catalogo pubblico
     @GetMapping("/catalogo")
     public String getCatalogo(Model model) {
@@ -136,6 +151,10 @@ public class AutoController {
         return "catalogo";
     }
 
+    
+    
+    
+    
     // Catalogo filtrato
     @PostMapping("/catalogo/filtra")
     public String getAutoFiltrate(
@@ -169,9 +188,54 @@ public class AutoController {
     
     
     
+    @GetMapping("/filtroCategoria/{cerca}")
+    public String filterHome(@PathVariable String cerca, Model model) {
+    	
+    	
+
+    	List<Auto> autoList = autoService.filtraAuto(
+                cerca, null,  null, null, 0, 500000, 0, 300000);
+    	
+    	model.addAttribute("autoList", autoList);
+        model.addAttribute("categoria", cerca);
+        model.addAttribute("marca", null);
+        model.addAttribute("colore", null);
+        model.addAttribute("carburante", null);
+        model.addAttribute("kmMin", 0);
+        model.addAttribute("kmMax", 500000);
+        model.addAttribute("prezzoMin", 0);
+        model.addAttribute("prezzoMax", 300000);
+
+        return "catalogo";
+    	
+    }
+    
+    
+    @GetMapping("/filtroCarburante/{cerca}")
+    public String filterFuelHome(@PathVariable String cerca, Model model) {
+    	
+    	
+
+    	List<Auto> autoList = autoService.filtraAuto(
+                null, null,  null, cerca, 0, 500000, 0, 300000);
+    	
+    	model.addAttribute("autoList", autoList);
+        model.addAttribute("categoria", null);
+        model.addAttribute("marca", null);
+        model.addAttribute("colore", null);
+        model.addAttribute("carburante", cerca);
+        model.addAttribute("kmMin", 0);
+        model.addAttribute("kmMax", 500000);
+        model.addAttribute("prezzoMin", 0);
+        model.addAttribute("prezzoMax", 300000);
+
+        return "catalogo";
+    	
+    }
+    
     
     //eliminazione auto
-    @PostMapping("/admin/eliminaAuto/{id}")
+    @GetMapping("/admin/eliminaAuto/{id}")
     public String deleteAuto(@PathVariable Long id) {
         Optional<Auto> optAuto = autoRepository.findById(id);
         if (optAuto.isPresent()) {

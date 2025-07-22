@@ -109,16 +109,26 @@
           />
         </div>
 
-        <div class="mb-3">
-          <label for="colore" class="form-label">Colore</label>
-          <input
-            type="text"
-            class="form-control"
-            th:field="*{colore}"
-            id="colore"
-            required
-          />
-        </div>
+		<div class="mb-3">
+		  <label for="colore" class="form-label">Colore</label>
+		  <select
+		    class="form-select"
+		    th:field="*{colore}"
+		    id="colore"
+		    required
+		  >
+		    <option value="" disabled selected>Scegli un colore</option>
+		    <option value="Rosso">Rosso</option>
+		    <option value="Blu">Blu</option>
+		    <option value="Verde">Verde</option>
+		    <option value="Nero">Nero</option>
+		    <option value="Bianco">Bianco</option>
+		    <option value="Grigio">Grigio</option>
+		    <option value="Giallo">Giallo</option>
+		    <option value="Argento">Argento</option>
+		  </select>
+		</div>
+
 
         <div class="mb-3">
           <label for="km" class="form-label">KM</label>
@@ -144,27 +154,39 @@
           />
         </div>
 
-        <div class="mb-3">
-          <label for="carburante" class="form-label">Carburante</label>
-          <input
-            type="text"
-            class="form-control"
-            th:field="*{carburante}"
-            id="carburante"
-            required
-          />
-        </div>
+		<div class="mb-3">
+		  <label for="carburante" class="form-label">Carburante</label>
+		  <select
+		    class="form-select"
+		    th:field="*{carburante}"
+		    id="carburante"
+		    required
+		  >
+		    <option value="" disabled selected>Scegli il tipo di carburante</option>
+		    <option value="Benzina">Benzina</option>
+		    <option value="Diesel">Diesel</option>
+		    <option value="Elettrico">Elettrico</option>
+		    <option value="Ibrido">Ibrido</option>
+		  </select>
+		</div>
 
-        <div class="mb-3">
-          <label for="categoria" class="form-label">Categoria</label>
-          <input
-            type="text"
-            class="form-control"
-            th:field="*{categoria}"
-            id="categoria"
-            required
-          />
-        </div>
+
+		<div class="mb-3">
+		  <label for="categoria" class="form-label">Categoria</label>
+		  <select
+		    class="form-select"
+		    th:field="*{categoria}"
+		    id="categoria"
+		    required
+		  >
+		    <option value="" disabled selected>Scegli la categoria</option>
+		    <option value="Utilitaria">Utilitaria</option>
+		    <option value="Berlina">Berlina</option>
+		    <option value="Sportiva">Sportiva</option>
+		    <option value="SUV">SUV</option>
+		  </select>
+		</div>
+
 
         <div class="mb-3">
           <label for="immagine" class="form-label">Immagine (opzionale)</label>
@@ -179,7 +201,7 @@
 
         <div class="d-flex justify-content-between">
           <a
-            th:href="@{/lista(puntoVenditaId=${auto.puntoVendita.id})}"
+            th:href="@{/punti-vendita/{id}(id=${auto.puntoVendita.id})}"
             class="btn btn-secondary"
           >
             <i class="bi bi-arrow-left"></i> Annulla

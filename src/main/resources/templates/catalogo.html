@@ -71,7 +71,7 @@
 	
 	<form action="/catalogo/filtra" method="POST">
 	     <!-- Filtri in alto -->
-	     <section id="filters" class="filters section pt-3">
+	     <section id="filters" class="filters section pt-3 pb-0"  >
 	       <div class="container align-items-center">
 	         <div class="row">
 	           <div class="col-md-3 me-3 col-lg-2 mb-3">
@@ -84,23 +84,26 @@
 					<option th:value="'Berlina'" th:selected="${categoria == 'Berlina'}">Berlina</option>
 	 			  </select>
 	           </div>
-	           <div class="col-md-3 me-3 col-lg-2 mb-3">
+	           <div class="col-md-3 me-3 col-lg-2 mb-3 me-2">
 	             <p>Marca auto:</p>
-				  <input type="text" class="form-control" style="width: 300px;" name="marca" th:value="${marca}" placeholder="Inserisci la marca dell'auto">
+				  <input type="text" class="form-control" style="width: 250px;" name="marca" th:value="${marca}" placeholder="Inserisci la marca dell'auto">
 
 	           </div>
 	          
-	           <div class="col-md-3 me-3 col-lg-2 mb-3">
-	             <p>Colore auto:</p>
-				 <select class="form-select" id="colore" name="colore" th:value="${colore}">
-	 	 		    <option th:value="All" th:selected="${colore == null || colore == 'All'}">Tutti</option>
-	 	 		    <option th:value="Bianco" th:selected="${colore == 'Bianco'}">Bianco</option>
-	 	 		    <option th:value="Nero" th:selected="${colore == 'Nero'}">Nero</option>
-	 	 		    <option th:value="Rosso" th:selected="${colore == 'Rosso'}">Rosso</option>
-	 				<option th:value="Blu" th:selected="${colore == 'Blu'}">Blu</option>
-					<option th:value="Blu" th:selected="${colore == 'Grigio'}">Grigio</option>
-	 	 		  </select>
-	           </div>
+			   <div class="col-md-3 me-3 col-lg-2 mb-3">
+			     <p>Colore auto:</p>
+			     <select class="form-select" id="colore" name="colore" th:value="${colore}">
+			       <option th:value="All" th:selected="${colore == null || colore == 'All'}">Tutti</option>
+			       <option th:value="Bianco" th:selected="${colore == 'Bianco'}">Bianco</option>
+			       <option th:value="Nero" th:selected="${colore == 'Nero'}">Nero</option>
+			       <option th:value="Rosso" th:selected="${colore == 'Rosso'}">Rosso</option>
+			       <option th:value="Blu" th:selected="${colore == 'Blu'}">Blu</option>
+			       <option th:value="Grigio" th:selected="${colore == 'Grigio'}">Grigio</option>
+			       <option th:value="Giallo" th:selected="${colore == 'Giallo'}">Giallo</option>
+			       <option th:value="Argento" th:selected="${colore == 'Argento'}">Argento</option>
+			     </select>
+			   </div>
+
 	           <div class="col-md-3 col-lg-2 mb-3">
 	             <p>Tipo carburante:</p>
 	             
@@ -195,7 +198,7 @@
 	   </form>
 
   <!-- Real Estate Section -->
-  <section id="real-estate" class="real-estate section">
+  <section id="real-estate" class="real-estate section pt-0" >
 
 	
 	
